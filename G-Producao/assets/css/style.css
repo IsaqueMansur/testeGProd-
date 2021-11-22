@@ -1,0 +1,402 @@
+:root {
+    --primary-color: rgb(35, 99, 62);
+    --primary-color-darker: rgb(11, 75, 38);
+    --primary-color-white: rgb(47, 255, 116);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap');
+
+.branco {
+  border-radius: 30%;
+  color: black;
+  background-color: white;
+  border:black;
+  border-style: solid;
+  border-width: .5px;
+}
+.amarelo {
+  border-radius: 30%;
+  color: black;
+  background-color: yellow;
+  border:black;
+  border-style: solid;
+  border-width: .5px;
+}
+.magenta {
+  border-radius: 30%;
+  color: black;
+  background-color: fuchsia;
+  border:black;
+  border-style: solid;
+  border-width: .5px;
+} 
+.cyan {
+  border-radius: 30%;
+  color: black;
+  background-color: cyan;
+  border:black;
+  border-style: solid;
+  border-width: .5px;
+}
+.preto {
+  border-radius: 30%;
+  color: white;
+  background-color: black;
+  border:black;
+  border-style: solid;
+  border-width: .5px;
+}
+.p485 {
+  border-radius: 30%;
+  color: black;
+  background-color: red;
+  border:black;
+  border-style: solid;
+  border-width: .5px;
+}
+
+.p355 {
+  border-radius: 30%;
+  color: black;
+  background-color: rgb(2, 146, 26);
+  border:black;
+  border-style: solid;
+  border-width: .5px;
+}
+
+body {
+  margin: 0;
+  padding: 2% 2% 2% 2%;
+  background: var(--primary-color);
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+.container {
+    display: block;
+    margin-bottom: 20px;
+    padding: 0% 0px .7% 0%;
+    border-radius: 10px;
+    margin: 3% 3%;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    height: 50%;
+    width: 60%;
+    color:red;
+    background: white;   
+}
+
+h1 {
+    line-height: 90px;
+    color: var(--primary-color-darker);
+    font-size: 35pt;
+    text-align: center;
+    font-weight: 700;
+  }
+
+  form label {
+      text-align: center;
+      color: var(--primary-color-darker);
+      font-size: 20pt;
+      padding: 0 11px;
+  }
+
+
+form input, form label, form button {
+    display: block;
+    height: 90%;
+    margin-bottom: 20px;
+  }
+
+  form input {
+    text-align: center;
+    color: var(--primary-color);
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 24px;
+    height: 50px;
+    padding: 0 20px;
+    width: 30%;
+  }
+
+  form input:hover {
+    border-color: var(--primary-color);
+    border-width: .5px;
+  }
+
+  form button {
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 25%;
+    border-radius: 10px;
+    background: var(--primary-color);
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+    height: 50px;
+    cursor: pointer;
+    border-color: transparent;
+  }
+  
+  form button:hover {
+    background: white;
+    color: var(--primary-color-darker);
+    border-color: var(--primary-color);
+    border-width: 3px;
+  }
+
+  .erro1 {
+      float: right;
+      margin-right: 15%;
+      margin-top: -55px;
+      font-size: 13pt;
+  }
+
+  #admB1 {
+    width: 10%;
+    background-color: var(--primary-color-white);
+    color: var(--primary-color);
+  }
+
+  #admB1:hover {
+    color: black;
+  }
+
+  .container-tela-inicial {
+    text-align: center;
+    height: 90%;
+    border-radius: 10px;
+    margin: 3% 3%;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    margin-top: -3.2%;
+    width: 95%;
+    color:red;
+    background: white;
+  }
+
+  .container-tela-inicial button {
+    position: relative;
+    display: inline;
+    width: 21%;
+    margin: 1% 1% 1% 1%;
+    margin-left: 2.4%;
+  }
+
+  #nomeUsuario {
+    cursor: default;
+    border-radius: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    background: rgb(47, 255, 116);
+    width: 60%;
+    text-align: center;
+    font-size: 20pt;
+    color: var(--primary-color);
+  }
+
+  #nomeUsuario:hover {
+    color:rgb(47, 255, 116);
+    background: var(--primary-color);
+  }
+
+  #escopo {
+    padding: 20px 20px 20px 0px;
+  }
+
+  .programacao {
+    color: var(--primary-color);
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+    width: 95%;
+    background: white; 
+  }
+  #sobe1 {
+    margin-top: -16%;
+  }
+
+  .programacao {
+    display: block;
+    padding: -10px 0px 10px 0px   ;
+  }
+
+  .programacao select, button {
+    border-radius: 10px;
+    display: inline;
+    margin: 0px 0px 10px .3%;
+    background-color: var(--primary-color);
+    color: white;
+  }
+
+  .programacao select {
+    margin-left: -70px;
+    width: 200px;
+    font-size: 20pt;
+  } .programacao select:hover {
+    color:var(--primary-color);
+    background-color: white;
+  }
+  .programacao button {
+    cursor: pointer;
+    margin-left: 1%;
+    width: 100px;
+    font-size: 19pt;
+  } .programacao button:hover {
+    color:var(--primary-color);
+    background-color: white;
+  }
+
+  .programacao p {
+    font-size: 20pt;
+    font-weight: 700;
+    padding: 18px 30px 0px 45px;
+  }
+
+  #maquina-selecionada {
+    display: inline-table;
+  }
+
+  .cabecalho-programacao {
+    display: inline-table;
+    width: 400px;
+  }
+
+  .fecharProg {
+    display: inline-table;
+  }
+
+  .fecharProg button{
+    display: list-item;
+    width: 150px;
+    background-color: rgb(247, 52, 52);
+    color: white;
+    border-color: transparent;
+    margin-left: 550px;
+  }
+
+  .fecharProg button:hover {
+    color: rgb(247, 52, 52);
+    border-color: rgb(247, 52, 52);
+  }
+
+  .maquina-programacao {
+    display: inline-table;
+    margin: 20px 20px;
+  }
+
+  .maquina-programacao p1 {
+    background-color: var(--primary-color);
+    padding: .3% 2%;
+    border-radius: 10px;
+    color: white;
+    font-size: 20pt;
+  } #usuario-programacao {
+    cursor: default;
+    background-color: var(--primary-color-white);
+    font-weight: 700;
+    font-size: 12pt;
+    border-radius: 5px;
+    color: var(--primary-color-darker);
+  } #usuario-programacao:hover {
+    color: var(--primary-color-white);
+    background-color: var(--primary-color-darker);
+  }
+
+  .nomeServico {
+    cursor: default;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 5px;
+  } .nomeServico:hover {
+    background-color: white;
+    color: var(--primary-color);
+  }
+
+  .config-programacao {
+    background-color: darkgray;
+    width: 296px;
+    line-height: 50px;
+    margin: 20px 0px;
+    border-radius: 10px;
+   } .config-programacao input {
+    margin-left: 0px;
+    border-radius: 5px;
+    border-color: transparent;
+    } .config-programacao button{
+      border-color: transparent;
+      width: 250px;
+      margin-left: 20px;
+    } #velocidade-op {
+      width: 50px;
+    } #metragem-op {
+      width: 55px;
+    } .config-programacao p2 {
+      margin-left: 10px;
+    }
+
+    .informacoes-fixas-op {
+      display: grid;
+    } .informacoes-fixas-op p2 {
+      margin-top: 3px;
+      line-height: 25px;
+      background-color: white;
+      width: 276px;
+      border-radius: 5px;
+    } .informacoes-fixas-op p2:hover {
+      color: white;
+      background-color: var(--primary-color);
+    }
+
+  .teste {
+    border-radius: 10px;
+    display: table-cell;
+    background-color: transparent;
+    position: relative;
+    left: 10px;
+    width: 90%;
+  }
+
+  .fundo {
+    display: inline-block;
+    background-color: transparent;
+    height: 100%;
+  }
+
+  #teste {
+    background-color: rgb(241, 241, 241);
+    position: relative;
+    left: 20px;
+    display: table-cell;
+    font-size: 8pt;
+    border-style: solid;
+    border-width: 1px;
+  } #teste table {
+    border-spacing: 0px;
+  } #teste thead {
+    font-size: 10pt;
+    font-weight: 700;
+    background-color: var(--primary-color);
+    color: white;
+    border-width: 3px;
+  } #teste tr th {
+    line-height: 15px;
+    padding: 0 3px;
+    border-style: solid;
+    border-width: 1px;
+    text-align: center;
+    max-width: 500px;
+  }#teste tbody th {
+    opacity: 90%;
+  }#teste tbody th:hover {
+    opacity: 100%;
+    cursor: default;
+    background-color: var(--primary-color);
+    color: white;
+  } 
+
+  
+
+

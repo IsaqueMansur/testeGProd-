@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G.PROD</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <button onclick="admProgramacao()">ADM - PROGRAMACAO</button>
+</head>
+
+<body>
+    <section class="container">
+        <h1>Bem vindo !</h1>
+        <form action="/" id="formulario" method="POST">
+            <usuario>
+                <label for="usuario">Usuário</label>
+                <input type="text" id="usuario" name="usuario">
+                <div id="erroUsuario"></div>
+            </usuario>
+            <senha>
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" name="senha">
+                <div id="erroSenha"></div>
+            </senha>
+            <button type="submit" onclick="login(usuarios)">Login</button>
+            <button id="admB1" onclick="adm(usuarios)">Botão ADM</button>
+        </form>
+    </section> 
+    
+    <section class="container-tela-inicial">
+        <form id="escopo" method="POST">
+            <p id='nomeUsuario'></p>
+            <button type="submit" onclick="programacao()">Programação</button>
+            <button type="submit" onclick="bobinas()">Bobinas</button>
+            <button type="submit" onclick="c()">Impressão</button>
+            <button type="submit" onclick="d()">Resultados</button>
+        </form>
+    </section>
+
+    <section class="programacao">
+
+        <div class="cabecalho-programacao">
+            <p>Selecione a máquina:</p>
+        </div>
+    
+        <select id="maquina-selecionada">
+            <option>IMP-01</option>
+            <option>IMP-02</option>
+            <option>IMP-03</option>
+        </select>
+        <button onclick="nomeMaquina()">Ok</button>
+        
+
+        <div class="fecharProg">
+            <button onclick="fechaProgramacao()">Tela inicial</button>
+        </div>
+
+
+        <section class="maquina-programacao">
+            <p1></p1>
+
+            <div class="config-programacao">
+                <div>
+                    <p2 id="usuario-programacao"></p2>
+                </div>
+                <div>
+                    <p2>O.P.:</p2>
+                    <input type="text" id="inclui-op">
+                    <div>
+                        <p2>Vel.:</p2>
+                        <input type="number" id="velocidade-op">
+                        <p2>metros por minuto</p2>
+                    </div>
+                    <div>
+                        <button onclick="confirmaOp(ops)">Ok</button>
+                    </div>
+                    <div>
+                        <p2 class="nomeServico">Clichê:</p2>
+                    </div>
+                </div>
+
+                <div>
+                    <p2>Metros:</p2>
+                    <input id="metragem-op"></input>
+                    <p2>a serem impressos</p2>
+                    <div>
+                        <button onclick="alteraMetros(ops)">Alterar Metragem</button>
+                    </div>
+                    <p2>Inicio:</p2>
+                    <input type="date" lang="pt-BR" id="data-inicio-op">
+                    <input type='time' id="hora-inicio-op">
+                    <div></div>
+                    <p2>Térm.:</p2>
+                    <input type="date" id="data-termino-op">
+                    <input type='time' id="hora-termino-op">
+
+                    <div class="informacoes-fixas-op">
+                        <p2 class="comprimento-op">Comprimento:</p2>
+                        <p2 class="largura-op">Largura:</p2>
+                        <p2 class="peso-impresso-op">Peso Imp.:</p2>
+                        <p2 class="material-op">Material Imp.:</p2>
+                    </div>
+                    
+
+                    <div>
+                        <button type="submit" onclick="programarOp(ops)">Programar</button>
+                    </div>
+                    
+                </div>  
+            </div>
+
+            <div id="teste"></div> 
+
+        </section>
+        
+        
+    </section>
+    <script src="./assets/js/moment.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment-with-locales.min.js"></script>
+    <script src="./assets/js/main teste.js "></script>
+</body>
+</html>
