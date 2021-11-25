@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>G.PROD</title>
     <link rel="stylesheet" href="./assets/css/style.css">
-    <button onclick="admProgramacao()">ADM - PROGRAMACAO</button>
+    <!-- <button onclick="admProgramacao()">ADM - PROGRAMACAO</button> -->
 </head>
 
 <body>
@@ -110,14 +110,108 @@
                 </div>  
             </div>
 
-            <div id="teste"></div> 
+            <div id="tabelaProgramacao"></div> 
 
         </section>
-        
-        
+           
     </section>
+
+    <section class="bobinas">
+        <div class="opcoesBobinas">
+            <button class="criaBobina" onclick="criarBobina()">Criar bobinas</button>
+            <button class="apontaBobina" onclick="apontaBobina()">Apontar bobinas</button>
+            <button class="visualizarBobina" onclick="visualizarBobina()">Visualizar bobinas</button>
+            <button class="telaInicialBobinas" onclick="fechaBobinas()">Tela inicial</button>
+        </div>
+
+        <section class="criar-bobina">
+
+            <div class="selecionaMaterial">
+                <p>Material:</p>
+            </div>
+            <select id="tipoMaterialBobina">
+                <option>Nylon Poli</option>
+                <option>Termoencolhível</option>
+                <option>Prime S/B.</option>
+                <option>Prime C/B.</option>
+                <option>Pet</option>
+            </select>
+            <div class="selecionaLargura">
+                <p>Largura:</p>
+            </div>
+            <input id="selecionaLarguraBobina" type="number">mm</input>
+            <div class="selecionaEspessura">
+                <p>Espessura:</p>
+            </div>
+            <input id="selecionaEspessuraBobina" type="number">mm</input>
+            <div class="selecionaPigmento">
+                <p>Pigmento:</p>
+            </div>
+            <select id="pigmentoMaterialBobina">
+                <option>Natural</option>
+                <option>Branco</option>
+                <option>Vermelho</option>
+                <option>Laranja</option>
+                <option>Mate</option>
+            </select> 
+            <div class="selecionaPesoBruto">
+                <p>Peso Bruto:</p>
+            </div>
+            <input id="selecionaPesoBruto" type="number">Kg's</input>
+            <div class="selecionaTubete">
+                <p>Peso Tubete:</p>
+            </div>
+            <input id="selecionaTubete" type="number">Kg's</input>  
+
+            <button class="visualizarBobinaCriada" onclick="visualizarBob()">Visualizar criação</button>
+
+
+            <div class="informacoes-fixas-bobina-criada">
+                <p>Peso líquido:</p>
+            </div>
+            <div class="peso-liquido-bobina-criada">
+                <p class="peso-liquido-bobina-criada-valor"></p>
+            </div>
+            <div class="informacoes-fixas-bobina-criada-codigo">
+                <p>Código bobina:</p> 
+            </div>
+            <div class="codigo-bobina-criada">
+            </div>
+            
+            <div>
+                <div class="molde-etiqueta">
+                    <div class="informacoes-molde-direito"></div>
+                    
+                    <div class="informacoes-molde-esquerdo">
+                        <div class="qrCode"></div>
+                        <div class="informacoes-molde-esquerdo-qr">
+                            <svg id="codBarras"></svg> 
+                        </div>
+                    </div>
+                </div>
+
+                <button id="botaoCriaBobina" onclick="confirmaCriacaoBobina(listaBobinas)">Criar bobina</button>
+                <button id="botaoFechaCriaBobina" onclick="fechaCriarBobinas()">Fechar tela</button>
+
+            </div>      
+        </section> <!-- criar bobinas -->
+        <section class="apontar-bobina">
+            <select id="maquina-apontar-bobina">
+                <option>IMP-01</option>
+                <option>IMP-02</option>
+                <option>IMP-03</option>
+            </select>
+            <button onclick="nomeMaquinaBobina()">Ok</button>
+
+            <div id="tabelaProgramacao-apontar-bobina"></div> 
+        </section> <!-- apontar bobinas -->
+
+    </section> <!-- bobinas -->
+    
+
     <script src="./assets/js/moment.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment-with-locales.min.js"></script>
-    <script src="./assets/js/main teste.js "></script>
+    <script src="https://cdn.jsdelivr.net/jsbarcode/3.6.0/JsBarcode.all.min.js"></script>
+    <script src="./assets/js/main.js "></script>
 </body>
 </html>
