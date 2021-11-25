@@ -63,6 +63,14 @@
   border-style: solid;
   border-width: .5px;
 }
+.p871 {
+  border-radius: 30%;
+  color: black;
+  background-color: rgb(136, 138, 17);
+  border:black;
+  border-style: solid;
+  border-width: .5px;
+}
 
 body {
   margin: 0;
@@ -211,13 +219,21 @@ form input, form label, form button {
     margin-left: auto;
     margin-right: auto;
     border-radius: 10px;
-    width: 95%;
+    width: 100%;
     background: white; 
   }
   #sobe1 {
     margin-top: -16%;
+  } #desce1 {
+    margin-top: 16%;
   }
 
+  #sobe2 {
+    margin-top: -70%;
+  }
+  #sobe3 {
+    margin-top: -28%;
+  }
   .programacao {
     display: block;
     padding: -10px 0px 10px 0px   ;
@@ -350,22 +366,7 @@ form input, form label, form button {
       background-color: var(--primary-color);
     }
 
-  .teste {
-    border-radius: 10px;
-    display: table-cell;
-    background-color: transparent;
-    position: relative;
-    left: 10px;
-    width: 90%;
-  }
-
-  .fundo {
-    display: inline-block;
-    background-color: transparent;
-    height: 100%;
-  }
-
-  #teste {
+  #tabelaProgramacao {
     background-color: rgb(241, 241, 241);
     position: relative;
     left: 20px;
@@ -373,30 +374,227 @@ form input, form label, form button {
     font-size: 8pt;
     border-style: solid;
     border-width: 1px;
-  } #teste table {
+  } #tabelaProgramacao table {
     border-spacing: 0px;
-  } #teste thead {
+  } #tabelaProgramacao thead {
     font-size: 10pt;
     font-weight: 700;
     background-color: var(--primary-color);
     color: white;
     border-width: 3px;
-  } #teste tr th {
+    height: 40px;
+  } #tabelaProgramacao tr th {
     line-height: 15px;
     padding: 0 3px;
     border-style: solid;
     border-width: 1px;
     text-align: center;
     max-width: 500px;
-  }#teste tbody th {
+  }#tabelaProgramacao tbody th {
+    height: 35px;
     opacity: 90%;
-  }#teste tbody th:hover {
+  }#tabelaProgramacao tbody th:hover {
     opacity: 100%;
     cursor: default;
     background-color: var(--primary-color);
     color: white;
-  } 
+  }
 
+  .bobinas {
+    background-color: white;
+  }
+
+  .opcoesBobinas {
+    text-align: center;
+    height: 90%;
+    border-radius: 10px;
+    margin: 3% 3% 3%;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    margin-top: -3.2%;
+    width: 95%;
+  } .opcoesBobinas button {
+    cursor: pointer;
+    height: 45px;
+    position: relative;
+    display: inline;
+    width: 21%;
+    margin: 1% 1% 1% 1%;
+    margin-left: 2.4%;
+  } .opcoesBobinas button:hover {
+    color: var(--primary-color);
+    background-color: white;
+  }.telaInicialBobinas {
+    background-color: red;
+    color: white;
+    border-style: none;
+  }.telaInicialBobinas:hover {
+    background-color: white;
+    color: red;
+  }
+
+  .criar-bobina {
+    border-radius: 10px;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: darkgray;
+    width: 78%;
+  }.criar-bobina p {
+    border-radius: 4px;
+    background-color: var(--primary-color);
+    color: white;
+    height: 100%;
+  }
+
+  .selecionaMaterial {
+    display: inline-block;
+    margin-left: 20px;
+  }.selecionaLargura {
+    display: inline-block;
+    margin-left: 20px; 
+  }.selecionaEspessura {
+    display: inline-block;
+    margin-left: 20px; 
+  }#selecionaEspessuraBobina {
+    width: 50px;
+  }#selecionaLarguraBobina {
+    width: 60px;
+  }.selecionaPigmento {
+    display: inline-block;
+    margin-left: 20px;
+  }.selecionaPesoBruto {
+    display: inline-block;
+    margin-left: 20px;
+  }#selecionaPesoBruto {
+    width: 40px;
+  }.selecionaTubete {
+    display: inline-block;
+    margin-left: 20px;
+  }#selecionaTubete {
+    width: 40px;  
+  }
+
+  .visualizarBobinaCriada {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    height: 40px;
+    width: 200px;
+  }.visualizarBobinaCriada:hover {
+    cursor: pointer;
+    background-color: white;
+    color: var(--primary-color);
+  }
   
+  .informacoes-fixas-bobina-criada {
+    margin-left: 20px;
+    display: inline-block;
+  }.peso-liquido-bobina-criada {
+    margin-left: 5px;
+    display: inline-block;
+  }.informacoes-fixas-bobina-criada-codigo {
+    display: inline-block;
+    margin-left: 20px;
+  }.peso-liquido-bobina-criada p {
+    background-color: white;
+    color: var(--primary-color);
+  }
+  .codigo-bobina-criada {
+    display: inline-block;
+  }.codigo-bobina-criada p {
+    background-color: white;
+    color: var(--primary-color);
+  }
 
+  .molde-etiqueta {
+    padding: 5px 5px;
+    display: block;
+    position: relative;
+    margin-right: auto;
+    margin-left: auto;
+    background-color: white;
+    border-radius: 15px;
+    width: 300px;
+    height: 150px;
+  }.informacoes-molde-direito p {
+    padding-left: 4px;
+    color: black;
+    background-color: transparent;
+    border-style: solid;
+    border-width: 2px;
+    margin: 3px 0px;
+    width: 150px;
+    text-align: left;
+    font-size: 7pt;
+  }.materialExibidoCriacaoBobina {
+    border-radius: 4px;
+    padding-left: 4px;
+    padding-right: 4px;
+    text-align: center;
+    font-size: 8pt;
+    background-color: black;
+    color: white;
+    width: 150px;
+  }.informacoes-molde-direito {
+    position: relative;
+    top: -57px;
+    display: table-cell;
+  }.informacoes-molde-esquerdo {
+    position: relative;
+    left: 10px;
+    top: 5px;
+    display: table-cell;
+  }
 
+  #botaoCriaBobina {
+    background-color: white;
+    color: black;
+    position: relative;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    height: 40px;
+    width: 200px;
+  }#botaoCriaBobina:hover {
+    cursor: pointer;
+    background-color: var(--primary-color);
+    color: white;
+  }
+  .codigo-bobina-criada {
+    border-radius: 5px;
+    background-color: white;
+    color: var(--primary-color);
+  }#codBarras {
+    width: 120px;
+    height: auto;
+  }.qrCode {
+    position: relative;
+    margin-left: 22px;
+  }
+  #botaoFechaCriaBobina {
+    position: relative;
+    margin-left: 90%;
+    border-style: none;
+    background-color: red;
+    color: white;
+    height: 30px;
+  }#botaoFechaCriaBobina:hover {
+    cursor: pointer;
+    color: red;
+    background-color: white;
+  }
+
+  .apontar-bobina {
+    padding: 10px;
+    border-radius: 20px;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: darkgray;
+    width: 90%;
+    height: 500px;
+  }
