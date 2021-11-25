@@ -9,22 +9,29 @@ const folhaOuTubular = ['Folha', 'Tubular'];
 
 const soldas = ['Fundo', 'Lateral']
 
-const ops = 
-[{op: 300001, nomeServico: 'MUSSARELA MUSSARELA MUSSARELA MUSSARELA MUSSARELA MUSSARELA', material: materiais[2], tipoBobina: folhaOuTubular[0], pesoImpresso: 200,
-    largura: 740, comprimento: 180, tipoSolda: soldas[1], quantidadeEmMilheiros: 5, metros: 648000, pistas: 2, imagens: 3, cilindro: 54,
+const ops = [{
+    op: 300001, 
+    nomeServico: 'MUSSARELA MUSSARELA MUSSARELA MUSSARELA MUSSARELA MUSSARELA', 
+    material: materiais[2],
+    pigmento: 'Natural',
+    espessura: 0.09, 
+    tipoBobina: folhaOuTubular[0], 
+    pesoImpresso: 200,
+    largura: 740, 
+    comprimento: 180, 
+    tipoSolda: soldas[1], 
+    quantidadeEmMilheiros: 5, 
+    metros: 648000, 
+    pistas: 2, imagens: 
+    3, 
+    cilindro: 54,
     cores: ['branco', 'amarelo', 'magenta', 'cyan', 'p485', 'preto']},
-
-    {op: 300002, nomeServico: 'REQUEIJÃO REQUEIJÃO REQUEIJÃO REQUEIJÃO REQUEIJÃO REQUEIJÃO REQUEIJÃO', material: materiais[2], tipoBobina: folhaOuTubular[0], pesoImpresso: 200,
-    largura: 740, comprimento: 180, tipoSolda: soldas[1], quantidadeEmMilheiros: 5, metros: 648000, pistas: 2, imagens: 3, cilindro: 54,
-    cores: ['branco', 'amarelo', 'magenta', 'cyan', 'p485', 'preto']}
-
 ];
-
-/* console.log(ops[0].cores[3]); */ /* acessa as cores pelo index */
-
 
 document.querySelector(".container-tela-inicial").style.visibility = "hidden";
 document.querySelector(".programacao").style.visibility = "hidden";
+document.querySelector(".bobinas").style.visibility = "hidden";
+document.querySelector("#botaoCriaBobina").style.visibility = "hidden";
 
 const pegaErroUsuario = document.querySelector("#erroUsuario");
 const erroUsuario = "<div class='erro1' id='erroUsuario'>Usuário incorreto</div>"
@@ -101,12 +108,14 @@ function fechaProgramacao() {
     document.querySelector(".programacao").style.visibility = "hidden";
     document.querySelector(".container-tela-inicial").style.visibility = 'visible';
     document.querySelector("#escopo").style.visibility = "visible";
+    document.querySelector(".programacao").id = 'sobeFull';
 }
 
 
+//Programação
 
 function nomeMaquina() {
-    let x = document.querySelector('#teste');
+    let x = document.querySelector('#tabelaProgramacao');
     x.innerHTML = '<div><div>'
 
 
@@ -176,7 +185,7 @@ function confirmaOp(ops, alterarMetros) {
         let dataOkI = `${anoI}-${mesI}-${diaI}`;
         document.querySelector("#data-inicio-op").value = dataOkI;
 
-        let horaI = Number(dataI.getHours());
+        let horaI = Number(dataI.getHours());                       
         let minutoI = Number(dataI.getMinutes());
         let minutoIOk = minutoI;
         if (minutoI < 10) minutoIOk = `${0}${minutoI}`;
@@ -186,6 +195,7 @@ function confirmaOp(ops, alterarMetros) {
                
         let minhaData = moment(`${anoI}/${mesI}/${diaI} ${horaI}:${minutoI}`, "YYYY/M/DD h:m").add('minutes', minutosGastosImpressao).locale("pt").format('L');
         let minhaHora = moment(`${anoI}/${mesI}/${diaI} ${horaI}:${minutoI}`, "YYYY/M/DD h:m").add('minutes', minutosGastosImpressao).locale("pt").format('LT');
+
 
         let diaTerm = minhaData.substr(0, 2);
         let mesTerm = minhaData.substr(3, 2);
@@ -258,7 +268,7 @@ let maquinasProg = [[],[],[]];
 
 function programarOp(ops) {
     listaOps = [];
-    let x = document.querySelector('#teste');
+    let x = document.querySelector('#tabelaProgramacao');
     x.innerHTML = '<div><div>'
 
     let info = document.querySelector("#inclui-op").value;
@@ -276,7 +286,13 @@ function programarOp(ops) {
 
         let opProgramada = {
             op: op.op, 
-            cliche: op.nomeServico, 
+            pesoImp: op.pesoImpresso,
+            cliche: op.nomeServico,
+            material: op.material,
+            pigmento: op.pigmento,
+            espessura: op.espessura,
+            tipoBobina: op.tipoBobina,
+            solda: op.tipoSolda,
             c1: op.cores[0], 
             c2: op.cores[1], 
             c3: op.cores[2], 
@@ -319,7 +335,7 @@ function criaTabela(listaTab, listaOps) {
     let headTabela = document.createElement('thead');
     let bodyTabela = document.createElement('tbody');
     let trTabela = document.createElement('tr');
-    let local = document.querySelector("#teste");
+    let local = document.querySelector("#tabelaProgramacao");
     
 
     for (let i = 0; i < listaTab.length; i++) {
@@ -348,9 +364,15 @@ function criaTabela(listaTab, listaOps) {
         
         for (let i in ops) {
             let t = document.createElement('th');
-            t.appendChild(document.createTextNode(ops[i]));
-            tr.appendChild(t);
-            bodyTabela.appendChild(tr); 
+            t.className = (ops[i]);
+            if (ops[i] === undefined) {
+                t.appendChild(document.createTextNode('Vázio'));
+                tr.appendChild(t);
+            } else {
+                t.appendChild(document.createTextNode(ops[i]));
+                tr.appendChild(t);
+                bodyTabela.appendChild(tr);
+            } 
         }                
     }
     tabela.className = 'TabelaProg'
@@ -370,4 +392,272 @@ function criaTabela(listaTab, listaOps) {
     document.querySelector('.material-op').textContent = 'Material Imp.:';
     document.querySelector('.nomeServico').textContent = 'Clichê:'
 }
-criaTabela(listaTab, listaOps);
+
+//--------Final--------Programação
+
+//Bobinas
+
+function bobinas() {
+    document.querySelector(".bobinas").style.visibility = "visible";
+    document.querySelector(".bobinas").id = "sobe2";
+    document.querySelector(".container-tela-inicial").style.visibility = 'hidden';
+    document.querySelector("#escopo").style.visibility = "hidden";
+    document.querySelector(".criar-bobina").style.visibility = "hidden";
+    document.querySelector(".apontar-bobina").style.visibility = "hidden";
+    document.querySelector(".apontar-bobina").id = 'sobe3';
+}
+
+function fechaBobinas() {
+    document.querySelector(".bobinas").style.visibility = "hidden";
+    document.querySelector(".container-tela-inicial").style.visibility = 'visible';
+    document.querySelector("#escopo").style.visibility = "visible";
+    document.querySelector(".criar-bobina").style.visibility = "hidden";
+    document.querySelector("#botaoCriaBobina").style.visibility = "hidden";
+    document.querySelector("#selecionaLarguraBobina").value = null;
+    document.querySelector("#selecionaEspessuraBobina").value = null;
+    document.querySelector("#selecionaPesoBruto").value = null;
+    document.querySelector("#selecionaTubete").value = null;
+    document.querySelector(".peso-liquido-bobina-criada-valor").textContent = null;
+    document.querySelector(".codigo-bobina-criada").textContent = null;
+    document.querySelector(".molde-etiqueta").style.visibility = "hidden";
+    document.querySelector(".apontar-bobina").style.visibility = "hidden";   
+}
+
+function criarBobina() {
+    document.querySelector(".criar-bobina").style.visibility = "visible";
+    document.querySelector(".apontar-bobina").id = null;
+    document.querySelector(".apontar-bobina").style.visibility = "hidden";
+    document.querySelector(".apontar-bobina").id = 'sobe3';
+}
+
+function fechaCriarBobinas() {
+    document.querySelector(".criar-bobina").style.visibility = "hidden";
+    document.querySelector("#botaoCriaBobina").style.visibility = "hidden";
+    document.querySelector("#botaoCriaBobina").style.visibility = "hidden";
+    document.querySelector("#selecionaLarguraBobina").value = null;
+    document.querySelector("#selecionaEspessuraBobina").value = null;
+    document.querySelector("#selecionaPesoBruto").value = null;
+    document.querySelector("#selecionaTubete").value = null;
+    document.querySelector(".peso-liquido-bobina-criada-valor").textContent = null;
+    document.querySelector(".codigo-bobina-criada").textContent = null;
+    document.querySelector(".molde-etiqueta").style.visibility = "hidden";
+}
+
+let listaBobinas = [];
+
+function visualizarBob() {
+    let local = document.querySelector(".informacoes-molde-direito");
+    local.innerHTML = null;
+    let larguraCriada = Number(document.querySelector("#selecionaLarguraBobina").value);
+    if (larguraCriada < 10) {
+        alert("Largura errada !!!");
+        document.querySelector("#botaoCriaBobina").style.visibility = "hidden";
+        document.querySelector("#selecionaLarguraBobina").value = null;
+        return
+    } else {
+        let pesoBrutoCriado = Number(document.querySelector("#selecionaPesoBruto").value);
+        let pesoTubeteCriado = Number(document.querySelector("#selecionaTubete").value);
+
+        if (pesoTubeteCriado >= pesoBrutoCriado) {
+            alert("Pesos não corretos !!! (peso bruto menor ou igual ao peso do tubete)");
+            document.querySelector("#botaoCriaBobina").style.visibility = "hidden";
+            document.querySelector("#selecionaTubete").value = null;
+            document.querySelector("#selecionaPesoBruto").value = null;
+            return
+        } else {
+            let pesoLiquido = (pesoBrutoCriado - pesoTubeteCriado);
+            document.querySelector(".peso-liquido-bobina-criada-valor").textContent = pesoLiquido;  
+            
+            try {
+                let achaUltimoCodBobina = listaBobinas[listaBobinas.length - 1].codigo;
+                let codigoBobinaCriada = Number(achaUltimoCodBobina + 1);
+
+                let codigoBobinaQr = `<img src ="https://chart.googleapis.com/chart?chs=80x80&cht=qr&chl=https://${codigoBobinaCriada}">`
+                let localQrCode = document.querySelector(".qrCode");
+                localQrCode.innerHTML = codigoBobinaQr;
+                
+                document.querySelector(".codigo-bobina-criada").textContent = codigoBobinaCriada;
+                JsBarcode('#codBarras', codigoBobinaCriada);
+
+                
+                
+            } catch {
+                let codigoBobinaQr = `<img src ="https://chart.googleapis.com/chart?chs=80x80&cht=qr&chl=https://1000000000001">`
+                let localQrCode = document.querySelector(".qrCode");
+                localQrCode.innerHTML = codigoBobinaQr;
+                document.querySelector(".codigo-bobina-criada").textContent = 1000000000001;
+                JsBarcode('#codBarras', 1000000000001);
+            }
+
+            let materialN = document.createTextNode((document.querySelector("#tipoMaterialBobina").value));
+            let larguraN = document.querySelector("#selecionaLarguraBobina").value;
+            let espessuraN = document.querySelector("#selecionaEspessuraBobina").value;
+            let pigmentoN = document.querySelector("#pigmentoMaterialBobina").value;
+            let pesoBrutoN = document.querySelector("#selecionaPesoBruto").value;
+            let pesoTubeteN = document.querySelector("#selecionaTubete").value;
+            let pesoLiquidoN = document.querySelector(".peso-liquido-bobina-criada-valor").textContent;
+            let codigoN = document.querySelector(".codigo-bobina-criada").textContent;
+
+            let p2 = document.createElement('p2');
+            p2.className = 'materialExibidoCriacaoBobina';
+            p2.appendChild(materialN);
+            local.appendChild(p2);
+
+            listaMostrarEtiqueta = [
+                document.createTextNode(`Código: ${codigoN}`), 
+                document.createTextNode(`Largura: ${larguraN}mm`), 
+                document.createTextNode(`Espessura: ${espessuraN}mm`),
+                document.createTextNode(`Pigmento: ${pigmentoN}`), 
+                document.createTextNode(`Peso bruto: ${pesoBrutoN} Kg's`), 
+                document.createTextNode(`Peso tubete: ${pesoTubeteN} Kg's`),
+                document.createTextNode(`Peso líquido: ${pesoLiquidoN} Kg's`)
+            ];
+
+            for (let i in listaMostrarEtiqueta) {
+                let p = document.createElement('p');
+                p.appendChild(listaMostrarEtiqueta[i]);
+                local.appendChild(p);
+            }
+            document.querySelector(".molde-etiqueta").style.visibility = "visible";
+            document.querySelector("#botaoCriaBobina").style.visibility = "visible";
+        }
+    }
+    
+}
+
+function confirmaCriacaoBobina(listaBobinas) {
+    let materialCriado = document.querySelector("#tipoMaterialBobina").value;
+    let larguraCriada = Number(document.querySelector("#selecionaLarguraBobina").value);
+    let espessuraCriada = Number(document.querySelector("#selecionaEspessuraBobina").value);
+    let pigmentoCriado = document.querySelector("#pigmentoMaterialBobina").value;
+    let pesoBrutoCriado = Number(document.querySelector("#selecionaPesoBruto").value);
+    let pesoTubeteCriado = Number(document.querySelector("#selecionaTubete").value);
+    let pesoLiquidoCriado = Number(document.querySelector(".peso-liquido-bobina-criada-valor").textContent);
+    let codigoCriado = Number(document.querySelector(".codigo-bobina-criada").textContent);
+
+    let bobinaCriada = {
+        material: materialCriado, 
+        largura: larguraCriada,
+        espessura: espessuraCriada, 
+        pigmento: pigmentoCriado , 
+        pesoBruto: pesoBrutoCriado, 
+        pesoTubete: pesoTubeteCriado, 
+        pesoLiquido: (pesoLiquidoCriado), 
+        codigo: codigoCriado
+    };
+
+    listaBobinas.push(bobinaCriada)
+    document.querySelector("#botaoCriaBobina").style.visibility = "hidden";
+    document.querySelector("#selecionaEspessuraBobina").value = null;
+    document.querySelector("#selecionaLarguraBobina").value = null;
+    document.querySelector("#selecionaPesoBruto").value = null;
+    document.querySelector("#selecionaTubete").value = null;
+    document.querySelector(".peso-liquido-bobina-criada-valor").textContent = null;
+    document.querySelector(".codigo-bobina-criada").textContent = null;
+    document.querySelector(".molde-etiqueta").style.visibility = "hidden";
+}
+
+function apontaBobina() {
+    document.querySelector(".apontar-bobina").style.visibility = "visible";
+    document.querySelector(".criar-bobina").style.visibility = "hidden"
+    document.querySelector("#botaoCriaBobina").style.visibility = "hidden";
+    document.querySelector("#selecionaEspessuraBobina").value = null;
+    document.querySelector("#selecionaLarguraBobina").value = null;
+    document.querySelector("#selecionaPesoBruto").value = null;
+    document.querySelector("#selecionaTubete").value = null;
+    document.querySelector(".peso-liquido-bobina-criada-valor").textContent = null;
+    document.querySelector(".codigo-bobina-criada").textContent = null;
+    document.querySelector(".molde-etiqueta").style.visibility = "hidden";
+    document.querySelector(".apontar-bobina").id = 'sobe3';
+}
+
+function nomeMaquinaBobina() {
+    let x = document.querySelector('#tabelaProgramacao-apontar-bobina');
+    x.innerHTML = '<div><div>'
+    let maquinaSelecionada = document.querySelector("#maquina-apontar-bobina").value;
+    let indiceMaquina = null;
+
+    if (maquinaSelecionada === 'IMP-01') indiceMaquina = 0;
+    if (maquinaSelecionada === 'IMP-02') indiceMaquina = 1;
+    if (maquinaSelecionada === 'IMP-03') indiceMaquina = 2;
+    criaTabelaApontarBobinas(indiceMaquina);      
+}
+let listaTabApontarBobinas = ['Selecionar', 'Material', 'Pigmento', 'Esp.', 'Largura.', 'Comp.', 'Tipo', 'Tipo Solda', 'Kgs', 'OP', 'Clichê', 'Data Inicio', 'Hora inicio', 'Data Final', 'Hora final'];
+
+function criaTabelaApontarBobinas(indiceMaquina) {
+    var listaProg = [];
+    let tabela = document.createElement('table');
+    let headTabela = document.createElement('thead');
+    let bodyTabela = document.createElement('tbody');
+    let trTabela = document.createElement('tr');
+    let local = document.querySelector("#tabelaProgramacao-apontar-bobina");
+
+
+    for (let i = 0; i < listaTabApontarBobinas.length; i++) {
+        let texto = document.createTextNode(listaTabApontarBobinas[i]);
+        let t = document.createElement('th');
+        t.appendChild(texto);
+        trTabela.appendChild(t);
+        headTabela.appendChild(trTabela);
+    }
+
+    for (let i = 0; i < maquinasProg[indiceMaquina].length; i++) {
+        let tr = document.createElement('tr');
+        let th = document.createElement("th");
+        let botao = document.createElement('button');
+        botao.id = 'botao' + maquinasProg[indiceMaquina][i];
+        botao.name = botao.id
+        botao.textContent = `Posi: ${[i +1]}`;
+        botao.value = maquinasProg[indiceMaquina][i];
+        botao.onclick = () => alert(maquinasProg[indiceMaquina][i].op);
+        th.appendChild(botao);
+        tr.appendChild(th)
+        bodyTabela.appendChild(tr);
+    }
+
+        for (let i = 0; i < maquinasProg[indiceMaquina].length; i++) {
+            listaProg.push({
+                material: maquinasProg[indiceMaquina][i].material,
+                pigmento: maquinasProg[indiceMaquina][i].pigmento,
+                espessura: maquinasProg[indiceMaquina][i].espessura,
+                largura: maquinasProg[indiceMaquina][i].largura,
+                comprimento: maquinasProg[indiceMaquina][i].comprimento,
+                tipoBobina: maquinasProg[indiceMaquina][i].tipoBobina,
+                solda: maquinasProg[indiceMaquina][i].solda,
+                op: maquinasProg[indiceMaquina][i].op,
+                cliche: maquinasProg[indiceMaquina][i].cliche,
+                dtI: maquinasProg[indiceMaquina][i].dtI,
+                hrI: maquinasProg[indiceMaquina][i].hrI,
+                dtF: maquinasProg[indiceMaquina][i].dtF,
+                hrF: maquinasProg[indiceMaquina][i].hrF
+            });
+        }
+        console.log(listaProg);
+
+    tabela.className = 'TabelaProg-x'
+    tabela.appendChild(headTabela);
+    tabela.appendChild(bodyTabela);
+    local.appendChild(tabela);
+}
+
+/* 
+for (let i in listaProg) {
+let tr = document.createElement('tr');
+let ops = [
+    listaProg[i][0], listaProg[i][1], listaProg[i][2], listaProg[i][3], listaProg[i][4], listaProg[i][5]
+   , listaProg[i][6], listaProg[i][7], listaProg[i][8], listaProg[i][9], listaProg[i][10], listaProg[i][11]
+   , listaProg[i][12], listaProg[i][13], listaProg[i][14], listaProg[i][15]
+];
+
+for (let i in ops) {
+    let t = document.createElement('th');
+    t.className = (ops[i]);
+    if (ops[i] === undefined) {
+        t.appendChild(document.createTextNode('Vázio'));
+        tr.appendChild(t);
+    } else {
+        t.appendChild(document.createTextNode(ops[i]));
+        tr.appendChild(t);
+        bodyTabela.appendChild(tr);
+    } 
+}  */
