@@ -229,10 +229,10 @@ form input, form label, form button {
   }
 
   #sobe2 {
-    margin-top: -70%;
+    margin-top: -1050px;
   }
   #sobe3 {
-    margin-top: -28%;
+    margin-top: -450px;
   }
   .programacao {
     display: block;
@@ -401,6 +401,10 @@ form input, form label, form button {
   }
 
   .bobinas {
+    border-radius: 10px;
+    padding: 0px 20px 20px;
+    position: relative;
+    width: 95%;
     background-color: white;
   }
 
@@ -439,8 +443,8 @@ form input, form label, form button {
     position: relative;
     margin-left: auto;
     margin-right: auto;
-    background-color: darkgray;
-    width: 78%;
+    background-color: rgb(241, 241, 241);
+    width: 83%;
   }.criar-bobina p {
     border-radius: 4px;
     background-color: var(--primary-color);
@@ -589,12 +593,51 @@ form input, form label, form button {
   }
 
   .apontar-bobina {
+    border-style: solid;
     padding: 10px;
     border-radius: 20px;
-    position: relative;
+    position: absolute;
+    left: .5%;
+    top: 550px;
+    background-color: white;
+    width: 97%;
+    height: auto;
+  }.apontar-bobina select {
+    width: 200px;
+    height: 30px;
+  }.apontar-bobina button {
+    width: 80px;
+    height: 25px;
+  }.apontar-bobina button:hover {
+    cursor: pointer;
+    background-color: white;
+    color: var(--primary-color);
+  }.apontar-bobina h3 {
+    color: var(--primary-color);
+  }
+  
+ #tabelaProgramacao-apontar-bobina thead {
+    font-size: 10pt;
+    font-weight: 700;
+    background-color: var(--primary-color);
+    color: white;
+    border-width: 3px;
+    height: 40px;
+  }#tabelaProgramacao-apontar-bobina tbody {
+    border-width: 3px;
+    background-color: rgb(241, 241, 241);
+    font-size: 8pt;
+  }#tabelaProgramacao-apontar-bobina tr th {
+    border-color: var(--primary-color-darker);
+    line-height: 15px;
+    padding: 0 3px;
+    border-style: solid;
+    border-width: 1px;
+    text-align: center;
+    max-width: 500px;
+  }#tabelaProgramacao-apontar-bobina table {
+    margin-top: 20px;
     margin-left: auto;
-    margin-right: auto;
-    background-color: darkgray;
-    width: 90%;
-    height: 500px;
+    margin-right: auto; 
+    border-spacing: 0px;
   }
