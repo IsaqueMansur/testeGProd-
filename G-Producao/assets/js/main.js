@@ -404,6 +404,7 @@ function bobinas() {
     document.querySelector("#escopo").style.visibility = "hidden";
     document.querySelector(".criar-bobina").style.visibility = "hidden";
     document.querySelector(".apontar-bobina").style.visibility = "hidden";
+    document.querySelector(".molde-etiqueta").style.visibility = "hidden";
     document.querySelector(".apontar-bobina").id = 'sobe3';
 }
 
@@ -592,72 +593,72 @@ function criaTabelaApontarBobinas(indiceMaquina) {
     let trTabela = document.createElement('tr');
     let local = document.querySelector("#tabelaProgramacao-apontar-bobina");
 
-
     for (let i = 0; i < listaTabApontarBobinas.length; i++) {
         let texto = document.createTextNode(listaTabApontarBobinas[i]);
         let t = document.createElement('th');
         t.appendChild(texto);
         trTabela.appendChild(t);
         headTabela.appendChild(trTabela);
-    }
+    }  
 
-    for (let i = 0; i < maquinasProg[indiceMaquina].length; i++) {
-        let tr = document.createElement('tr');
+    for (let i = 0; i < maquinasProg[indiceMaquina].length; i++) { 
+        var tr = document.createElement('tr');  
         let th = document.createElement("th");
-        let botao = document.createElement('button');
+        let botao = document.createElement('button')
         botao.id = 'botao' + maquinasProg[indiceMaquina][i];
         botao.name = botao.id
         botao.textContent = `Posi: ${[i +1]}`;
         botao.value = maquinasProg[indiceMaquina][i];
         botao.onclick = () => alert(maquinasProg[indiceMaquina][i].op);
         th.appendChild(botao);
-        tr.appendChild(th)
-        bodyTabela.appendChild(tr);
-    }
+        tr.appendChild(th);
 
-        for (let i = 0; i < maquinasProg[indiceMaquina].length; i++) {
-            listaProg.push({
-                material: maquinasProg[indiceMaquina][i].material,
-                pigmento: maquinasProg[indiceMaquina][i].pigmento,
-                espessura: maquinasProg[indiceMaquina][i].espessura,
-                largura: maquinasProg[indiceMaquina][i].largura,
-                comprimento: maquinasProg[indiceMaquina][i].comprimento,
-                tipoBobina: maquinasProg[indiceMaquina][i].tipoBobina,
-                solda: maquinasProg[indiceMaquina][i].solda,
-                op: maquinasProg[indiceMaquina][i].op,
-                cliche: maquinasProg[indiceMaquina][i].cliche,
-                dtI: maquinasProg[indiceMaquina][i].dtI,
-                hrI: maquinasProg[indiceMaquina][i].hrI,
-                dtF: maquinasProg[indiceMaquina][i].dtF,
-                hrF: maquinasProg[indiceMaquina][i].hrF
-            });
+        listaProg.push({
+            material: maquinasProg[indiceMaquina][i].material,
+            pigmento: maquinasProg[indiceMaquina][i].pigmento,
+            espessura: maquinasProg[indiceMaquina][i].espessura,
+            largura: maquinasProg[indiceMaquina][i].largura,
+            comprimento: maquinasProg[indiceMaquina][i].comprimento,
+            tipoBobina: maquinasProg[indiceMaquina][i].tipoBobina,
+            solda: maquinasProg[indiceMaquina][i].solda,
+            pesoImp: maquinasProg[indiceMaquina][i].pesoImp,
+            op: maquinasProg[indiceMaquina][i].op,
+            cliche: maquinasProg[indiceMaquina][i].cliche,
+            dtI: maquinasProg[indiceMaquina][i].dtI,
+            hrI: maquinasProg[indiceMaquina][i].hrI,
+            dtF: maquinasProg[indiceMaquina][i].dtF,
+            hrF: maquinasProg[indiceMaquina][i].hrF
+        });
+
+        for(let i in listaProg) {
+            let ops = [
+                listaProg[i].material, 
+                listaProg[i].pigmento, 
+                listaProg[i].espessura,
+                listaProg[i].largura,
+                listaProg[i].comprimento,
+                listaProg[i].tipoBobina,
+                listaProg[i].solda,
+                listaProg[i].pesoImp,
+                listaProg[i].op,
+                listaProg[i].cliche,
+                listaProg[i].dtI,
+                listaProg[i].hrI,
+                listaProg[i].dtF,
+                listaProg[i].hrF
+            ];
+
+            for (let i = 0; i < ops.length; i++) {
+                let td = document.createElement("th");
+                td.appendChild(document.createTextNode(ops[i]));
+                tr.appendChild(td)
+                bodyTabela.appendChild(tr);                  
+            } 
+            listaProg = [];
         }
-        console.log(listaProg);
-
+    }            
     tabela.className = 'TabelaProg-x'
     tabela.appendChild(headTabela);
     tabela.appendChild(bodyTabela);
     local.appendChild(tabela);
 }
-
-/* 
-for (let i in listaProg) {
-let tr = document.createElement('tr');
-let ops = [
-    listaProg[i][0], listaProg[i][1], listaProg[i][2], listaProg[i][3], listaProg[i][4], listaProg[i][5]
-   , listaProg[i][6], listaProg[i][7], listaProg[i][8], listaProg[i][9], listaProg[i][10], listaProg[i][11]
-   , listaProg[i][12], listaProg[i][13], listaProg[i][14], listaProg[i][15]
-];
-
-for (let i in ops) {
-    let t = document.createElement('th');
-    t.className = (ops[i]);
-    if (ops[i] === undefined) {
-        t.appendChild(document.createTextNode('Vázio'));
-        tr.appendChild(t);
-    } else {
-        t.appendChild(document.createTextNode(ops[i]));
-        tr.appendChild(t);
-        bodyTabela.appendChild(tr);
-    } 
-}  */
