@@ -7,6 +7,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap');
 
 .branco {
+  font-size: 7pt;
   border-radius: 30%;
   color: black;
   background-color: white;
@@ -15,6 +16,7 @@
   border-width: .5px;
 }
 .amarelo {
+  font-size: 7pt;
   border-radius: 30%;
   color: black;
   background-color: yellow;
@@ -23,6 +25,7 @@
   border-width: .5px;
 }
 .magenta {
+  font-size: 7pt;
   border-radius: 30%;
   color: black;
   background-color: fuchsia;
@@ -31,6 +34,7 @@
   border-width: .5px;
 } 
 .cyan {
+  font-size: 7pt;
   border-radius: 30%;
   color: black;
   background-color: cyan;
@@ -39,6 +43,7 @@
   border-width: .5px;
 }
 .preto {
+  font-size: 7pt;
   border-radius: 30%;
   color: white;
   background-color: black;
@@ -47,6 +52,7 @@
   border-width: .5px;
 }
 .p485 {
+  font-size: 7pt;
   border-radius: 30%;
   color: black;
   background-color: red;
@@ -56,6 +62,7 @@
 }
 
 .p355 {
+  font-size: 7pt;
   border-radius: 30%;
   color: black;
   background-color: rgb(2, 146, 26);
@@ -64,9 +71,19 @@
   border-width: .5px;
 }
 .p871 {
+  font-size: 7pt;
   border-radius: 30%;
   color: black;
   background-color: rgb(136, 138, 17);
+  border:black;
+  border-style: solid;
+  border-width: .5px;
+}
+.p021 {
+  font-size: 7pt;
+  border-radius: 30%;
+  color: black;
+  background-color: rgb(255, 136, 0);
   border:black;
   border-style: solid;
   border-width: .5px;
@@ -220,12 +237,14 @@ form input, form label, form button {
     margin-right: auto;
     border-radius: 10px;
     width: 100%;
-    background: white; 
+    background: white;
+    height: 840px;
+    max-height: 840px;
   }
   #sobe1 {
     margin-top: -16%;
   } #desce1 {
-    margin-top: 16%;
+    margin-top: 2%;
   }
 
   #sobe2 {
@@ -321,13 +340,31 @@ form input, form label, form button {
     background-color: var(--primary-color-darker);
   }
 
+  .nomeServicoDiv {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    width: 95%;
+    border-radius: 10px 0px 0px 10px;
+    background-color: white;
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgb(143, 143, 143);
+    text-align: left;
+    font-size: 10pt;
+    line-height: 25px;
+    overflow-y: scroll;
+    height: 50px;
+  }
   .nomeServico {
+    padding: 0 8px;
     cursor: default;
-    background-color: var(--primary-color);
+    background-color: darkgray;
     color: white;
     border-radius: 5px;
+    color: black;
   } .nomeServico:hover {
-    background-color: white;
+    background-color: rgb(209, 209, 209);
     color: var(--primary-color);
   }
 
@@ -366,15 +403,26 @@ form input, form label, form button {
       background-color: var(--primary-color);
     }
 
+    .tbOverflow {
+      position: relative;
+      display: table-cell;
+    }
+
   #tabelaProgramacao {
+    display: block;
+    height: 680px;
+    overflow-y: scroll;
     background-color: rgb(241, 241, 241);
     position: relative;
     left: 20px;
-    display: table-cell;
+    line-height: 500px;
     font-size: 8pt;
     border-style: solid;
-    border-width: 1px;
+    border-width: 3px;
+    border-color: black;
+    border-radius: 7px;
   } #tabelaProgramacao table {
+    padding: 5px;
     border-spacing: 0px;
   } #tabelaProgramacao thead {
     font-size: 10pt;
@@ -383,7 +431,11 @@ form input, form label, form button {
     color: white;
     border-width: 3px;
     height: 40px;
-  } #tabelaProgramacao tr th {
+  } #tabelaProgramacao thead th {
+    border-style: solid;
+    border-color: var(--primary-color-darker);
+  }
+  #tabelaProgramacao tr th {
     line-height: 15px;
     padding: 0 3px;
     border-style: solid;
@@ -439,6 +491,8 @@ form input, form label, form button {
   }
 
   .criar-bobina {
+    border-style: solid;
+    border-width: 3px;
     border-radius: 10px;
     position: relative;
     margin-left: auto;
@@ -514,6 +568,8 @@ form input, form label, form button {
   }
 
   .molde-etiqueta {
+    border-style: solid;
+    border-width: 3px;
     padding: 5px 5px;
     display: block;
     position: relative;
@@ -601,7 +657,8 @@ form input, form label, form button {
     top: 550px;
     background-color: white;
     width: 97%;
-    height: auto;
+    height: 600px;
+    max-height: 600px;
   }.apontar-bobina select {
     width: 200px;
     height: 30px;
@@ -614,6 +671,11 @@ form input, form label, form button {
     color: var(--primary-color);
   }.apontar-bobina h3 {
     color: var(--primary-color);
+  }
+
+  .tabelaProgApontarOverflow {
+    max-height: 550px;
+    overflow-y: scroll;
   }
   
  #tabelaProgramacao-apontar-bobina thead {
@@ -641,3 +703,40 @@ form input, form label, form button {
     margin-right: auto; 
     border-spacing: 0px;
   }
+
+  .apontar-selecionado {
+    width: 90%;
+    border-style: solid;
+    border-width: 3px;
+    position: absolute;
+    background-color: darkgreen;
+    margin-top: -460px;
+  }
+
+  .apontar {
+    background-color: darkgray;
+    width: 100%;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+}.apontar div {
+    display: table-cell;
+}.apontar-bobina-aba {
+  position: relative;
+  left: 100px;
+}.tabela-apontar-bobinas-selecionado {
+  position: relative;
+  left: 200px;
+}.molde-etiqueta-apontar {
+  border-style: solid;
+  border-width: 3px;
+  padding: 5px 5px;
+  display: block;
+  position: relative;
+  margin-right: auto;
+  margin-left: auto;
+  background-color: white;
+  border-radius: 15px;
+  width: 300px;
+  height: 150px;
+}
