@@ -76,7 +76,9 @@
                         <button onclick="confirmaOp(ops)">Ok</button>
                     </div>
                     <div>
-                        <p2 class="nomeServico">Clichê:</p2>
+                        <div class="nomeServicoDiv">
+                            <p2 class="nomeServico">Clichê:</p2>
+                        </div>
                     </div>
                 </div>
 
@@ -110,7 +112,9 @@
                 </div>  
             </div>
 
-            <div id="tabelaProgramacao"></div> 
+            <section class="tbOverflow">
+                <div id="tabelaProgramacao"></div> 
+            </section>
 
         </section>
            
@@ -204,8 +208,45 @@
             </select>
             <button onclick="nomeMaquinaBobina()">Ok</button>
 
-            <div id="tabelaProgramacao-apontar-bobina"></div> 
+
+            <div class="tabelaProgApontarOverflow">
+                <div id="tabelaProgramacao-apontar-bobina"></div> 
+            </div>
+
         </section> <!-- apontar bobinas -->
+
+        <section class="apontar-selecionado">
+                <section class="apontar">
+                    <div class="fixos-apontar-bobina">
+                        <p>O.P.: 300001</p>
+                        <p>Material: Nylon Poli</p>
+                        <p>Pigmento: Natural</p>
+                        <p>Largura: 560mm</p>
+                        <p>Comprimento: 220mm</p>
+                        <p>Espessura: 0.11mm</p>
+                        <p>Peso à separar: 220 Kg's</p>
+                    </div>
+                    <div class="apontar-bobina-aba">
+                        <p>Bobina:<input type="number" id="apontou"><button onclick="visualizarEtiquetaApontada()">Visualizar</button></p>
+            
+                        <div class="molde-etiqueta-apontar">
+                            <div class="informacoes-molde-direito-apontar"></div>
+                            
+                            <div class="informacoes-molde-esquerdo-apontar">
+                                <div class="qrCode-apontar"></div>
+                                <div class="informacoes-molde-esquerdo-qr-apontar">
+                                    <svg id="codBarras-apontar"></svg> 
+                                </div>
+                            </div>
+                        </div>
+            
+                        <button id="botao-confirmacao-apontamento" onclick="confirmarApontamento()">Apontar</button>
+                    </div>
+                    <div class="tabela-apontar-bobinas-selecionado">
+                        <p>teaaaaaaaaaaaaaaaaaaaaaaste</p>
+                    </div>
+                </section>
+        </section>
 
     </section> <!-- bobinas -->
     
