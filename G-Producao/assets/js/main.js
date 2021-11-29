@@ -11,21 +11,38 @@ const soldas = ['Fundo', 'Lateral']
 
 const ops = [{
     op: 300001, 
-    nomeServico: 'MUSSARELA MUSSARELA MUSSARELA MUSSARELA MUSSARELA MUSSARELA', 
-    material: materiais[2],
+    nomeServico: 'QUEIJO TIPO COALHO TESTE 1KG', 
+    material: materiais[0],
     pigmento: 'Natural',
-    espessura: 0.09, 
-    tipoBobina: folhaOuTubular[0], 
-    pesoImpresso: 200,
-    largura: 740, 
-    comprimento: 180, 
-    tipoSolda: soldas[1], 
-    quantidadeEmMilheiros: 5, 
-    metros: 648000, 
-    pistas: 2, imagens: 
-    3, 
-    cilindro: 54,
-    cores: ['branco', 'amarelo', 'magenta', 'cyan', 'p485', 'preto']},
+    espessura: 0.11, 
+    tipoBobina: folhaOuTubular[1], 
+    pesoImpresso: 320,
+    largura: 160, 
+    comprimento: 240, 
+    tipoSolda: soldas[0], 
+    quantidadeEmMilheiros: 40, 
+    metros: 10560, 
+    pistas: 1, 
+    imagens: 2, 
+    cilindro: 480,
+    cores: ['branco', 'amarelo', 'magenta', 'cyan', 'p485', 'p355', , 'preto']},
+    {
+        op: 300002, 
+        nomeServico: 'QUEIJO MUSSARELA TESTE 4KG', 
+        material: materiais[1],
+        pigmento: 'Natural',
+        espessura: 0.09, 
+        tipoBobina: folhaOuTubular[1], 
+        pesoImpresso: 350,
+        largura: 240, 
+        comprimento: 460, 
+        tipoSolda: soldas[0], 
+        quantidadeEmMilheiros: 30, 
+        metros: 15800, 
+        pistas: 1, 
+        imagens: 1, 
+        cilindro: 460,
+        cores: ['branco', 'amarelo', 'magenta', 'cyan', 'p485', , 'p021' , 'preto']},
 ];
 
 document.querySelector(".container-tela-inicial").style.visibility = "hidden";
@@ -90,6 +107,7 @@ const escopo = document.querySelector('#escopo');
 escopo.addEventListener('submit', function(e){
     e.preventDefault();
     });
+    
 function escopoPrincipal(usuario, indexUsuario) {
     document.querySelector("#escopo").style.visibility = "visible";
     document.querySelector("#nomeUsuario").textContent = `Usuário: ${usuario}`;
@@ -321,6 +339,7 @@ function programarOp(ops) {
         for (var o = 0; o < maquinasProg[i].length; o++) {
             listaOps.push(maquinasProg[i][o]);
         }
+        bobinasApontadas.push({op: op.op, bobinas: []})
         criaTabela(listaTab, listaOps)
     }
 }
@@ -398,6 +417,7 @@ function criaTabela(listaTab, listaOps) {
 //Bobinas
 
 function bobinas() {
+    document.querySelector(".programacao").id = "desce1";
     document.querySelector(".bobinas").style.visibility = "visible";
     document.querySelector(".bobinas").id = "sobe2";
     document.querySelector(".container-tela-inicial").style.visibility = 'hidden';
@@ -609,7 +629,7 @@ function criaTabelaApontarBobinas(indiceMaquina) {
         botao.name = botao.id
         botao.textContent = `Posi: ${[i +1]}`;
         botao.value = maquinasProg[indiceMaquina][i];
-        botao.onclick = () => alert(maquinasProg[indiceMaquina][i].op);
+        botao.onclick = () => abc(maquinasProg[indiceMaquina][i].op);
         th.appendChild(botao);
         tr.appendChild(th);
 
@@ -661,4 +681,14 @@ function criaTabelaApontarBobinas(indiceMaquina) {
     tabela.appendChild(headTabela);
     tabela.appendChild(bodyTabela);
     local.appendChild(tabela);
+}
+
+const bobinasApontadas = [];
+
+function abc(op) {
+    const achaOp = bobinasApontadas.findIndex((ordem) => ordem.op == op);
+    
+
+
+    bobinasApontadas[achaOp].bobinas.push();
 }
