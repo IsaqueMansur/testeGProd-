@@ -217,33 +217,47 @@
 
         <section class="apontar-selecionado">
                 <section class="apontar">
-                    <div class="fixos-apontar-bobina">
-                        <p>O.P.: 300001</p>
-                        <p>Material: Nylon Poli</p>
-                        <p>Pigmento: Natural</p>
-                        <p>Largura: 560mm</p>
-                        <p>Comprimento: 220mm</p>
-                        <p>Espessura: 0.11mm</p>
-                        <p>Peso à separar: 220 Kg's</p>
-                    </div>
+                    <div class="fixos-apontar-bobina"></div>
                     <div class="apontar-bobina-aba">
-                        <p>Bobina:<input type="number" id="apontou"><button onclick="visualizarEtiquetaApontada()">Visualizar</button></p>
-            
-                        <div class="molde-etiqueta-apontar">
-                            <div class="informacoes-molde-direito-apontar"></div>
-                            
+                        <p>
+                            <p>Volumes: <input type="number" id="volumes"></p>
+                            <p>Bobina:<input type="number" id="apontou"></p>
+                            <p>Peso U.: <input type="number" id="pesoUtilizado"><button onclick="visualizarEtiquetaApontada()">Visualizar</button></p>
+                        </p>
+
+                        <div class="separarInfosApontamento">
+
+                            <div class="molde-etiqueta-apontar">
+                                <p id="cliche-apontar-selecioado"></p>
+                                <p id="volume-apontar-selecioado"></p>
+                                <p id="op-apontar-selecioado"></p>       
+                                <p id="material-apontar-selecioado"></p>
+                                <p id="largura-apontar-selecioado"></p>
+                                <p id="espessura-apontar-selecioado"></p>
+                                <p id="pigmento-apontar-selecioado"></p>
+                                <p id="tipo-apontar-selecioado"></p>
+                                <p id="pesoBobina-apontar-selecioado"></p>
+                                <p id="pesoSeparado-apontar-selecioado"></p>
+                                <svg id="codBarras-apontar"></svg>                       
+                            <div class="informacoes-molde-direito-apontar"> 
+                            </div>
+                       
                             <div class="informacoes-molde-esquerdo-apontar">
                                 <div class="qrCode-apontar"></div>
                                 <div class="informacoes-molde-esquerdo-qr-apontar">
-                                    <svg id="codBarras-apontar"></svg> 
                                 </div>
                             </div>
+                            </div>
                         </div>
-            
-                        <button id="botao-confirmacao-apontamento" onclick="confirmarApontamento()">Apontar</button>
+                        <button id="botao-confirmacao-apontamento" onclick="confirmarApontamento(op)">Apontar</button>
+                         
+                        
                     </div>
                     <div class="tabela-apontar-bobinas-selecionado">
-                        <p>teaaaaaaaaaaaaaaaaaaaaaaste</p>
+                        <p>teste</p>
+                        <p>teste</p>
+                        <p>teste</p>
+                        <button class="fechar-apontar-selecionado" onclick="fecharApontarSelecionado()">Fechar</button>
                     </div>
                 </section>
         </section>
@@ -254,6 +268,6 @@
     <script src="./assets/js/moment.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment-with-locales.min.js"></script>
     <script src="https://cdn.jsdelivr.net/jsbarcode/3.6.0/JsBarcode.all.min.js"></script>
-    <script src="./assets/js/main.js "></script>
+    <script src="./assets/js/main teste.js "></script>
 </body>
 </html>
