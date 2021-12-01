@@ -200,6 +200,9 @@ function confirmaOp(ops, alterarMetros) {
         let anoI = dataI.getFullYear();
         let mesI = dataI.getMonth() + 1;
         let diaI = dataI.getDate();
+        let zero = '0';
+        let pegaDiaI = diaI;
+        if (diaI < 10) diaI = (zero + pegaDiaI);
         let dataOkI = `${anoI}-${mesI}-${diaI}`;
         document.querySelector("#data-inicio-op").value = dataOkI;
 
@@ -305,6 +308,7 @@ function programarOp(ops) {
         let opProgramada = {
             op: op.op, 
             pesoImp: op.pesoImpresso,
+            pesoSeparado : 0,
             cliche: op.nomeServico,
             material: op.material,
             pigmento: op.pigmento,
@@ -324,7 +328,8 @@ function programarOp(ops) {
             dtF: dataF, 
             hrF: horaF, 
             comprimento: op.comprimento, 
-            largura: op.largura
+            largura: op.largura,
+            bobinas: [],
         };
    
     
@@ -339,7 +344,7 @@ function programarOp(ops) {
         for (var o = 0; o < maquinasProg[i].length; o++) {
             listaOps.push(maquinasProg[i][o]);
         }
-        bobinasApontadas.push({op: op.op, bobinas: []})
+        bobinasApontadas.push({op: op.op, bobinas: [], separado: 0})
         criaTabela(listaTab, listaOps)
     }
 }
@@ -417,6 +422,7 @@ function criaTabela(listaTab, listaOps) {
 //Bobinas
 
 function bobinas() {
+    document.querySelector(".apontar-selecionado").style.visibility = "hidden";
     document.querySelector(".programacao").id = "desce1";
     document.querySelector(".bobinas").style.visibility = "visible";
     document.querySelector(".bobinas").id = "sobe2";
@@ -563,8 +569,10 @@ function confirmaCriacaoBobina(listaBobinas) {
         pigmento: pigmentoCriado , 
         pesoBruto: pesoBrutoCriado, 
         pesoTubete: pesoTubeteCriado, 
-        pesoLiquido: (pesoLiquidoCriado), 
-        codigo: codigoCriado
+        pesoLiquido: pesoLiquidoCriado, 
+        codigo: codigoCriado,
+        disponivel: pesoLiquidoCriado,
+        usadaPor: []
     };
 
     listaBobinas.push(bobinaCriada)
@@ -629,7 +637,7 @@ function criaTabelaApontarBobinas(indiceMaquina) {
         botao.name = botao.id
         botao.textContent = `Posi: ${[i +1]}`;
         botao.value = maquinasProg[indiceMaquina][i];
-        botao.onclick = () => abc(maquinasProg[indiceMaquina][i].op);
+        botao.onclick = () => abrirApontamento(maquinasProg[indiceMaquina][i].op);
         th.appendChild(botao);
         tr.appendChild(th);
 
@@ -685,10 +693,67 @@ function criaTabelaApontarBobinas(indiceMaquina) {
 
 const bobinasApontadas = [];
 
-function abc(op) {
-    const achaOp = bobinasApontadas.findIndex((ordem) => ordem.op == op);
+function abrirApontamento(op) {
+    document.querySelector(".bobinas").style.visibility = "hidden";
+    document.querySelector(".apontar-bobina").style.visibility = "hidden";
+    document.querySelector(".apontar-selecionado").style.visibility = "visible";
+    let indexMaquina;
+    let maquinaSelecionada = document.querySelector("#maquina-apontar-bobina").value;
+    if (maquinaSelecionada === 'IMP-01') indexMaquina = 0;
+    if (maquinaSelecionada === 'IMP-02') indexMaquina = 1;
+    if (maquinaSelecionada === 'IMP-03') indexMaquina = 2;
+
+    const achaOp = (maquinasProg[indexMaquina]).find((ordem) => ordem.op == op);
     
+    let listaPush = [
+        ('Clichê: ' + achaOp.cliche),
+        ('O.P.: ' + achaOp.op), 
+        ('Material: ' + achaOp.material), 
+        ('Pigmento: ' + achaOp.pigmento),
+        ('Solda: ' + achaOp.solda), 
+        ('Largura: ' + achaOp.largura + 'mm'),
+        ('Comprimento: ' + achaOp.comprimento + 'mm'), 
+        ('Espessura: ' + achaOp.espessura + 'mm'),
+        ('Tipo: ' + achaOp.tipoBobina), 
+        ('Peso a separar: ' + achaOp.pesoImp + "Kg's")
+    ];
 
+    let local = document.querySelector(".fixos-apontar-bobina");
 
-    bobinasApontadas[achaOp].bobinas.push();
+    for (let i in listaPush) {
+        let p = document.createElement("p");
+        let puxar = document.createTextNode(listaPush[i]);
+        p.appendChild(puxar)
+        local.appendChild(p);
+    }
+
 }
+
+function visualizarEtiquetaApontada() {
+    let volumeDigitado = document.querySelector("#volumes").value;
+    let bobinaDigitada = document.querySelector("#apontou").value
+    let bobina = listaBobinas.findIndex((bob) => bob.codigo == bobinaDigitada);
+    if (bobina === -1 || ! Number) {
+        alert("Bobina inexistente !!!");
+        return;
+    }else {
+        console.log(listaBobinas[bobina]);
+    }
+
+
+}
+
+function confirmarApontamento(op) {
+    const achaOp = bobinasApontadas.findIndex((ordem) => ordem.op == op);
+    let bobinaApontada = Number(document.querySelector("#apontou").value);
+    bobinasApontadas[achaOp].bobinas.push(bobinaApontada);
+}
+
+function fecharApontarSelecionado() {
+    document.querySelector(".bobinas").style.visibility = "visible";
+    document.querySelector(".apontar-bobina").style.visibility = "visible";
+    document.querySelector(".apontar-selecionado").style.visibility = "hidden";
+    document.querySelector(".fixos-apontar-bobina").textContent = null;
+}
+
+JsBarcode('#codBarras-apontar', 100000000001);
