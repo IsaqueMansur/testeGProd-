@@ -1,3 +1,6 @@
+google.load("visualization", "1", { packages: ["corechart"] });
+
+
 const usuarios = [
     {usuario: 'adm', senha:'123'},
     {usuario: 'teste teste teste', senha: '123'}
@@ -344,7 +347,6 @@ function programarOp(ops) {
         for (var o = 0; o < maquinasProg[i].length; o++) {
             listaOps.push(maquinasProg[i][o]);
         }
-        bobinasApontadas.push({op: op.op, bobinas: [], separado: 0})
         criaTabela(listaTab, listaOps)
     }
 }
@@ -524,6 +526,7 @@ function visualizarBob() {
             let pesoTubeteN = document.querySelector("#selecionaTubete").value;
             let pesoLiquidoN = document.querySelector(".peso-liquido-bobina-criada-valor").textContent;
             let codigoN = document.querySelector(".codigo-bobina-criada").textContent;
+            let tipoN = document.querySelector("#folhaOuTubular").value;
 
             let p2 = document.createElement('p2');
             p2.className = 'materialExibidoCriacaoBobina';
@@ -532,6 +535,7 @@ function visualizarBob() {
 
             listaMostrarEtiqueta = [
                 document.createTextNode(`Código: ${codigoN}`), 
+                document.createTextNode(`Tipo: ${tipoN}`),
                 document.createTextNode(`Largura: ${larguraN}mm`), 
                 document.createTextNode(`Espessura: ${espessuraN}mm`),
                 document.createTextNode(`Pigmento: ${pigmentoN}`), 
@@ -554,6 +558,7 @@ function visualizarBob() {
 
 function confirmaCriacaoBobina(listaBobinas) {
     let materialCriado = document.querySelector("#tipoMaterialBobina").value;
+    let tipoCriado = document.querySelector("#folhaOuTubular").value;
     let larguraCriada = Number(document.querySelector("#selecionaLarguraBobina").value);
     let espessuraCriada = Number(document.querySelector("#selecionaEspessuraBobina").value);
     let pigmentoCriado = document.querySelector("#pigmentoMaterialBobina").value;
@@ -563,7 +568,8 @@ function confirmaCriacaoBobina(listaBobinas) {
     let codigoCriado = Number(document.querySelector(".codigo-bobina-criada").textContent);
 
     let bobinaCriada = {
-        material: materialCriado, 
+        material: materialCriado,
+        tipo: tipoCriado, 
         largura: larguraCriada,
         espessura: espessuraCriada, 
         pigmento: pigmentoCriado , 
@@ -691,19 +697,21 @@ function criaTabelaApontarBobinas(indiceMaquina) {
     local.appendChild(tabela);
 }
 
-const bobinasApontadas = [];
+let achaOp;
+let indexMaquina;
 
 function abrirApontamento(op) {
+    document.querySelector(".molde-etiqueta-apontar").style.visibility = "hidden";
     document.querySelector(".bobinas").style.visibility = "hidden";
     document.querySelector(".apontar-bobina").style.visibility = "hidden";
     document.querySelector(".apontar-selecionado").style.visibility = "visible";
-    let indexMaquina;
     let maquinaSelecionada = document.querySelector("#maquina-apontar-bobina").value;
     if (maquinaSelecionada === 'IMP-01') indexMaquina = 0;
     if (maquinaSelecionada === 'IMP-02') indexMaquina = 1;
     if (maquinaSelecionada === 'IMP-03') indexMaquina = 2;
 
-    const achaOp = (maquinasProg[indexMaquina]).find((ordem) => ordem.op == op);
+    achaOp = (maquinasProg[indexMaquina]).find((ordem) => ordem.op == op);
+    indexOp = (maquinasProg[indexMaquina]).findIndex((ordem) => ordem.op == achaOp.op);
     
     let listaPush = [
         ('Clichê: ' + achaOp.cliche),
@@ -726,27 +734,79 @@ function abrirApontamento(op) {
         p.appendChild(puxar)
         local.appendChild(p);
     }
-
+    desenharGraficoApontamento(
+        (maquinasProg[indexMaquina][indexOp].pesoImp), 
+        (maquinasProg[indexMaquina][indexOp].pesoSeparado),
+        ((maquinasProg[indexMaquina][indexOp].pesoImp) - (maquinasProg[indexMaquina][indexOp].pesoSeparado))
+        );
 }
 
+let volumeDigitado;
+let bobinaDigitada;
+let usarDigitado;
+let indexOp;
+
 function visualizarEtiquetaApontada() {
-    let volumeDigitado = document.querySelector("#volumes").value;
-    let bobinaDigitada = document.querySelector("#apontou").value
-    let bobina = listaBobinas.findIndex((bob) => bob.codigo == bobinaDigitada);
-    if (bobina === -1 || ! Number) {
+
+    document.querySelector(".molde-etiqueta-apontar").style.visibility = "visible";
+    
+    volumeDigitado = Number(document.querySelector("#volumes").value);
+    bobinaDigitada = Number(document.querySelector("#apontou").value);
+    usarDigitado = Number(document.querySelector("#pesoUtilizado").value);
+    let indexBobina = listaBobinas.findIndex((bob) => bob.codigo == bobinaDigitada);
+    if (indexBobina === -1 || ! Number) {
         alert("Bobina inexistente !!!");
         return;
     }else {
-        console.log(listaBobinas[bobina]);
+        maquinasProg[indexMaquina][indexOp].bobinas.push('v');
+        document.querySelector("#cliche-apontar-selecioado").textContent = achaOp.cliche;
+        document.querySelector("#op-apontar-selecioado").textContent = achaOp.op;
+        document.querySelector("#material-apontar-selecioado").textContent = listaBobinas[indexBobina].material;
+        document.querySelector("#largura-apontar-selecioado").textContent = `L.: ${listaBobinas[indexBobina].largura}`;
+        document.querySelector("#espessura-apontar-selecioado").textContent = `E.: ${listaBobinas[indexBobina].espessura}`;
+        document.querySelector("#pigmento-apontar-selecioado").textContent = `Pigmento: ${listaBobinas[indexBobina].pigmento}`;
+        document.querySelector("#tipo-apontar-selecioado").textContent = `Bob. tipo: ${listaBobinas[indexBobina].tipo}`;
+        document.querySelector("#pesoBobina-apontar-selecioado").textContent = `Peso bobina: ${listaBobinas[indexBobina].pesoLiquido} Kg's`;
+        document.querySelector("#pesoSeparado-apontar-selecioado").textContent = `Peso separado: ${usarDigitado} Kg's`;
+
+        
+        numeroBobinaAtual = maquinasProg[indexMaquina][indexOp].bobinas.length;
+        
+        let volumesOk = `VOL.: ${numeroBobinaAtual}/${volumeDigitado}`;
+
+        document.querySelector("#volume-apontar-selecioado").textContent = volumesOk;
+
+
+        JsBarcode('#codBarras-apontar', bobinaDigitada);
     }
 
 
 }
 
-function confirmarApontamento(op) {
-    const achaOp = bobinasApontadas.findIndex((ordem) => ordem.op == op);
+function confirmarApontamento() {  
+    document.querySelector(".molde-etiqueta-apontar").style.visibility = "hidden";
+    
+
+    for (let i of maquinasProg[indexMaquina][indexOp].bobinas) {
+        index = (maquinasProg[indexMaquina][indexOp].bobinas).findIndex((bob) => bob.bobinas == 'v');
+        maquinasProg[indexMaquina][indexOp].bobinas.pop(index);
+    }
     let bobinaApontada = Number(document.querySelector("#apontou").value);
-    bobinasApontadas[achaOp].bobinas.push(bobinaApontada);
+    maquinasProg[indexMaquina][indexOp].pesoSeparado += usarDigitado;
+    maquinasProg[indexMaquina][indexOp].bobinas.push(bobinaApontada);
+
+    desenharGraficoApontamento(
+        (maquinasProg[indexMaquina][indexOp].pesoImp), 
+        (maquinasProg[indexMaquina][indexOp].pesoSeparado),
+        ((maquinasProg[indexMaquina][indexOp].pesoImp) - (maquinasProg[indexMaquina][indexOp].pesoSeparado))
+        );
+
+    if (maquinasProg[indexMaquina][indexOp].bobinas.length === volumeDigitado) {
+        document.querySelector("#volumes").value = null;
+        alert("Todos os volumes separados !!!");
+    }
+    document.querySelector("#apontou").value = null;
+    document.querySelector("#pesoUtilizado").value = null;
 }
 
 function fecharApontarSelecionado() {
@@ -756,4 +816,59 @@ function fecharApontarSelecionado() {
     document.querySelector(".fixos-apontar-bobina").textContent = null;
 }
 
-JsBarcode('#codBarras-apontar', 100000000001);
+function desenharGraficoApontamento(solicitado, separado, faltam) {
+  let barData = google.visualization.arrayToDataTable([
+    ["status", "Solicitado", "Separado", "Faltam"],
+    ["Quilos", solicitado, separado, faltam]
+  ]);
+  // set bar chart options
+  var barOptions = {
+      focusTarget: "category",
+      backgroundColor: "transparent",
+      colors: ["rgb(47, 255, 116)", "rgb(35, 99, 62)", "red"],
+      fontName: 'Verdana',
+      chartArea: {
+      left: 50,
+      top: 10,
+      width: "90%",
+      height: "70%"
+    },
+    bar: {
+      groupWidth: "60%"
+    },
+    hAxis: {
+      textStyle: {
+      fontSize: 11
+      }
+    },
+    vAxis: {
+      minValue: 0,
+      maxValue: 0,
+      baselineColor: "rgb(35, 99, 62)",
+      gridlines: {
+      color: "rgb(107, 146, 197)",
+      count: 4
+      },
+      textStyle: {
+      fontSize: 11
+      }
+    },
+    legend: {
+      position: "bottom",
+      textStyle: {
+      fontSize: 12
+      }
+    },
+    animation: {
+      duration: 1200,
+      easing: "out",
+      startup: true
+    }
+  };
+  // draw bar chart twice so it animates
+  var barChart = new google.visualization.ColumnChart(
+    document.getElementById("grafico-apontamento")
+  );
+  //barChart.draw(barZeroData, barOptions);
+  barChart.draw(barData, barOptions);
+}
