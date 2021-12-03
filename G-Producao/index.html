@@ -140,14 +140,13 @@
                 <option>Prime C/B.</option>
                 <option>Pet</option>
             </select>
-            <div class="selecionaLargura">
-                <p>Largura:</p>
+            <div class="selecionaTipo">
+                <p>Tipo:</p>
             </div>
-            <input id="selecionaLarguraBobina" type="number">mm</input>
-            <div class="selecionaEspessura">
-                <p>Espessura:</p>
-            </div>
-            <input id="selecionaEspessuraBobina" type="number">mm</input>
+            <select id="folhaOuTubular">
+                <option>Folha</option>
+                <option>Tubular</option>
+            </select>
             <div class="selecionaPigmento">
                 <p>Pigmento:</p>
             </div>
@@ -158,6 +157,14 @@
                 <option>Laranja</option>
                 <option>Mate</option>
             </select> 
+            <div class="selecionaLargura">
+                <p>Largura:</p>
+            </div>
+            <input id="selecionaLarguraBobina" type="number">mm</input>
+            <div class="selecionaEspessura">
+                <p>Espessura:</p>
+            </div>
+            <input id="selecionaEspessuraBobina" type="number">mm</input>
             <div class="selecionaPesoBruto">
                 <p>Peso Bruto:</p>
             </div>
@@ -165,7 +172,7 @@
             <div class="selecionaTubete">
                 <p>Peso Tubete:</p>
             </div>
-            <input id="selecionaTubete" type="number">Kg's</input>  
+            <input id="selecionaTubete" type="number">Kg's</input>   
 
             <button class="visualizarBobinaCriada" onclick="visualizarBob()">Visualizar criação</button>
 
@@ -249,14 +256,12 @@
                             </div>
                             </div>
                         </div>
-                        <button id="botao-confirmacao-apontamento" onclick="confirmarApontamento(op)">Apontar</button>
+                        <button id="botao-confirmacao-apontamento" onclick="confirmarApontamento()">Apontar</button>
                          
                         
                     </div>
                     <div class="tabela-apontar-bobinas-selecionado">
-                        <p>teste</p>
-                        <p>teste</p>
-                        <p>teste</p>
+                        <div id="grafico-apontamento"></div>
                         <button class="fechar-apontar-selecionado" onclick="fecharApontarSelecionado()">Fechar</button>
                     </div>
                 </section>
@@ -268,6 +273,7 @@
     <script src="./assets/js/moment.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment-with-locales.min.js"></script>
     <script src="https://cdn.jsdelivr.net/jsbarcode/3.6.0/JsBarcode.all.min.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script src="./assets/js/main teste.js "></script>
 </body>
 </html>
