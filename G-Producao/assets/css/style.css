@@ -259,7 +259,7 @@ form input, form label, form button {
   }
 
   .programacao select, button {
-    border-radius: 10px;
+    border-radius: 6px;
     display: inline;
     margin: 0px 0px 10px .3%;
     background-color: var(--primary-color);
@@ -712,7 +712,6 @@ form input, form label, form button {
   .apontar-selecionado {
     border-radius: 20px;
     width: 1200px;
-    border-style: solid;
     border-width: 3px;
     position: relative;
     margin-left: auto;
@@ -728,21 +727,35 @@ form input, form label, form button {
   margin-left: auto;
   margin-right: auto;
   height: 380px;
-}.apontar div {
+  top: -180px;
+}.apontar button:hover {
+  cursor: pointer;
+  background-color: white;
+  color: var(--primary-color);
+}
+.apontar div {
     display: inline-block;
-}.apontar-bobina-aba {
+    font-weight: 700;
+}.apontar input {
+  border-radius: 5px;
+}.apontar input:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+.apontar-bobina-aba {
   padding: 3px;
-  display: inline-block;
   position: absolute;
   top: 8px;
   left: 440px;
   width: 317px;
   height: 355px;
-  background-color: rgb(222, 223, 223);
+  background-color: rgb(239 239 239);
   border-radius: 20px;
-  border-style: solid;
   border-width: 2px;
-}.apontar-bobina-aba input {
+}.apontar-bobina-aba:hover {
+  background-color: rgb(199, 199, 199);
+}
+.apontar-bobina-aba input {
   width: 40px;
 }#apontou {
   width: 200px;
@@ -764,6 +777,7 @@ form input, form label, form button {
   border-radius: 15px;
   width: 300px;
   height: 150px;
+  margin-left: 5px;
 }.molde-etiqueta-apontar p {
   position: relative;
   padding: 1px;
@@ -779,15 +793,17 @@ form input, form label, form button {
 .fixos-apontar-bobina {
   width: 400px;
   padding: 3px;
-  background-color: rgb(222, 223, 223);
+  background-color: rgb(239 239 239);
   border-radius: 20px;
-  border-style: solid;
   border-width: 2px;
   position: absolute;
   height: 355px;
   left: 20px;
   top: 8px;
-}.fixos-apontar-bobina p {
+}.fixos-apontar-bobina:hover {
+  background-color: rgb(199, 199, 199);
+}
+.fixos-apontar-bobina p {
   overflow: hidden;
   padding: 2px;
   background-color: white;
@@ -796,8 +812,11 @@ form input, form label, form button {
   border-color: black;
   border-width: 2px;
   line-height: 12px;
-}#botao-confirmacao-apontamento {
-  position: relative;
+  border-radius: 6px;
+  font-weight: 700
+}.fixos-apontar-bobina p:hover {
+  background-color: var(--primary-color);
+  color: white;
 }
 #cliche-apontar-selecioado {
   width: 80%;
@@ -806,7 +825,12 @@ form input, form label, form button {
   background-color: black;
   color: white;
   line-height: 10px;
-}#volume-apontar-selecioado {
+}#volumes {
+  height: 55px;
+  width: 55px;
+  font-size: 25pt;
+}
+#volume-apontar-selecioado {
   line-height: 10px;
   text-align: center;
   height: 20px;
@@ -876,12 +900,48 @@ form input, form label, form button {
     height: auto;
     margin-left: 105px;
 }
+#botao-confirmacao-apontamento {
+  position: absolute;
+  height: 20px;
+  margin-top: 157px;
+  margin-left: -200px;
+  width: 90px;
+}
 
 #grafico-apontamento {
   margin-top: 100px;
+  background-color: rgb(239, 239, 239);
+  border-radius: 10px;
+}#grafico-apontamento:hover {
+  background-color: rgb(199, 199, 199);
 }
 
 .fechar-apontar-selecionado {
-  margin-top: 300px;
-  margin-left: 350px;
+  position: absolute;
+  margin-top: 350px;
+  margin-left: -81px;
+  width: 80px;
+}.fechar-apontar-selecionado:hover {
+  color: var(--primary-color);
+  background-color: white;
+}
+
+.tabela-bobinas-apontadas {
+  background-color: white;
+  width: 600px;
+  height: 300px;
+  margin-top: 390px;
+  border-radius: 20px;
+  padding: 10px;
+}
+
+.impressao {
+  position: absolute;
+  display: block;
+  margin-left: auto;
+  right: auto;
+  background-color: white;
+  width: 1200px;
+  height: 700px;
+  top: 30px;
 }
