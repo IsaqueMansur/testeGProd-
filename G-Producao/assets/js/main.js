@@ -52,6 +52,7 @@ document.querySelector(".container-tela-inicial").style.visibility = "hidden";
 document.querySelector(".programacao").style.visibility = "hidden";
 document.querySelector(".bobinas").style.visibility = "hidden";
 document.querySelector("#botaoCriaBobina").style.visibility = "hidden";
+document.querySelector(".impressao").style.visibility = "hidden";
 
 const pegaErroUsuario = document.querySelector("#erroUsuario");
 const erroUsuario = "<div class='erro1' id='erroUsuario'>Usuário incorreto</div>"
@@ -65,15 +66,17 @@ form.addEventListener('submit', function(e) {
     e.preventDefault();
 });
 
+let usuario = null;
+
 function adm(usuarios) {
-    usuario.value = "adm"
+    this.usuario.value = "adm"
     senha.value = "123"
     login(usuarios);   
 }
 
 function login(usuarios) {
       
-    const usuario = document.querySelector("#usuario").value;
+    usuario = document.querySelector("#usuario").value;
     const senha = document.querySelector("#senha").value;
 
     const achaUsuario = usuarios.find((user) => user.usuario == usuario);
@@ -102,9 +105,8 @@ function login(usuarios) {
         document.querySelector(".container-tela-inicial").style.visibility = "visible";
         bV.innerHTML = vazio;
         return usuario, indexUsuario;
-    }
-}
-
+    };
+};
 
 const escopo = document.querySelector('#escopo');
 escopo.addEventListener('submit', function(e){
@@ -122,6 +124,7 @@ function programacao() {
     document.querySelector(".programacao").id = "sobe1";
     document.querySelector(".container-tela-inicial").style.visibility = 'hidden';
     document.querySelector("#escopo").style.visibility = "hidden";
+    nomeMaquina()
 }
 
 function fechaProgramacao() {
@@ -256,8 +259,8 @@ function confirmaOp(ops, alterarMetros) {
         let minutosGastosImpressao = ((alterarMetros || op.metros)/velocidadeMedia + tempoSetup);
 
         
-        let minhaData = moment(`${dataIPos} ${horaIPos}`, "YYYY/M/DD h:m").add('minutes', minutosGastosImpressao).locale("pt").format('L');
-        let minhaHora = moment(`${dataIPos} ${horaIPos}`, "YYYY/M/DD h:m").add('minutes', minutosGastosImpressao).locale("pt").format('LT');
+        let minhaData = moment(`${dataIPos} ${horaIPos}`, "YYYY/M/DD h:m").add(minutosGastosImpressao, 'minutes').locale("pt").format('L');
+        let minhaHora = moment(`${dataIPos} ${horaIPos}`, "YYYY/M/DD h:m").add(minutosGastosImpressao, 'minutes').locale("pt").format('LT');
         let diaTerm = minhaData.substr(0, 2);
         let mesTerm = minhaData.substr(3, 2);
         let anoTerm = minhaData.substr(6, 4);
@@ -269,11 +272,9 @@ function confirmaOp(ops, alterarMetros) {
         document.querySelector(".largura-op").textContent = `Largura: : ${op.largura}mm`;
         document.querySelector(".peso-impresso-op").textContent = `Peso imp: ${op.pesoImpresso}Kg's`;
         document.querySelector(".material-op").textContent = `Material Imp.: ${op.material}`;
-        }
-    }
-
-          
-}
+        };
+    };         
+};
 
 function alteraMetros(ops) {
     let alterarMetros = Number(document.querySelector("#metragem-op").value);
@@ -639,7 +640,7 @@ function criaTabelaApontarBobinas(indiceMaquina) {
         var tr = document.createElement('tr');  
         let th = document.createElement("th");
         let botao = document.createElement('button')
-        botao.id = 'botao' + maquinasProg[indiceMaquina][i];
+        botao.id = 'botao' + maquinasProg[indiceMaquina][i].op;
         botao.name = botao.id
         botao.textContent = `Posi: ${[i +1]}`;
         botao.value = maquinasProg[indiceMaquina][i];
@@ -690,17 +691,34 @@ function criaTabelaApontarBobinas(indiceMaquina) {
             } 
             listaProg = [];
         }
+        if (maquinasProg[indiceMaquina][i].pesoSeparado <= 0) {
+            botao.style.backgroundColor = 'red';
+            botao.style.borderStyle = 'none';
+            botao.style.marginTop = '10px';
+        }
+        if (maquinasProg[indiceMaquina][i].pesoSeparado > 0) {
+            botao.style.backgroundColor = 'yellow';
+            botao.style.color = 'black';
+            botao.style.borderStyle = 'none';
+            botao.style.marginTop = '10px';
+        }
+        if (maquinasProg[indiceMaquina][i].pesoSeparado >= maquinasProg[indiceMaquina][i].pesoImp) {
+            botao.style.backgroundColor = 'green';
+            botao.style.color = 'white';
+        }
     }            
     tabela.className = 'TabelaProg-x'
     tabela.appendChild(headTabela);
     tabela.appendChild(bodyTabela);
     local.appendChild(tabela);
+
 }
 
 let achaOp;
 let indexMaquina;
 
 function abrirApontamento(op) {
+    document.querySelector("#botao-confirmacao-apontamento").style.visibility = "hidden";
     document.querySelector(".molde-etiqueta-apontar").style.visibility = "hidden";
     document.querySelector(".bobinas").style.visibility = "hidden";
     document.querySelector(".apontar-bobina").style.visibility = "hidden";
@@ -747,9 +765,7 @@ let usarDigitado;
 let indexOp;
 
 function visualizarEtiquetaApontada() {
-
-    document.querySelector(".molde-etiqueta-apontar").style.visibility = "visible";
-    
+  
     volumeDigitado = Number(document.querySelector("#volumes").value);
     bobinaDigitada = Number(document.querySelector("#apontou").value);
     usarDigitado = Number(document.querySelector("#pesoUtilizado").value);
@@ -768,30 +784,27 @@ function visualizarEtiquetaApontada() {
         document.querySelector("#tipo-apontar-selecioado").textContent = `Bob. tipo: ${listaBobinas[indexBobina].tipo}`;
         document.querySelector("#pesoBobina-apontar-selecioado").textContent = `Peso bobina: ${listaBobinas[indexBobina].pesoLiquido} Kg's`;
         document.querySelector("#pesoSeparado-apontar-selecioado").textContent = `Peso separado: ${usarDigitado} Kg's`;
-
-        
-        numeroBobinaAtual = maquinasProg[indexMaquina][indexOp].bobinas.length;
-        
+       
+        numeroBobinaAtual = maquinasProg[indexMaquina][indexOp].bobinas.length; 
         let volumesOk = `VOL.: ${numeroBobinaAtual}/${volumeDigitado}`;
-
         document.querySelector("#volume-apontar-selecioado").textContent = volumesOk;
 
-
         JsBarcode('#codBarras-apontar', bobinaDigitada);
+
+        document.querySelector(".molde-etiqueta-apontar").style.visibility = "visible";
+        document.querySelector("#botao-confirmacao-apontamento").style.visibility = "visible";
     }
 
 
 }
-
 function confirmarApontamento() {  
+    document.querySelector("#botao-confirmacao-apontamento").style.visibility = "hidden";
     document.querySelector(".molde-etiqueta-apontar").style.visibility = "hidden";
-    
+ 
+    index = (maquinasProg[indexMaquina][indexOp].bobinas).findIndex((bob) => bob.bobinas == 'v');   
+    maquinasProg[indexMaquina][indexOp].bobinas.splice(index, 1);
 
-    for (let i of maquinasProg[indexMaquina][indexOp].bobinas) {
-        index = (maquinasProg[indexMaquina][indexOp].bobinas).findIndex((bob) => bob.bobinas == 'v');
-        maquinasProg[indexMaquina][indexOp].bobinas.pop(index);
-    }
-    let bobinaApontada = Number(document.querySelector("#apontou").value);
+    let bobinaApontada = {codigo: Number(document.querySelector("#apontou").value), pesoA: usarDigitado};
     maquinasProg[indexMaquina][indexOp].pesoSeparado += usarDigitado;
     maquinasProg[indexMaquina][indexOp].bobinas.push(bobinaApontada);
 
@@ -804,7 +817,24 @@ function confirmarApontamento() {
     if (maquinasProg[indexMaquina][indexOp].bobinas.length === volumeDigitado) {
         document.querySelector("#volumes").value = null;
         alert("Todos os volumes separados !!!");
+    };
+
+    var botao = document.getElementById("botao" + maquinasProg[indexMaquina][indexOp].op);
+    
+    avaliarPeso = function avaliaPesos() {
+        if (maquinasProg[indexMaquina][indexOp].pesoSeparado > 0) {
+            botao.style.backgroundColor = 'yellow';
+            botao.style.color = 'black';
+            botao.style.marginTop = '10px';
+        };
+    
+        if (maquinasProg[indexMaquina][indexOp].pesoSeparado > maquinasProg[indexMaquina][indexOp].pesoImp) {
+            botao.style.backgroundColor = 'green';
+            botao.style.color = 'white';
+        };
     }
+    apagaTabApSel(indexOp, indexMaquina, usarDigitado);
+    avaliarPeso();
     document.querySelector("#apontou").value = null;
     document.querySelector("#pesoUtilizado").value = null;
 }
@@ -814,6 +844,7 @@ function fecharApontarSelecionado() {
     document.querySelector(".apontar-bobina").style.visibility = "visible";
     document.querySelector(".apontar-selecionado").style.visibility = "hidden";
     document.querySelector(".fixos-apontar-bobina").textContent = null;
+    document.querySelector("#volumes").value = null;
 }
 
 function desenharGraficoApontamento(solicitado, separado, faltam) {
@@ -821,7 +852,6 @@ function desenharGraficoApontamento(solicitado, separado, faltam) {
     ["status", "Solicitado", "Separado", "Faltam"],
     ["Quilos", solicitado, separado, faltam]
   ]);
-  // set bar chart options
   var barOptions = {
       focusTarget: "category",
       backgroundColor: "transparent",
@@ -846,7 +876,7 @@ function desenharGraficoApontamento(solicitado, separado, faltam) {
       maxValue: 0,
       baselineColor: "rgb(35, 99, 62)",
       gridlines: {
-      color: "rgb(107, 146, 197)",
+      color: "green",
       count: 4
       },
       textStyle: {
@@ -860,15 +890,88 @@ function desenharGraficoApontamento(solicitado, separado, faltam) {
       }
     },
     animation: {
-      duration: 1200,
+      duration: 2700,
       easing: "out",
       startup: true
     }
   };
-  // draw bar chart twice so it animates
   var barChart = new google.visualization.ColumnChart(
     document.getElementById("grafico-apontamento")
   );
-  //barChart.draw(barZeroData, barOptions);
   barChart.draw(barData, barOptions);
-}
+};
+
+function apagaTabApSel(iOp, iMaquina, pesoSeparado) {
+    try {
+        let tabelaAntiga = document.querySelector("#tabelaApSel");
+        tabelaAntiga.remove();
+        tabelaApontamentoSelecionado(iOp, iMaquina, pesoSeparado);  
+    }catch {
+        tabelaApontamentoSelecionado(iOp, iMaquina, pesoSeparado);
+    }
+};
+
+function tabelaApontamentoSelecionado(iOp, iMaquina, pesoSeparado) {
+    let local = document.querySelector(".tabela-bobinas-apontadas");
+    let table = document.createElement('table');
+    table.id = "tabelaApSel"
+    let headTabela = document.createElement('thead');
+    headTabela.id = "headApSel"
+    let bodyTabela = document.createElement('tbody');
+
+    head = ['Deletar', 'Código', 'Material', 'Larg.', 'Esp.', 'Pigmento', 'Total bobina(Kg)', 'Total apontado(Kg)', 'Registro'];
+        let trC = document.createElement("tr");
+
+        for (let o in head) {
+            let th = document.createElement("th");
+            th.appendChild(document.createTextNode(head[o]));
+            trC.appendChild(th);
+            headTabela.appendChild(trC);
+        }
+   
+
+    for (var i in maquinasProg[iMaquina][iOp].bobinas){
+
+        let bobina = maquinasProg[iMaquina][iOp].bobinas[i].codigo;
+        let bob = listaBobinas.find((bob) => bob.codigo == bobina);
+
+        let tr = document.createElement("tr");
+        let botao = document.createElement("button");
+        botao.onclick = () => {
+            let index = (maquinasProg[indexMaquina][indexOp].bobinas).findIndex((bob) => bob.codigo == bobina);
+            maquinasProg[iMaquina][iOp].pesoSeparado = (maquinasProg[iMaquina][iOp].pesoSeparado - maquinasProg[iMaquina][iOp].bobinas[index].pesoA);
+            maquinasProg[iMaquina][iOp].bobinas.splice(index, 1);
+            let faltam = (maquinasProg[iMaquina][iOp].pesoImp - maquinasProg[iMaquina][iOp].pesoSeparado);
+            desenharGraficoApontamento(maquinasProg[iMaquina][iOp].pesoImp, maquinasProg[iMaquina][iOp].pesoSeparado, faltam);
+            apagaTabApSel(iOp, iMaquina, pesoSeparado);
+        };
+        botao.textContent = `Deletar - ${Number(i) + 1}`;
+
+        let registro = new Date();
+
+        tabela = [
+            botao, 
+            document.createTextNode(bobina),
+            document.createTextNode(bob.material),
+            document.createTextNode(bob.largura),
+            document.createTextNode(bob.espessura),
+            document.createTextNode(bob.pigmento),      
+            document.createTextNode(bob.pesoLiquido), 
+            document.createTextNode(maquinasProg[iMaquina][iOp].bobinas[i].pesoA),
+            document.createTextNode(
+                `Apontado por: ${usuario}, em 
+                ${registro.toLocaleDateString("pt-BR", {dateStyle: "short"})},
+                ${registro.toLocaleTimeString("pt-BR", {timeStyle: "short"})}.`)
+        ];
+            
+        for (var i in tabela) {
+            let th = document.createElement("th");
+            th.appendChild(tabela[i]);
+            tr.appendChild(th);
+        }
+        bodyTabela.appendChild(tr);
+    };
+    table.appendChild(headTabela);
+    table.appendChild(bodyTabela);
+    local.appendChild(table);
+};
