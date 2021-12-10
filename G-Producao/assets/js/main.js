@@ -289,7 +289,31 @@ function admProgramacao() {
 
 let listaOps = [];
 
-let maquinasProg = [[],[],[]];
+let maquinasProg = [[{
+    "op": 300001,
+    "pesoImp": 320,
+    "pesoSeparado": 0,
+    "cliche": "QUEIJO TIPO COALHO TESTE 1KG",
+    "material": "Nylon Poli",
+    "pigmento": "Natural",
+    "espessura": 0.11,
+    "tipoBobina": "Tubular",
+    "solda": "Fundo",
+    "c1": "branco",
+    "c2": "amarelo",
+    "c3": "magenta",
+    "c4": "cyan",
+    "c5": "p485",
+    "c6": "p355",
+    "c8": "preto",
+    "dtI": "2021-12-10",
+    "hrI": "13:57",
+    "dtF": "2021-12-10",
+    "hrF": "16:07",
+    "comprimento": 240,
+    "largura": 160,
+    "bobinas": []
+}],[],[]];
 
 function programarOp(ops) {
     listaOps = [];
@@ -473,7 +497,19 @@ function fechaCriarBobinas() {
     document.querySelector(".molde-etiqueta").style.visibility = "hidden";
 }
 
-let listaBobinas = [];
+let listaBobinas = [{
+    "material": "Nylon Poli",
+    "tipo": "Folha",
+    "largura": 600,
+    "espessura": 5,
+    "pigmento": "Natural",
+    "pesoBruto": 60,
+    "pesoTubete": 5,
+    "pesoLiquido": 55,
+    "codigo": 1000000000001,
+    "disponivel": 55,
+    "usadaPor": []
+}];
 
 function visualizarBob() {
     let local = document.querySelector(".informacoes-molde-direito");
@@ -642,9 +678,13 @@ function criaTabelaApontarBobinas(indiceMaquina) {
         let botao = document.createElement('button')
         botao.id = 'botao' + maquinasProg[indiceMaquina][i].op;
         botao.name = botao.id
+        botao.classList = "btn-selecionar-apontamento";
         botao.textContent = `Posi: ${[i +1]}`;
         botao.value = maquinasProg[indiceMaquina][i];
-        botao.onclick = () => abrirApontamento(maquinasProg[indiceMaquina][i].op);
+        botao.onclick = () => {
+            abrirApontamento(maquinasProg[indiceMaquina][i].op);
+            apagaTabApSel(i, indiceMaquina, maquinasProg[indiceMaquina][i].pesoSeparado)
+        }
         th.appendChild(botao);
         tr.appendChild(th);
 
@@ -690,9 +730,11 @@ function criaTabelaApontarBobinas(indiceMaquina) {
                 bodyTabela.appendChild(tr);                  
             } 
             listaProg = [];
+
         }
         if (maquinasProg[indiceMaquina][i].pesoSeparado <= 0) {
             botao.style.backgroundColor = 'red';
+            botao.style.color = 'white'
             botao.style.borderStyle = 'none';
             botao.style.marginTop = '10px';
         }
@@ -840,6 +882,7 @@ function confirmarApontamento() {
 }
 
 function fecharApontarSelecionado() {
+    nomeMaquinaBobina()
     document.querySelector(".bobinas").style.visibility = "visible";
     document.querySelector(".apontar-bobina").style.visibility = "visible";
     document.querySelector(".apontar-selecionado").style.visibility = "hidden";
@@ -975,3 +1018,28 @@ function tabelaApontamentoSelecionado(iOp, iMaquina, pesoSeparado) {
     table.appendChild(bodyTabela);
     local.appendChild(table);
 };
+
+// ---------IMPRESSÃO----------
+
+function impressao() {
+    document.querySelector(".impressao").style.visibility = "visible";
+};
+function fecharImpressao() {
+    document.querySelector(".impressao").style.visibility = "hidden";
+};
+
+function confirmarImpressao() {
+    let opDigitada = document.querySelector(".op-impressao").value;
+    let iOp = ops.findIndex((ordem) => ordem.op == opDigitada);
+
+    document.querySelector(".cliche-impressao").textContent = `Clichê:   ${ops[iOp].nomeServico}`
+
+    document.querySelector(".detalhes-impressao").textContent = `Detalhes:   
+    Material: ${ops[iOp].material} | 
+    Larg.: ${ops[iOp].largura}mm | 
+    Comp.: ${ops[iOp].comprimento}mm | 
+    Esp.: ${ops[iOp].espessura}mm | 
+    Solda: ${ops[iOp].tipoSolda}`
+
+    document.querySelector(".metros-impressao").textContent = `Metragem ideal: ${ops[iOp].metros} metros`
+}
