@@ -682,6 +682,10 @@ form input, form label, form button {
     max-height: 550px;
     overflow-y: scroll;
   }
+
+  .btn-selecionar-apontamento:hover {
+    opacity: 65%;
+  }
   
  #tabelaProgramacao-apontar-bobina thead {
     font-size: 10pt;
@@ -909,9 +913,10 @@ form input, form label, form button {
 }
 
 #grafico-apontamento {
-  margin-top: 100px;
   background-color: rgb(239, 239, 239);
   border-radius: 10px;
+  position: absolute;
+  margin-top: 65px;
 }#grafico-apontamento:hover {
   background-color: rgb(199, 199, 199);
 }
@@ -919,10 +924,13 @@ form input, form label, form button {
 .fechar-apontar-selecionado {
   position: absolute;
   margin-top: 350px;
-  margin-left: -81px;
+  margin-left: 320px;
   width: 80px;
+  background-color: red;
+  color: white;
+  border: none;
 }.fechar-apontar-selecionado:hover {
-  color: var(--primary-color);
+  color: red;
   background-color: white;
 }
 
@@ -936,12 +944,69 @@ form input, form label, form button {
 }
 
 .impressao {
+  padding: 0.5%;
   position: absolute;
-  display: block;
-  margin-left: auto;
-  right: auto;
-  background-color: white;
-  width: 1200px;
+  top: 60px;
+  background-color: rgb(0, 0, 0);
+  width: 96%;
   height: 700px;
-  top: 30px;
+}
+
+.fechar-impressao {
+  float: right;
+  position: relative;
+}
+
+.cabecalho-impressao {
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5px;
+  display: flex;
+  width: 99%;
+  height: 11%;
+  background-color: red;
+}
+
+.cab-imp1 {
+  width: 14%;
+  background-color: yellow;
+  height: 100%;
+  display: inline-block;
+}
+.cab-imp2 {
+  overflow-y: scroll;
+  width: 60%;
+  margin-left: .5%;
+  background-color: yellow;
+  height: 100%;
+  display: inline-block;
+}.cab-imp2 p{
+  border-style: solid;
+  border-width: 0.5px;
+  padding: 0.1%;
+  overflow: hidden;
+  margin: 0.3%;
+  line-height: 100%;
+}
+.painel-impressao {
+  width: 26%;
+  margin-left: .5%;
+  background-color: yellow;
+  height: 100%;
+  display: inline-block;
+}
+
+.aba1-imp {
+  margin-top: 0.5%;
+  display: inline-block;
+  background-color: greenyellow;
+  width: 36.7%;
+  height: 65%;
+}
+.aba2-imp {
+  margin-top: 0.5%;
+  display: inline-block;
+  background-color: greenyellow;
+  width: 36.7%;
+  height: 65%;
 }
