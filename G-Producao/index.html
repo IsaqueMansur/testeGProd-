@@ -33,7 +33,7 @@
             <p id='nomeUsuario'></p>
             <button type="submit" onclick="programacao()">Programação</button>
             <button type="submit" onclick="bobinas()">Bobinas</button>
-            <button type="submit" onclick="c()">Impressão</button>
+            <button type="submit" onclick="impressao()">Impressão</button>
             <button type="submit" onclick="d()">Resultados</button>
         </form>
     </section>
@@ -268,9 +268,34 @@
                 </section>
         </section>
     </section> <!-- bobinas -->
-    <section class="impressao">
-            
-    </section>
+
+
+    <div class="impressao"> <!--impressao-->
+        <section class="cabecalho-impressao">
+            <section class="cab-imp1">
+                <p>O.P.<input type="number" class="op-impressao"></p>
+            <p>Máquina 
+                <select class="maquina-impressao">
+                    <option>IMP-01</option>
+                    <option>IMP-02</option>
+                    <option>IMP-03</option>
+                </select>
+                <button class="confirmar-impressao" onclick="confirmarImpressao()">Ok</button>
+            </p>
+            </section>
+
+            <section class="cab-imp2">
+                <p class="cliche-impressao">Clichê:</p>
+                <p class="detalhes-impressao">Detalhes:</p>
+                <p class="metros-impressao">Metragem ideal:</p>
+            </section> 
+            <section class="painel-impressao"></section>      
+        </section>
+        
+        <section class="aba1-imp"></section>  
+        <section class="aba2-imp"></section> 
+        <button class="fechar-impressao" onclick="fecharImpressao()">Tela inicial</button>    
+    </div> <!--impressao-->
     
 
     <script src="./assets/js/moment.js" type="text/javascript"></script>
