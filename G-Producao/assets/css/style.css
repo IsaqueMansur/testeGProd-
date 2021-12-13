@@ -968,10 +968,18 @@ form input, form label, form button {
 }
 
 .cab-imp1 {
+  overflow-y: scroll;
   width: 14%;
+  margin-left: .5%;
   background-color: yellow;
   height: 100%;
   display: inline-block;
+  line-height: 100%;
+}.cab-imp1 p {
+  margin-top: -0.2%;
+  padding: 5px;
+}.cab-imp1 input {
+  width: 60%;
 }
 .cab-imp2 {
   overflow-y: scroll;
@@ -995,6 +1003,45 @@ form input, form label, form button {
   height: 100%;
   display: inline-block;
 }
+
+.painel-botoes-impressao {
+  display: flex;
+  width: 100%;
+  background-color: orange;
+}
+
+.inclui-bobina-lisa {
+  border-radius: 20px;
+  padding: 20px;
+  align-content: center;
+  position: absolute;
+  top: 35%;
+  left: 35%;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+  width: 30%;
+  height: 200px;
+}.inclui-bobina-lisa p{
+  margin-top: 10px;
+  font-size: 18pt;
+  text-align: center;
+}
+.inclui-bobina-lisa input {
+  text-align: center;
+  font-size: 30pt;
+  width: 90%;
+  height: 10%;
+  padding: 20px 0;
+}.confirma-bobina-lisa {
+  width: 80%;
+  height: 50px;
+  margin-top: 5%;
+}.fechar-inclui-bobina-lisa {
+  background-color: red;
+  max-width: 20%;
+  height: 50px;
+} 
 
 .aba1-imp {
   margin-top: 0.5%;
