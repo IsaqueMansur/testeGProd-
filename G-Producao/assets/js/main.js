@@ -106,6 +106,7 @@ function login(usuarios) {
         bV.innerHTML = vazio;
         return usuario, indexUsuario;
     };
+
 };
 
 const escopo = document.querySelector('#escopo');
@@ -290,13 +291,13 @@ function admProgramacao() {
 let listaOps = [];
 
 let maquinasProg = [[{
-    "op": 300001,
-    "pesoImp": 320,
+    "op": 300002,
+    "pesoImp": 350,
     "pesoSeparado": 0,
-    "cliche": "QUEIJO TIPO COALHO TESTE 1KG",
-    "material": "Nylon Poli",
+    "cliche": "QUEIJO MUSSARELA TESTE 4KG",
+    "material": "Termoencolhível Artflex",
     "pigmento": "Natural",
-    "espessura": 0.11,
+    "espessura": 0.09,
     "tipoBobina": "Tubular",
     "solda": "Fundo",
     "c1": "branco",
@@ -304,15 +305,16 @@ let maquinasProg = [[{
     "c3": "magenta",
     "c4": "cyan",
     "c5": "p485",
-    "c6": "p355",
+    "c7": "p021",
     "c8": "preto",
     "dtI": "2021-12-10",
-    "hrI": "13:57",
+    "hrI": "16:07",
     "dtF": "2021-12-10",
-    "hrF": "16:07",
-    "comprimento": 240,
-    "largura": 160,
-    "bobinas": []
+    "hrF": "18:52",
+    "comprimento": 460,
+    "largura": 240,
+    "bobinas": [],
+    "producoes": []
 }],[],[]];
 
 function programarOp(ops) {
@@ -358,6 +360,7 @@ function programarOp(ops) {
             comprimento: op.comprimento, 
             largura: op.largura,
             bobinas: [],
+            producoes: []
         };
    
     
@@ -1022,15 +1025,22 @@ function tabelaApontamentoSelecionado(iOp, iMaquina, pesoSeparado) {
 // ---------IMPRESSÃO----------
 
 function impressao() {
+    document.querySelector(".inclui-bobina-lisa").style.visibility = "hidden";
     document.querySelector(".impressao").style.visibility = "visible";
 };
 function fecharImpressao() {
+    fecharIncluiLisa()
     document.querySelector(".impressao").style.visibility = "hidden";
 };
 
-function confirmarImpressao() {
+function ConfirmarImpressao() {
+
     let opDigitada = document.querySelector(".op-impressao").value;
     let iOp = ops.findIndex((ordem) => ordem.op == opDigitada);
+
+    this.op = function() {
+        return opDigitada
+    } 
 
     document.querySelector(".cliche-impressao").textContent = `Clichê:   ${ops[iOp].nomeServico}`
 
@@ -1041,5 +1051,127 @@ function confirmarImpressao() {
     Esp.: ${ops[iOp].espessura}mm | 
     Solda: ${ops[iOp].tipoSolda}`
 
-    document.querySelector(".metros-impressao").textContent = `Metragem ideal: ${ops[iOp].metros} metros`
+    document.querySelector(".metros-impressao").textContent = `Metragem ideal: ${ops[iOp].metros} metros`;
+
+    this.maquina = function() {
+        let indexMaquina = null;
+        let maquinaSelecionada = document.querySelector(".maquina-impressao").value;
+        if (maquinaSelecionada === 'IMP-01') indexMaquina = 0;
+        if (maquinaSelecionada === 'IMP-02') indexMaquina = 1;
+        if (maquinaSelecionada === 'IMP-03') indexMaquina = 2;
+        return indexMaquina;
+    }
 }
+
+let producoes = [[], [], []];
+
+let bobinasImpressas = [];
+
+function incluirImpressa() {
+    document.querySelector(".inclui-bobina-lisa").style.visibility = "visible";
+    let bobDigitada = document.querySelector(".bobina-lisa-adicionada");
+    let botaoAdciocionaBob = document.querySelector(".confirma-bobina-lisa");
+    botaoAdciocionaBob.style.visibility = "hidden";
+
+    let valorAcima;
+
+    let procura = function() {
+        bobDigitada.style.backgroundColor = "white";
+        bobDigitada.addEventListener('keyup', function(e) {
+            let bobina = listaBobinas.findIndex((codigo) => codigo.codigo == bobDigitada.value);
+            if ((bobDigitada.value).length === 13) {
+                if (bobina > -1) {
+                    bobDigitada.style.backgroundColor = "green";
+                    botaoAdciocionaBob.style.visibility = "visible";
+                }else {
+                    alert("Bobina não encontrada");
+                    bobDigitada.style.backgroundColor = "red";
+                    botaoAdciocionaBob.style.visibility = "hidden";
+                };
+                valorAcima = bobDigitada.value;
+            };
+            if ((bobDigitada.value).length > 13) {
+                bobDigitada.style.backgroundColor = "red";
+                bobDigitada.value = valorAcima;
+                alert("Limite de 13 dígitos. Bobina não encontrada.");
+            };
+        });
+
+    };
+    procura();
+};
+function fecharIncluiLisa() {
+    document.querySelector(".inclui-bobina-lisa").style.visibility = "hidden";
+    document.querySelector(".confirma-bobina-lisa").style.visibility = "hidden";
+};
+
+function confirmaEntradaLisa() {
+    document.querySelector(".inclui-bobina-lisa").style.visibility = "hidden";
+    document.querySelector(".confirma-bobina-lisa").style.visibility = "hidden";
+    let bobinaDigitada = document.querySelector(".bobina-lisa-adicionada").value;
+    let maquina = new ConfirmarImpressao();
+    let indexMaq = maquina.maquina();
+    let op = maquina.op();
+
+    let indexOpNaProgramacao = maquinasProg[indexMaq].findIndex((ordem) => ordem.op == op);
+
+    if (indexOpNaProgramacao < 0) {
+        alert("Esta O.P. não está programada para essa máquina")
+        return
+    } else {
+        let dataCadastro = new Date();
+        let dataFormatoOk = dataCadastro.toLocaleDateString("pt-BR", {dateStyle: "short"});
+        let horaFormatoOk = dataCadastro.toLocaleTimeString("pt-BR", {timeStyle: "short"});
+
+        try {
+            let lengthBobinasImpressas = bobinasImpressas.length;
+            let ultimoValor = bobinasImpressas[lengthBobinasImpressas -1].codigo;
+            geraCodigo = ultimoValor + 1;
+        } catch {
+            geraCodigo = 5000000000001;
+        };
+
+        let prod = {
+            codigo: geraCodigo,
+            operador: usuario,
+            metros: 0,
+            tubete: 0,
+            pesoBruto: 0,
+            pesoLiquido: 0,
+            perdaImp: 0,
+            perdaExt: 0,
+            bobinasLisas: [],
+            dataInicio: {
+                data: dataFormatoOk,
+                hora: horaFormatoOk,
+            },
+            dataTermino: {
+                data: null,
+                hora: null
+            }
+        };        
+        
+        let bobinaLisaCadastrada = listaBobinas.findIndex((bob) => bob.codigo == bobinaDigitada);
+        if (bobinaLisaCadastrada < 0) {
+            alert("Bobina Inexistente");
+            return
+        }else {     
+            let encontraOpIgual = producoes[indexMaq].findIndex((ordem) => ordem.op == op);
+            if (encontraOpIgual < 0) {
+                producoes[indexMaq].push(maquinasProg[indexMaq][indexOpNaProgramacao]);
+            }      
+            let indexOpNaProducoes = producoes[indexMaq].findIndex((ordem) => ordem.op == op);
+            producoes[indexMaq][indexOpNaProducoes].producoes.push(prod);
+
+            let indiceEmProducoes = producoes[indexMaq][indexOpNaProducoes].producoes.length;
+            producoes[indexMaq][indexOpNaProducoes].producoes[indiceEmProducoes -1].bobinasLisas.push(listaBobinas[bobinaLisaCadastrada]);
+            bobinasImpressas.push(producoes[indexMaq][indexOpNaProducoes].producoes[indiceEmProducoes -1]);
+            tabelaImpressas(producoes[indexMaq][indexOpNaProducoes].producoes);
+        };
+    };
+};
+
+function tabelaImpressas(producoes) {
+    let local = document.querySelector(".aba1-imp");
+    console.log(producoes);
+};
