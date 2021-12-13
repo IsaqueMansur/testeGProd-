@@ -273,14 +273,14 @@
     <div class="impressao"> <!--impressao-->
         <section class="cabecalho-impressao">
             <section class="cab-imp1">
-                <p>O.P.<input type="number" class="op-impressao"></p>
-            <p>Máquina 
+                <p>O.P.:<input type="number" class="op-impressao"></p>
+            <p>Máq.: 
                 <select class="maquina-impressao">
                     <option>IMP-01</option>
                     <option>IMP-02</option>
                     <option>IMP-03</option>
                 </select>
-                <button class="confirmar-impressao" onclick="confirmarImpressao()">Ok</button>
+                <button class="confirmar-impressao" onclick="ConfirmarImpressao()">Ok</button>
             </p>
             </section>
 
@@ -290,6 +290,17 @@
                 <p class="metros-impressao">Metragem ideal:</p>
             </section> 
             <section class="painel-impressao"></section>      
+        </section>
+        <section class="painel-botoes-impressao">
+            <button onclick="incluirImpressa()">Nova bob. impressa</button>
+        </section>
+        <section class="inclui-bobina-lisa">
+            <p>BOBINA LISA
+            <input class="bobina-lisa-adicionada">
+            <button onclick="confirmaEntradaLisa()" class="confirma-bobina-lisa">Confirmar</button>
+            <button onclick="fecharIncluiLisa()" class="fechar-inclui-bobina-lisa">Cancelar</button>
+            </p>
+            
         </section>
         
         <section class="aba1-imp"></section>  
