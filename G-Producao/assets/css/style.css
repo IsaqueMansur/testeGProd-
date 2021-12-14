@@ -1,942 +1,962 @@
 :root {
-    --primary-color: rgb(35, 99, 62);
-    --primary-color-darker: rgb(11, 75, 38);
-    --primary-color-white: rgb(47, 255, 116);
+  --primary-color: rgb(35, 99, 62);
+  --primary-color-darker: rgb(11, 75, 38);
+  --primary-color-white: rgb(47, 255, 116);
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap');
 
 .branco {
-  font-size: 7pt;
-  border-radius: 30%;
-  color: black;
-  background-color: white;
-  border:black;
-  border-style: solid;
-  border-width: .5px;
+font-size: 7pt;
+border-radius: 30%;
+color: black;
+background-color: white;
+border:black;
+border-style: solid;
+border-width: .5px;
 }
 .amarelo {
-  font-size: 7pt;
-  border-radius: 30%;
-  color: black;
-  background-color: yellow;
-  border:black;
-  border-style: solid;
-  border-width: .5px;
+font-size: 7pt;
+border-radius: 30%;
+color: black;
+background-color: yellow;
+border:black;
+border-style: solid;
+border-width: .5px;
 }
 .magenta {
-  font-size: 7pt;
-  border-radius: 30%;
-  color: black;
-  background-color: fuchsia;
-  border:black;
-  border-style: solid;
-  border-width: .5px;
+font-size: 7pt;
+border-radius: 30%;
+color: black;
+background-color: fuchsia;
+border:black;
+border-style: solid;
+border-width: .5px;
 } 
 .cyan {
-  font-size: 7pt;
-  border-radius: 30%;
-  color: black;
-  background-color: cyan;
-  border:black;
-  border-style: solid;
-  border-width: .5px;
+font-size: 7pt;
+border-radius: 30%;
+color: black;
+background-color: cyan;
+border:black;
+border-style: solid;
+border-width: .5px;
 }
 .preto {
-  font-size: 7pt;
-  border-radius: 30%;
-  color: white;
-  background-color: black;
-  border:black;
-  border-style: solid;
-  border-width: .5px;
+font-size: 7pt;
+border-radius: 30%;
+color: white;
+background-color: black;
+border:black;
+border-style: solid;
+border-width: .5px;
 }
 .p485 {
-  font-size: 7pt;
-  border-radius: 30%;
-  color: black;
-  background-color: red;
-  border:black;
-  border-style: solid;
-  border-width: .5px;
+font-size: 7pt;
+border-radius: 30%;
+color: black;
+background-color: red;
+border:black;
+border-style: solid;
+border-width: .5px;
 }
 
 .p355 {
-  font-size: 7pt;
-  border-radius: 30%;
-  color: black;
-  background-color: rgb(2, 146, 26);
-  border:black;
-  border-style: solid;
-  border-width: .5px;
+font-size: 7pt;
+border-radius: 30%;
+color: black;
+background-color: rgb(2, 146, 26);
+border:black;
+border-style: solid;
+border-width: .5px;
 }
 .p871 {
-  font-size: 7pt;
-  border-radius: 30%;
-  color: black;
-  background-color: rgb(136, 138, 17);
-  border:black;
-  border-style: solid;
-  border-width: .5px;
+font-size: 7pt;
+border-radius: 30%;
+color: black;
+background-color: rgb(136, 138, 17);
+border:black;
+border-style: solid;
+border-width: .5px;
 }
 .p021 {
-  font-size: 7pt;
-  border-radius: 30%;
-  color: black;
-  background-color: rgb(255, 136, 0);
-  border:black;
-  border-style: solid;
-  border-width: .5px;
+font-size: 7pt;
+border-radius: 30%;
+color: black;
+background-color: rgb(255, 136, 0);
+border:black;
+border-style: solid;
+border-width: .5px;
 }
 
 body {
-  margin: 0;
-  padding: 2% 2% 2% 2%;
-  background: var(--primary-color);
-  font-family: 'Roboto Condensed', sans-serif;
+margin: 0;
+padding: 2% 2% 2% 2%;
+background: var(--primary-color);
+font-family: 'Roboto Condensed', sans-serif;
 }
 
 .container {
-    display: block;
-    margin-bottom: 20px;
-    padding: 0% 0px .7% 0%;
-    border-radius: 10px;
-    margin: 3% 3%;
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
-    height: 50%;
-    width: 60%;
-    color:red;
-    background: white;   
+  display: block;
+  margin-bottom: 20px;
+  padding: 0% 0px .7% 0%;
+  border-radius: 10px;
+  margin: 3% 3%;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  height: 50%;
+  width: 60%;
+  color:red;
+  background: white;   
 }
 
 h1 {
-    line-height: 90px;
-    color: var(--primary-color-darker);
-    font-size: 35pt;
-    text-align: center;
-    font-weight: 700;
-  }
+  line-height: 90px;
+  color: var(--primary-color-darker);
+  font-size: 35pt;
+  text-align: center;
+  font-weight: 700;
+}
 
-  form label {
-      text-align: center;
-      color: var(--primary-color-darker);
-      font-size: 20pt;
-      padding: 0 11px;
-  }
+form label {
+    text-align: center;
+    color: var(--primary-color-darker);
+    font-size: 20pt;
+    padding: 0 11px;
+}
 
 
 form input, form label, form button {
-    display: block;
-    height: 90%;
-    margin-bottom: 20px;
-  }
+  display: block;
+  height: 90%;
+  margin-bottom: 20px;
+}
 
-  form input {
-    text-align: center;
-    color: var(--primary-color);
-    margin-left: auto;
-    margin-right: auto;
-    font-size: 24px;
-    height: 50px;
-    padding: 0 20px;
-    width: 30%;
-  }
+form input {
+  text-align: center;
+  color: var(--primary-color);
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 24px;
+  height: 50px;
+  padding: 0 20px;
+  width: 30%;
+}
 
-  form input:hover {
-    border-color: var(--primary-color);
-    border-width: .5px;
-  }
+form input:hover {
+  border-color: var(--primary-color);
+  border-width: .5px;
+}
 
-  form button {
-    margin-top: 40px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 25%;
-    border-radius: 10px;
-    background: var(--primary-color);
-    color: #fff;
-    font-size: 18px;
-    font-weight: 700;
-    height: 50px;
-    cursor: pointer;
-    border-color: transparent;
-  }
-  
-  form button:hover {
-    background: white;
-    color: var(--primary-color-darker);
-    border-color: var(--primary-color);
-    border-width: 3px;
-  }
+form button {
+  margin-top: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 25%;
+  border-radius: 10px;
+  background: var(--primary-color);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  height: 50px;
+  cursor: pointer;
+  border-color: transparent;
+}
 
-  .erro1 {
-      float: right;
-      margin-right: 15%;
-      margin-top: -55px;
-      font-size: 13pt;
-  }
+form button:hover {
+  background: white;
+  color: var(--primary-color-darker);
+  border-color: var(--primary-color);
+  border-width: 3px;
+}
 
-  #admB1 {
-    width: 10%;
-    background-color: var(--primary-color-white);
-    color: var(--primary-color);
-  }
+.erro1 {
+    float: right;
+    margin-right: 15%;
+    margin-top: -55px;
+    font-size: 13pt;
+}
 
-  #admB1:hover {
-    color: black;
-  }
+#admB1 {
+  width: 10%;
+  background-color: var(--primary-color-white);
+  color: var(--primary-color);
+}
 
-  .container-tela-inicial {
-    text-align: center;
-    height: 90%;
-    border-radius: 10px;
-    margin: 3% 3%;
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
-    margin-top: -3.2%;
-    width: 95%;
-    color:red;
-    background: white;
-  }
+#admB1:hover {
+  color: black;
+}
 
-  .container-tela-inicial button {
-    position: relative;
-    display: inline;
-    width: 21%;
-    margin: 1% 1% 1% 1%;
-    margin-left: 2.4%;
-  }
+.container-tela-inicial {
+  text-align: center;
+  height: 90%;
+  border-radius: 10px;
+  margin: 3% 3%;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  margin-top: -3.2%;
+  width: 95%;
+  color:red;
+  background: white;
+}
 
-  #nomeUsuario {
-    cursor: default;
-    border-radius: 20px;
-    margin-left: auto;
-    margin-right: auto;
-    background: rgb(47, 255, 116);
-    width: 60%;
-    text-align: center;
-    font-size: 20pt;
-    color: var(--primary-color);
-  }
+.container-tela-inicial button {
+  position: relative;
+  display: inline;
+  width: 21%;
+  margin: 1% 1% 1% 1%;
+  margin-left: 2.4%;
+}
 
-  #nomeUsuario:hover {
-    color:rgb(47, 255, 116);
-    background: var(--primary-color);
-  }
-
-  #escopo {
-    padding: 20px 20px 20px 0px;
-  }
-
-  .programacao {
-    color: var(--primary-color);
-    margin-left: auto;
-    margin-right: auto;
-    border-radius: 10px;
-    width: 100%;
-    background: white;
-    height: 840px;
-    max-height: 840px;
-  }
-  #sobe1 {
-    margin-top: -16%;
-  } #desce1 {
-    margin-top: 2%;
-  }
-
-  #sobe2 {
-    margin-top: -1050px;
-  }
-  #sobe3 {
-    margin-top: -450px;
-  }
-  .programacao {
-    display: block;
-    padding: -10px 0px 10px 0px   ;
-  }
-
-  .programacao select, button {
-    border-radius: 6px;
-    display: inline;
-    margin: 0px 0px 10px .3%;
-    background-color: var(--primary-color);
-    color: white;
-  }
-
-  .programacao select {
-    margin-left: -70px;
-    width: 200px;
-    font-size: 20pt;
-  } .programacao select:hover {
-    color:var(--primary-color);
-    background-color: white;
-  }
-  .programacao button {
-    cursor: pointer;
-    margin-left: 1%;
-    width: 100px;
-    font-size: 19pt;
-  } .programacao button:hover {
-    color:var(--primary-color);
-    background-color: white;
-  }
-
-  .programacao p {
-    font-size: 20pt;
-    font-weight: 700;
-    padding: 18px 30px 0px 45px;
-  }
-
-  #maquina-selecionada {
-    display: inline-table;
-  }
-
-  .cabecalho-programacao {
-    display: inline-table;
-    width: 400px;
-  }
-
-  .fecharProg {
-    display: inline-table;
-  }
-
-  .fecharProg button{
-    display: list-item;
-    width: 150px;
-    background-color: rgb(247, 52, 52);
-    color: white;
-    border-color: transparent;
-    margin-left: 550px;
-  }
-
-  .fecharProg button:hover {
-    color: rgb(247, 52, 52);
-    border-color: rgb(247, 52, 52);
-  }
-
-  .maquina-programacao {
-    display: inline-table;
-    margin: 20px 20px;
-  }
-
-  .maquina-programacao p1 {
-    background-color: var(--primary-color);
-    padding: .3% 2%;
-    border-radius: 10px;
-    color: white;
-    font-size: 20pt;
-  } #usuario-programacao {
-    cursor: default;
-    background-color: var(--primary-color-white);
-    font-weight: 700;
-    font-size: 12pt;
-    border-radius: 5px;
-    color: var(--primary-color-darker);
-  } #usuario-programacao:hover {
-    color: var(--primary-color-white);
-    background-color: var(--primary-color-darker);
-  }
-
-  .nomeServicoDiv {
-    position: relative;
-    margin-left: auto;
-    margin-right: auto;
-    width: 95%;
-    border-radius: 10px 0px 0px 10px;
-    background-color: white;
-    border-style: solid;
-    border-width: 2px;
-    border-color: rgb(143, 143, 143);
-    text-align: left;
-    font-size: 10pt;
-    line-height: 25px;
-    overflow-y: scroll;
-    height: 50px;
-  }
-  .nomeServico {
-    padding: 0 8px;
-    cursor: default;
-    background-color: darkgray;
-    color: white;
-    border-radius: 5px;
-    color: black;
-  } .nomeServico:hover {
-    background-color: rgb(209, 209, 209);
-    color: var(--primary-color);
-  }
-
-  .config-programacao {
-    background-color: darkgray;
-    width: 296px;
-    line-height: 50px;
-    margin: 20px 0px;
-    border-radius: 10px;
-   } .config-programacao input {
-    margin-left: 0px;
-    border-radius: 5px;
-    border-color: transparent;
-    } .config-programacao button{
-      border-color: transparent;
-      width: 250px;
-      margin-left: 20px;
-    } #velocidade-op {
-      width: 50px;
-    } #metragem-op {
-      width: 55px;
-    } .config-programacao p2 {
-      margin-left: 10px;
-    }
-
-    .informacoes-fixas-op {
-      display: grid;
-    } .informacoes-fixas-op p2 {
-      margin-top: 3px;
-      line-height: 25px;
-      background-color: white;
-      width: 276px;
-      border-radius: 5px;
-    } .informacoes-fixas-op p2:hover {
-      color: white;
-      background-color: var(--primary-color);
-    }
-
-    .tbOverflow {
-      position: relative;
-      display: table-cell;
-    }
-
-  #tabelaProgramacao {
-    display: block;
-    height: 680px;
-    overflow-y: scroll;
-    background-color: rgb(241, 241, 241);
-    position: relative;
-    left: 20px;
-    line-height: 500px;
-    font-size: 8pt;
-    border-style: solid;
-    border-width: 3px;
-    border-color: black;
-    border-radius: 7px;
-  } #tabelaProgramacao table {
-    padding: 5px;
-    border-spacing: 0px;
-  } #tabelaProgramacao thead {
-    font-size: 10pt;
-    font-weight: 700;
-    background-color: var(--primary-color);
-    color: white;
-    border-width: 3px;
-    height: 40px;
-  } #tabelaProgramacao thead th {
-    border-style: solid;
-    border-color: var(--primary-color-darker);
-  }
-  #tabelaProgramacao tr th {
-    line-height: 15px;
-    padding: 0 3px;
-    border-style: solid;
-    border-width: 1px;
-    text-align: center;
-    max-width: 500px;
-  }#tabelaProgramacao tbody th {
-    height: 35px;
-    opacity: 90%;
-  }#tabelaProgramacao tbody th:hover {
-    opacity: 100%;
-    cursor: default;
-    background-color: var(--primary-color);
-    color: white;
-  }
-
-  .bobinas {
-    border-radius: 10px;
-    padding: 0px 20px 20px;
-    position: relative;
-    width: 95%;
-    background-color: white;
-  }
-
-  .opcoesBobinas {
-    text-align: center;
-    height: 90%;
-    border-radius: 10px;
-    margin: 3% 3% 3%;
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
-    margin-top: -3.2%;
-    width: 95%;
-  } .opcoesBobinas button {
-    cursor: pointer;
-    height: 45px;
-    position: relative;
-    display: inline;
-    width: 21%;
-    margin: 1% 1% 1% 1%;
-    margin-left: 2.4%;
-  } .opcoesBobinas button:hover {
-    color: var(--primary-color);
-    background-color: white;
-  }.telaInicialBobinas {
-    background-color: red;
-    color: white;
-    border-style: none;
-  }.telaInicialBobinas:hover {
-    background-color: white;
-    color: red;
-  }
-
-  .criar-bobina {
-    border-style: solid;
-    border-width: 3px;
-    border-radius: 10px;
-    position: relative;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: rgb(241, 241, 241);
-    width: 1370px;
-  }.criar-bobina p {
-    border-radius: 4px;
-    background-color: var(--primary-color);
-    color: white;
-    height: 100%;
-    padding: 2px 5px;
-  }
-
-  .selecionaMaterial {
-    display: inline-block;
-    margin-left: 20px;
-  }.selecionaLargura {
-    display: inline-block;
-    margin-left: 20px; 
-  }.selecionaEspessura {
-    display: inline-block;
-    margin-left: 20px; 
-  }#selecionaEspessuraBobina {
-    width: 50px;
-  }#selecionaLarguraBobina {
-    width: 60px;
-  }.selecionaPigmento {
-    display: inline-block;
-    margin-left: 20px;
-  }.selecionaPesoBruto {
-    display: inline-block;
-    margin-left: 20px;
-  }#selecionaPesoBruto {
-    width: 40px;
-  }.selecionaTubete {
-    display: inline-block;
-    margin-left: 20px;
-  }#selecionaTubete {
-    width: 40px;  
-  }.selecionaTipo {
-    display: inline-block;
-    margin-left: 20px;
-  }
-
-  .visualizarBobinaCriada {
-    position: relative;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    height: 40px;
-    width: 200px;
-  }.visualizarBobinaCriada:hover {
-    cursor: pointer;
-    background-color: white;
-    color: var(--primary-color);
-  }
-  
-  .informacoes-fixas-bobina-criada {
-    margin-left: 20px;
-    display: inline-block;
-  }.peso-liquido-bobina-criada {
-    margin-left: 5px;
-    display: inline-block;
-  }.informacoes-fixas-bobina-criada-codigo {
-    display: inline-block;
-    margin-left: 20px;
-  }.peso-liquido-bobina-criada p {
-    background-color: white;
-    color: var(--primary-color);
-  }
-  .codigo-bobina-criada {
-    display: inline-block;
-  }.codigo-bobina-criada p {
-    background-color: white;
-    color: var(--primary-color);
-  }
-
-  .molde-etiqueta {
-    border-style: solid;
-    border-width: 3px;
-    padding: 5px 5px;
-    display: block;
-    position: relative;
-    margin-right: auto;
-    margin-left: auto;
-    background-color: white;
-    border-radius: 15px;
-    width: 300px;
-    height: 150px;
-  }.informacoes-molde-direito p {
-    padding: 0;
-    padding-left: 4px;
-    color: black;
-    background-color: transparent;
-    border-style: solid;
-    border-width: 2px;
-    margin: 3px 0px;
-    width: 150px;
-    text-align: left;
-    font-size: 7pt;
-  }.materialExibidoCriacaoBobina {
-    border-radius: 4px;
-    padding-left: 4px;
-    padding-right: 4px;
-    text-align: center;
-    font-size: 8pt;
-    background-color: black;
-    color: white;
-    width: 150px;
-  }.informacoes-molde-direito {
-    position: relative;
-    top: -70px;
-    display: table-cell;
-  }.informacoes-molde-esquerdo {
-    position: relative;
-    left: 10px;
-    top: 5px;
-    display: table-cell;
-  }
-
-  #botaoCriaBobina {
-    background-color: white;
-    color: black;
-    position: relative;
-    margin-top: 20px;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    height: 40px;
-    width: 200px;
-  }#botaoCriaBobina:hover {
-    cursor: pointer;
-    background-color: var(--primary-color);
-    color: white;
-  }
-  .codigo-bobina-criada {
-    border-radius: 5px;
-    background-color: white;
-    color: var(--primary-color);
-  }#codBarras {
-    width: 120px;
-    height: auto;
-  }.qrCode {
-    position: relative;
-    margin-left: 22px;
-  }
-  #botaoFechaCriaBobina {
-    position: relative;
-    margin-left: 90%;
-    border-style: none;
-    background-color: red;
-    color: white;
-    height: 30px;
-  }#botaoFechaCriaBobina:hover {
-    cursor: pointer;
-    color: red;
-    background-color: white;
-  }
-
-  .apontar-bobina {
-    border-style: solid;
-    padding: 10px;
-    border-radius: 20px;
-    position: absolute;
-    left: .5%;
-    top: 550px;
-    background-color: white;
-    width: 97%;
-    height: 600px;
-    max-height: 600px;
-  }.apontar-bobina select {
-    width: 200px;
-    height: 30px;
-  }.apontar-bobina button {
-    width: 80px;
-    height: 25px;
-  }.apontar-bobina button:hover {
-    cursor: pointer;
-    background-color: white;
-    color: var(--primary-color);
-  }.apontar-bobina h3 {
-    color: var(--primary-color);
-  }
-
-  .tabelaProgApontarOverflow {
-    max-height: 550px;
-    overflow-y: scroll;
-  }
-
-  .btn-selecionar-apontamento:hover {
-    opacity: 65%;
-  }
-  
- #tabelaProgramacao-apontar-bobina thead {
-    font-size: 10pt;
-    font-weight: 700;
-    background-color: var(--primary-color);
-    color: white;
-    border-width: 3px;
-    height: 40px;
-  }#tabelaProgramacao-apontar-bobina tbody {
-    border-width: 3px;
-    background-color: rgb(241, 241, 241);
-    font-size: 8pt;
-  }#tabelaProgramacao-apontar-bobina tr th {
-    border-color: var(--primary-color-darker);
-    line-height: 15px;
-    padding: 0 3px;
-    border-style: solid;
-    border-width: 1px;
-    text-align: center;
-    max-width: 500px;
-  }#tabelaProgramacao-apontar-bobina table {
-    margin-top: 20px;
-    margin-left: auto;
-    margin-right: auto; 
-    border-spacing: 0px;
-  }
-
-  .apontar-selecionado {
-    border-radius: 20px;
-    width: 1200px;
-    border-width: 3px;
-    position: relative;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: transparent;
-    margin-top: -460px;
-  }
-
-.apontar {
+#nomeUsuario {
+  cursor: default;
   border-radius: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  background: rgb(47, 255, 116);
+  width: 60%;
+  text-align: center;
+  font-size: 20pt;
+  color: var(--primary-color);
+}
+
+#nomeUsuario:hover {
+  color:rgb(47, 255, 116);
+  background: var(--primary-color);
+}
+
+#escopo {
+  padding: 20px 20px 20px 0px;
+}
+
+.programacao {
+  color: var(--primary-color);
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 10px;
+  width: 100%;
+  background: white;
+  height: 840px;
+  max-height: 840px;
+}
+#sobe1 {
+  margin-top: -16%;
+} #desce1 {
+  margin-top: 2%;
+}
+
+#sobe2 {
+  margin-top: -1050px;
+}
+#sobe3 {
+  margin-top: -450px;
+}
+.programacao {
+  display: block;
+  padding: -10px 0px 10px 0px   ;
+}
+
+.programacao select, button {
+  border-radius: 6px;
+  display: inline;
+  margin: 0px 0px 10px .3%;
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.programacao select {
+  margin-left: -70px;
+  width: 200px;
+  font-size: 20pt;
+} .programacao select:hover {
+  color:var(--primary-color);
   background-color: white;
+}
+.programacao button {
+  cursor: pointer;
+  margin-left: 1%;
+  width: 100px;
+  font-size: 19pt;
+} .programacao button:hover {
+  color:var(--primary-color);
+  background-color: white;
+}
+
+.programacao p {
+  font-size: 20pt;
+  font-weight: 700;
+  padding: 18px 30px 0px 45px;
+}
+
+#maquina-selecionada {
+  display: inline-table;
+}
+
+.cabecalho-programacao {
+  display: inline-table;
+  width: 400px;
+}
+
+.fecharProg {
+  display: inline-table;
+}
+
+.fecharProg button{
+  display: list-item;
+  width: 150px;
+  background-color: rgb(247, 52, 52);
+  color: white;
+  border-color: transparent;
+  margin-left: 550px;
+}
+
+.fecharProg button:hover {
+  color: rgb(247, 52, 52);
+  border-color: rgb(247, 52, 52);
+}
+
+.maquina-programacao {
+  display: inline-table;
+  margin: 20px 20px;
+}
+
+.maquina-programacao p1 {
+  background-color: var(--primary-color);
+  padding: .3% 2%;
+  border-radius: 10px;
+  color: white;
+  font-size: 20pt;
+} #usuario-programacao {
+  cursor: default;
+  background-color: var(--primary-color-white);
+  font-weight: 700;
+  font-size: 12pt;
+  border-radius: 5px;
+  color: var(--primary-color-darker);
+} #usuario-programacao:hover {
+  color: var(--primary-color-white);
+  background-color: var(--primary-color-darker);
+}
+
+.nomeServicoDiv {
   position: relative;
   margin-left: auto;
   margin-right: auto;
-  height: 380px;
-  top: -180px;
-}.apontar button:hover {
+  width: 95%;
+  border-radius: 10px 0px 0px 10px;
+  background-color: white;
+  border-style: solid;
+  border-width: 2px;
+  border-color: rgb(143, 143, 143);
+  text-align: left;
+  font-size: 10pt;
+  line-height: 25px;
+  overflow-y: scroll;
+  height: 50px;
+}
+.nomeServico {
+  padding: 0 8px;
+  cursor: default;
+  background-color: darkgray;
+  color: white;
+  border-radius: 5px;
+  color: black;
+} .nomeServico:hover {
+  background-color: rgb(209, 209, 209);
+  color: var(--primary-color);
+}
+
+.config-programacao {
+  background-color: darkgray;
+  width: 296px;
+  line-height: 50px;
+  margin: 20px 0px;
+  border-radius: 10px;
+ } .config-programacao input {
+  margin-left: 0px;
+  border-radius: 5px;
+  border-color: transparent;
+  } .config-programacao button{
+    border-color: transparent;
+    width: 250px;
+    margin-left: 20px;
+  } #velocidade-op {
+    width: 50px;
+  } #metragem-op {
+    width: 55px;
+  } .config-programacao p2 {
+    margin-left: 10px;
+  }
+
+  .informacoes-fixas-op {
+    display: grid;
+  } .informacoes-fixas-op p2 {
+    margin-top: 3px;
+    line-height: 25px;
+    background-color: white;
+    width: 276px;
+    border-radius: 5px;
+  } .informacoes-fixas-op p2:hover {
+    color: white;
+    background-color: var(--primary-color);
+  }
+
+  .tbOverflow {
+    position: relative;
+    display: table-cell;
+  }
+
+#tabelaProgramacao {
+  display: block;
+  height: 680px;
+  overflow-y: scroll;
+  background-color: rgb(241, 241, 241);
+  position: relative;
+  left: 20px;
+  line-height: 500px;
+  font-size: 8pt;
+  border-style: solid;
+  border-width: 3px;
+  border-color: black;
+  border-radius: 7px;
+} #tabelaProgramacao table {
+  padding: 5px;
+  border-spacing: 0px;
+} #tabelaProgramacao thead {
+  font-size: 10pt;
+  font-weight: 700;
+  background-color: var(--primary-color);
+  color: white;
+  border-width: 3px;
+  height: 40px;
+} #tabelaProgramacao thead th {
+  border-style: solid;
+  border-color: var(--primary-color-darker);
+}
+#tabelaProgramacao tr th {
+  line-height: 15px;
+  padding: 0 3px;
+  border-style: solid;
+  border-width: 1px;
+  text-align: center;
+  max-width: 500px;
+}#tabelaProgramacao tbody th {
+  height: 35px;
+  opacity: 90%;
+}#tabelaProgramacao tbody th:hover {
+  opacity: 100%;
+  cursor: default;
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.bobinas {
+  border-radius: 10px;
+  padding: 0px 20px 20px;
+  position: relative;
+  width: 95%;
+  background-color: white;
+}
+
+.opcoesBobinas {
+  text-align: center;
+  height: 90%;
+  border-radius: 10px;
+  margin: 3% 3% 3%;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  margin-top: -3.2%;
+  width: 95%;
+} .opcoesBobinas button {
+  cursor: pointer;
+  height: 45px;
+  position: relative;
+  display: inline;
+  width: 21%;
+  margin: 1% 1% 1% 1%;
+  margin-left: 2.4%;
+} .opcoesBobinas button:hover {
+  color: var(--primary-color);
+  background-color: white;
+}.telaInicialBobinas {
+  background-color: red;
+  color: white;
+  border-style: none;
+}.telaInicialBobinas:hover {
+  background-color: white;
+  color: red;
+}
+
+.criar-bobina {
+  border-style: solid;
+  border-width: 3px;
+  border-radius: 10px;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: rgb(241, 241, 241);
+  width: 1370px;
+}.criar-bobina p {
+  border-radius: 4px;
+  background-color: var(--primary-color);
+  color: white;
+  height: 100%;
+  padding: 2px 5px;
+}
+
+.selecionaMaterial {
+  display: inline-block;
+  margin-left: 20px;
+}.selecionaLargura {
+  display: inline-block;
+  margin-left: 20px; 
+}.selecionaEspessura {
+  display: inline-block;
+  margin-left: 20px; 
+}#selecionaEspessuraBobina {
+  width: 50px;
+}#selecionaLarguraBobina {
+  width: 60px;
+}.selecionaPigmento {
+  display: inline-block;
+  margin-left: 20px;
+}.selecionaPesoBruto {
+  display: inline-block;
+  margin-left: 20px;
+}#selecionaPesoBruto {
+  width: 40px;
+}.selecionaTubete {
+  display: inline-block;
+  margin-left: 20px;
+}#selecionaTubete {
+  width: 40px;  
+}.selecionaTipo {
+  display: inline-block;
+  margin-left: 20px;
+}
+
+.visualizarBobinaCriada {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  height: 40px;
+  width: 200px;
+}.visualizarBobinaCriada:hover {
   cursor: pointer;
   background-color: white;
   color: var(--primary-color);
 }
-.apontar div {
-    display: inline-block;
-    font-weight: 700;
-}.apontar input {
-  border-radius: 5px;
-}.apontar input:hover {
-  background-color: var(--primary-color);
-  color: white;
+
+.informacoes-fixas-bobina-criada {
+  margin-left: 20px;
+  display: inline-block;
+}.peso-liquido-bobina-criada {
+  margin-left: 5px;
+  display: inline-block;
+}.informacoes-fixas-bobina-criada-codigo {
+  display: inline-block;
+  margin-left: 20px;
+}.peso-liquido-bobina-criada p {
+  background-color: white;
+  color: var(--primary-color);
 }
-.apontar-bobina-aba {
-  padding: 3px;
-  position: absolute;
-  top: 8px;
-  left: 440px;
-  width: 317px;
-  height: 355px;
-  background-color: rgb(239 239 239);
-  border-radius: 20px;
-  border-width: 2px;
-}.apontar-bobina-aba:hover {
-  background-color: rgb(199, 199, 199);
+.codigo-bobina-criada {
+  display: inline-block;
+}.codigo-bobina-criada p {
+  background-color: white;
+  color: var(--primary-color);
 }
-.apontar-bobina-aba input {
-  width: 40px;
-}#apontou {
-  width: 200px;
-}.apontar-bobina-aba {
-  display: block;
-}
-.tabela-apontar-bobinas-selecionado {
-  position: absolute;
-  margin-left: 780px;
-}.separarInfosApontamento {
-  height: 150px;
-}
-.molde-etiqueta-apontar {
+
+.molde-etiqueta {
   border-style: solid;
   border-width: 3px;
-  padding: 0px 0px;
+  padding: 5px 5px;
   display: block;
+  position: relative;
+  margin-right: auto;
+  margin-left: auto;
   background-color: white;
   border-radius: 15px;
   width: 300px;
   height: 150px;
-  margin-left: 5px;
-}.molde-etiqueta-apontar p {
-  position: relative;
-  padding: 1px;
-  display: inline-block;
+}.informacoes-molde-direito p {
+  padding: 0;
+  padding-left: 4px;
+  color: black;
+  background-color: transparent;
   border-style: solid;
-  border-width: 0.1px;
+  border-width: 2px;
+  margin: 3px 0px;
+  width: 150px;
+  text-align: left;
   font-size: 7pt;
-  line-height: 7px;
-  margin-top: 3px;
-  margin-left: 3px;
+}.materialExibidoCriacaoBobina {
+  border-radius: 4px;
+  padding-left: 4px;
+  padding-right: 4px;
+  text-align: center;
+  font-size: 8pt;
+  background-color: black;
+  color: white;
+  width: 150px;
+}.informacoes-molde-direito {
+  position: relative;
+  top: -70px;
+  display: table-cell;
+}.informacoes-molde-esquerdo {
+  position: relative;
+  left: 10px;
+  top: 5px;
+  display: table-cell;
 }
 
-.fixos-apontar-bobina {
-  width: 400px;
-  padding: 3px;
-  background-color: rgb(239 239 239);
-  border-radius: 20px;
-  border-width: 2px;
-  position: absolute;
-  height: 355px;
-  left: 20px;
-  top: 8px;
-}.fixos-apontar-bobina:hover {
-  background-color: rgb(199, 199, 199);
-}
-.fixos-apontar-bobina p {
-  overflow: hidden;
-  padding: 2px;
+#botaoCriaBobina {
   background-color: white;
-  font-size: 10pt;
-  border-style: solid;
-  border-color: black;
-  border-width: 2px;
-  line-height: 12px;
-  border-radius: 6px;
-  font-weight: 700
-}.fixos-apontar-bobina p:hover {
+  color: black;
+  position: relative;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  height: 40px;
+  width: 200px;
+}#botaoCriaBobina:hover {
+  cursor: pointer;
   background-color: var(--primary-color);
   color: white;
 }
-#cliche-apontar-selecioado {
-  width: 80%;
-  text-align: center;
-  padding: 2px;
-  background-color: black;
-  color: white;
-  line-height: 10px;
-}#volumes {
-  height: 55px;
-  width: 55px;
-  font-size: 25pt;
+.codigo-bobina-criada {
+  border-radius: 5px;
+  background-color: white;
+  color: var(--primary-color);
+}#codBarras {
+  width: 120px;
+  height: auto;
+}.qrCode {
+  position: relative;
+  margin-left: 22px;
 }
-#volume-apontar-selecioado {
-  line-height: 10px;
-  text-align: center;
-  height: 20px;
-  background-color: white;
-  font-weight: 700;
-  width: 10%;
-}#op-apontar-selecioado {
-    line-height: 10px;
-    text-align: center;
-    height: 10px;
-    background-color: white;
-    font-weight: 700;
-    width: 20%;
-}#material-apontar-selecioado {
-  line-height: 10px;
-  text-align: center;
-  height: 10px;
-  background-color: white;
-  font-weight: 700;
-  width: 30%;
-}#largura-apontar-selecioado {
-  line-height: 10px;
-  text-align: center;
-  height: 10px;
-  background-color: white;
-  font-weight: 700;
-  width: 15%;
-}#espessura-apontar-selecioado {
-  line-height: 10px;
-  text-align: center;
-  height: 10px;
-  background-color: white;
-  font-weight: 700;
-  width: 20%;
-}#pigmento-apontar-selecioado {
-  line-height: 10px;
-  text-align: center;
-  height: 20px;
-  background-color: white;
-  font-weight: 700;
-  width: 20%;
-}#tipo-apontar-selecioado {
-  line-height: 10px;
-  text-align: center;
-  height: 20px;
-  background-color: white;
-  font-weight: 700;
-  width: 18%;
-}#pesoBobina-apontar-selecioado {
-  line-height: 10px;
-  text-align: center;
-  height: 20px;
-  background-color: white;
-  font-weight: 700;
-  width: 22%;
-}#pesoSeparado-apontar-selecioado {
-  line-height: 10px;
-  text-align: center;
-  height: 20px;
-  background-color: white;
-  font-weight: 700;
-  width: 24%;
-}
-#codBarras-apontar {
-  margin-top: -5px;
-    width: 80px;
-    height: auto;
-    margin-left: 105px;
-}
-#botao-confirmacao-apontamento {
-  position: absolute;
-  height: 20px;
-  margin-top: 157px;
-  margin-left: -200px;
-  width: 90px;
-}
-
-#grafico-apontamento {
-  background-color: rgb(239, 239, 239);
-  border-radius: 10px;
-  position: absolute;
-  margin-top: 65px;
-}#grafico-apontamento:hover {
-  background-color: rgb(199, 199, 199);
-}
-
-.fechar-apontar-selecionado {
-  position: absolute;
-  margin-top: 350px;
-  margin-left: 320px;
-  width: 80px;
+#botaoFechaCriaBobina {
+  position: relative;
+  margin-left: 90%;
+  border-style: none;
   background-color: red;
   color: white;
-  border: none;
-}.fechar-apontar-selecionado:hover {
+  height: 30px;
+}#botaoFechaCriaBobina:hover {
+  cursor: pointer;
   color: red;
   background-color: white;
 }
 
+.apontar-bobina {
+  border-style: solid;
+  padding: 10px;
+  border-radius: 20px;
+  position: absolute;
+  left: .5%;
+  top: 550px;
+  background-color: white;
+  width: 97%;
+  height: 600px;
+  max-height: 600px;
+}.apontar-bobina select {
+  width: 200px;
+  height: 30px;
+}.apontar-bobina button {
+  width: 80px;
+  height: 25px;
+}.apontar-bobina button:hover {
+  cursor: pointer;
+  background-color: white;
+  color: var(--primary-color);
+}.apontar-bobina h3 {
+  color: var(--primary-color);
+}
+
+.tabelaProgApontarOverflow {
+  max-height: 550px;
+  overflow-y: scroll;
+}
+
+.btn-selecionar-apontamento:hover {
+  opacity: 65%;
+}
+
+#tabelaProgramacao-apontar-bobina thead {
+  font-size: 10pt;
+  font-weight: 700;
+  background-color: var(--primary-color);
+  color: white;
+  border-width: 3px;
+  height: 40px;
+}#tabelaProgramacao-apontar-bobina tbody {
+  border-width: 3px;
+  background-color: rgb(241, 241, 241);
+  font-size: 8pt;
+}#tabelaProgramacao-apontar-bobina tr th {
+  border-color: var(--primary-color-darker);
+  line-height: 15px;
+  padding: 0 3px;
+  border-style: solid;
+  border-width: 1px;
+  text-align: center;
+  max-width: 500px;
+}#tabelaProgramacao-apontar-bobina table {
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto; 
+  border-spacing: 0px;
+}
+
+.apontar-selecionado {
+  border-radius: 20px;
+  width: 1200px;
+  border-width: 3px;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: transparent;
+  margin-top: -460px;
+}
+
+.apontar {
+border-radius: 20px;
+background-color: white;
+position: relative;
+margin-left: auto;
+margin-right: auto;
+height: 380px;
+top: -180px;
+}.apontar button:hover {
+cursor: pointer;
+background-color: white;
+color: var(--primary-color);
+}
+.apontar div {
+  display: inline-block;
+  font-weight: 700;
+}.apontar input {
+border-radius: 5px;
+}.apontar input:hover {
+background-color: var(--primary-color);
+color: white;
+}
+.apontar-bobina-aba {
+padding: 3px;
+position: absolute;
+top: 8px;
+left: 440px;
+width: 317px;
+height: 355px;
+background-color: rgb(239 239 239);
+border-radius: 20px;
+border-width: 2px;
+}.apontar-bobina-aba:hover {
+background-color: rgb(199, 199, 199);
+}
+.apontar-bobina-aba input {
+width: 40px;
+}#apontou {
+width: 200px;
+}.apontar-bobina-aba {
+display: block;
+}
+.tabela-apontar-bobinas-selecionado {
+position: absolute;
+margin-left: 780px;
+}
+#tabelaApSel {
+  margin-left: auto;
+  margin-right: auto;
+}
+#tabelaApSel thead{
+  border-style: solid;
+  border-width: 0.5px;
+  background-color: var(--primary-color);;
+}#tabelaApSel thead th{
+  margin-left: 1px;
+  border-style: solid;
+  border-width: 0.5px;
+}#tabelaApSel button{
+  width: 100%;
+}#tabelaApSel button:hover{
+  cursor: pointer;
+  background-color: white;
+  color: var(--primary-color);
+  width: 100%;
+}.separarInfosApontamento {
+height: 150px;
+}
+.molde-etiqueta-apontar {
+border-style: solid;
+border-width: 3px;
+padding: 0px 0px;
+display: block;
+background-color: white;
+border-radius: 15px;
+width: 300px;
+height: 150px;
+margin-left: 5px;
+}.molde-etiqueta-apontar p {
+position: relative;
+padding: 1px;
+display: inline-block;
+border-style: solid;
+border-width: 0.1px;
+font-size: 7pt;
+line-height: 7px;
+margin-top: 3px;
+margin-left: 3px;
+}
+
+.fixos-apontar-bobina {
+width: 400px;
+padding: 3px;
+background-color: rgb(239 239 239);
+border-radius: 20px;
+border-width: 2px;
+position: absolute;
+height: 355px;
+left: 20px;
+top: 8px;
+}.fixos-apontar-bobina:hover {
+background-color: rgb(199, 199, 199);
+}
+.fixos-apontar-bobina p {
+overflow: hidden;
+padding: 2px;
+background-color: white;
+font-size: 10pt;
+border-style: solid;
+border-color: black;
+border-width: 2px;
+line-height: 12px;
+border-radius: 6px;
+font-weight: 700
+}.fixos-apontar-bobina p:hover {
+background-color: var(--primary-color);
+color: white;
+}
+#cliche-apontar-selecioado {
+width: 80%;
+text-align: center;
+padding: 2px;
+background-color: black;
+color: white;
+line-height: 10px;
+}#volumes {
+height: 55px;
+width: 55px;
+font-size: 25pt;
+}
+#volume-apontar-selecioado {
+line-height: 10px;
+text-align: center;
+height: 20px;
+background-color: white;
+font-weight: 700;
+width: 10%;
+}#op-apontar-selecioado {
+  line-height: 10px;
+  text-align: center;
+  height: 10px;
+  background-color: white;
+  font-weight: 700;
+  width: 20%;
+}#material-apontar-selecioado {
+line-height: 10px;
+text-align: center;
+height: 10px;
+background-color: white;
+font-weight: 700;
+width: 30%;
+}#largura-apontar-selecioado {
+line-height: 10px;
+text-align: center;
+height: 10px;
+background-color: white;
+font-weight: 700;
+width: 15%;
+}#espessura-apontar-selecioado {
+line-height: 10px;
+text-align: center;
+height: 10px;
+background-color: white;
+font-weight: 700;
+width: 20%;
+}#pigmento-apontar-selecioado {
+line-height: 10px;
+text-align: center;
+height: 20px;
+background-color: white;
+font-weight: 700;
+width: 20%;
+}#tipo-apontar-selecioado {
+line-height: 10px;
+text-align: center;
+height: 20px;
+background-color: white;
+font-weight: 700;
+width: 18%;
+}#pesoBobina-apontar-selecioado {
+line-height: 10px;
+text-align: center;
+height: 20px;
+background-color: white;
+font-weight: 700;
+width: 22%;
+}#pesoSeparado-apontar-selecioado {
+line-height: 10px;
+text-align: center;
+height: 20px;
+background-color: white;
+font-weight: 700;
+width: 24%;
+}
+#codBarras-apontar {
+margin-top: -5px;
+  width: 80px;
+  height: auto;
+  margin-left: 105px;
+}
+#botao-confirmacao-apontamento {
+position: absolute;
+height: 20px;
+margin-top: 157px;
+margin-left: -200px;
+width: 90px;
+}
+
+#grafico-apontamento {
+background-color: rgb(239, 239, 239);
+border-radius: 10px;
+position: absolute;
+margin-top: 65px;
+}#grafico-apontamento:hover {
+background-color: rgb(199, 199, 199);
+}
+
+.fechar-apontar-selecionado {
+position: absolute;
+margin-top: 350px;
+margin-left: 320px;
+width: 80px;
+background-color: red;
+color: white;
+border: none;
+}.fechar-apontar-selecionado:hover {
+color: red;
+background-color: white;
+}
+
 .tabela-bobinas-apontadas {
   background-color: white;
-  width: 600px;
+  width: 1180px;
   height: 300px;
   margin-top: 390px;
   border-radius: 20px;
@@ -944,116 +964,116 @@ form input, form label, form button {
 }
 
 .impressao {
-  padding: 0.5%;
-  position: absolute;
-  top: 60px;
-  background-color: rgb(0, 0, 0);
-  width: 96%;
-  height: 700px;
+padding: 0.5%;
+position: absolute;
+top: 60px;
+background-color: rgb(0, 0, 0);
+width: 96%;
+height: 700px;
 }
 
 .fechar-impressao {
-  float: right;
-  position: relative;
+float: right;
+position: relative;
 }
 
 .cabecalho-impressao {
-  margin-left: auto;
-  margin-right: auto;
-  padding: 5px;
-  display: flex;
-  width: 99%;
-  height: 11%;
-  background-color: red;
+margin-left: auto;
+margin-right: auto;
+padding: 5px;
+display: flex;
+width: 99%;
+height: 11%;
+background-color: red;
 }
 
 .cab-imp1 {
-  overflow-y: scroll;
-  width: 14%;
-  margin-left: .5%;
-  background-color: yellow;
-  height: 100%;
-  display: inline-block;
-  line-height: 100%;
+overflow-y: scroll;
+width: 14%;
+margin-left: .5%;
+background-color: yellow;
+height: 100%;
+display: inline-block;
+line-height: 100%;
 }.cab-imp1 p {
-  margin-top: -0.2%;
-  padding: 5px;
+margin-top: -0.2%;
+padding: 5px;
 }.cab-imp1 input {
-  width: 60%;
+width: 60%;
 }
 .cab-imp2 {
-  overflow-y: scroll;
-  width: 60%;
-  margin-left: .5%;
-  background-color: yellow;
-  height: 100%;
-  display: inline-block;
+overflow-y: scroll;
+width: 60%;
+margin-left: .5%;
+background-color: yellow;
+height: 100%;
+display: inline-block;
 }.cab-imp2 p{
-  border-style: solid;
-  border-width: 0.5px;
-  padding: 0.1%;
-  overflow: hidden;
-  margin: 0.3%;
-  line-height: 100%;
+border-style: solid;
+border-width: 0.5px;
+padding: 0.1%;
+overflow: hidden;
+margin: 0.3%;
+line-height: 100%;
 }
 .painel-impressao {
-  width: 26%;
-  margin-left: .5%;
-  background-color: yellow;
-  height: 100%;
-  display: inline-block;
+width: 26%;
+margin-left: .5%;
+background-color: yellow;
+height: 100%;
+display: inline-block;
 }
 
 .painel-botoes-impressao {
-  display: flex;
-  width: 100%;
-  background-color: orange;
+display: flex;
+width: 100%;
+background-color: orange;
 }
 
 .inclui-bobina-lisa {
-  border-radius: 20px;
-  padding: 20px;
-  align-content: center;
-  position: absolute;
-  top: 35%;
-  left: 35%;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: white;
-  width: 30%;
-  height: 200px;
+border-radius: 20px;
+padding: 20px;
+align-content: center;
+position: absolute;
+top: 35%;
+left: 35%;
+margin-left: auto;
+margin-right: auto;
+background-color: white;
+width: 30%;
+height: 200px;
 }.inclui-bobina-lisa p{
-  margin-top: 10px;
-  font-size: 18pt;
-  text-align: center;
+margin-top: 10px;
+font-size: 18pt;
+text-align: center;
 }
 .inclui-bobina-lisa input {
-  text-align: center;
-  font-size: 30pt;
-  width: 90%;
-  height: 10%;
-  padding: 20px 0;
+text-align: center;
+font-size: 30pt;
+width: 90%;
+height: 10%;
+padding: 20px 0;
 }.confirma-bobina-lisa {
-  width: 80%;
-  height: 50px;
-  margin-top: 5%;
+width: 80%;
+height: 50px;
+margin-top: 5%;
 }.fechar-inclui-bobina-lisa {
-  background-color: red;
-  max-width: 20%;
-  height: 50px;
+background-color: red;
+max-width: 20%;
+height: 50px;
 } 
 
 .aba1-imp {
-  margin-top: 0.5%;
-  display: inline-block;
-  background-color: greenyellow;
-  width: 36.7%;
-  height: 65%;
+margin-top: 0.5%;
+display: inline-block;
+background-color: greenyellow;
+width: 36.7%;
+height: 65%;
 }
 .aba2-imp {
-  margin-top: 0.5%;
-  display: inline-block;
-  background-color: greenyellow;
-  width: 36.7%;
-  height: 65%;
+margin-top: 0.5%;
+display: inline-block;
+background-color: greenyellow;
+width: 36.7%;
+height: 65%;
 }
