@@ -274,7 +274,7 @@
         <section class="cabecalho-impressao">
             <section class="cab-imp1">
                 <p>O.P.:<input type="number" class="op-impressao"></p>
-            <p>Máq.: 
+            <p class="maquinaImp">Máq.: 
                 <select class="maquina-impressao">
                     <option>IMP-01</option>
                     <option>IMP-02</option>
@@ -292,7 +292,8 @@
             <section class="painel-impressao"></section>      
         </section>
         <section class="painel-botoes-impressao">
-            <button onclick="incluirImpressa()">Nova bob. impressa</button>
+            <button class="abrir-inclui-lisa" onclick="incluirImpressa()">Nova bob. impressa</button>
+            <button class="finalizar-impressa" onclick="FinalizarImpressa()">Finalizar impressa</button>
         </section>
         <section class="inclui-bobina-lisa">
             <p>BOBINA LISA
@@ -305,8 +306,39 @@
         
         <section class="aba1-imp"></section>  
         <section class="aba2-imp"></section> 
-        <button class="fechar-impressao" onclick="fecharImpressao()">Tela inicial</button>    
+        <button class="fechar-impressao" onclick="fecharImpressao()">Tela inicial</button>   
+
+        <form class="lancarBobinaImpressa">
+            <div class="lancarBobinaImpressaAla1">
+                <p>Tubete<input type="number" class="tubeteLancaImpressa"></p>
+                <p>Peso Bruto<input type="number" class="PesoBrutoLancaImpressa"></p>
+                <p>Metros<input type="number" class="metrosLancaImpressa"></p>
+            </div>
+            <div class="lancarBobinaImpressaAla2">
+                <p>Perda ACERTO:<input type="number" class="tubeteLancaImpressa"></p>
+                <p>
+                    Perda IMP.<input type="number" class="PesoBrutoLancaImpressa">Motivo
+                    <select class="motivosPerdaImp">
+                        <option></option>
+                        <option>Faca estourou</option>
+                        <option>Acerto de cores</option>
+                        <option>Acerto de impressao</option>
+                    </select>
+                </p>
+                <p>
+                    Perda EXT.<input type="number" class="PesoBrutoLancaImpressa">Motivo
+                    <select class="motivosPerdaImp">
+                        <option></option>
+                        <option>Borda caída</option>
+                        <option>Falta de tratamento</option>
+                        <option>Bobina colada</option>
+                    </select>
+                </p>
+            </div>  
+            <button class="confirmarLancamentoImpressao">Ok</button>        
+        </form>
     </div> <!--impressao-->
+        
     
 
     <script src="./assets/js/moment.js" type="text/javascript"></script>
