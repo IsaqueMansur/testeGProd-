@@ -4,6 +4,12 @@
   --primary-color-white: rgb(47, 255, 116);
 }
 
+body button:hover {
+  cursor: pointer;
+  background-color: white;
+  color: var(--primary-color);
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap');
 
 .branco {
@@ -1001,6 +1007,15 @@ padding: 5px;
 }.cab-imp1 input {
 width: 60%;
 }
+.inputMaquinaImp {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  background-color: green;
+  color: white;
+  width: 80%;
+  font-size: 17pt;
+}
 .cab-imp2 {
 overflow-y: scroll;
 width: 60%;
@@ -1076,4 +1091,46 @@ display: inline-block;
 background-color: greenyellow;
 width: 36.7%;
 height: 65%;
+}
+
+#selecaoTabelaImp {
+  background-color: red;
+}
+.lancarBobinaImpressa {
+  position: absolute;
+  margin-top: -400px;
+  width: 60%;
+  text-align: center;
+  display: flex;
+  margin-left: 20%;
+  padding: 20px;
+  border-radius: 20px;
+  background-color: white;
+}
+
+.lancarBobinaImpressaAla1 {
+  font-size: 20pt;
+  color: white;
+  width: 30%;
+  background-color: purple;
+}.lancarBobinaImpressaAla1 input {
+  width: 80%;
+}
+.lancarBobinaImpressaAla2 {
+  height: 50%;
+  display: flex;
+  width: 60%;
+  background-color: rgb(199, 100, 199);
+}
+.lancarBobinaImpressaAla2 input {
+  border-radius: 10px;
+  width: 50%;
+}
+
+.confirmarLancamentoImpressao {
+  display: block;
+  margin-left: 5px;
+  height: 160px;
+  width: 10%;
+  margin-top: 0px;
 }
