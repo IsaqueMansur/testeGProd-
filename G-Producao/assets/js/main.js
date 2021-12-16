@@ -1,6 +1,5 @@
 google.load("visualization", "1", { packages: ["corechart"] });
 
-
 const usuarios = [
     {usuario: 'adm', senha:'123'},
     {usuario: 'teste teste teste', senha: '123'}
@@ -810,7 +809,6 @@ let usarDigitado;
 let indexOp;
 
 function visualizarEtiquetaApontada() {
-  
     volumeDigitado = Number(document.querySelector("#volumes").value);
     bobinaDigitada = Number(document.querySelector("#apontou").value);
     usarDigitado = Number(document.querySelector("#pesoUtilizado").value);
@@ -819,7 +817,6 @@ function visualizarEtiquetaApontada() {
         alert("Bobina inexistente !!!");
         return;
     }else {
-        maquinasProg[indexMaquina][indexOp].bobinas.push('v');
         document.querySelector("#cliche-apontar-selecioado").textContent = achaOp.cliche;
         document.querySelector("#op-apontar-selecioado").textContent = achaOp.op;
         document.querySelector("#material-apontar-selecioado").textContent = listaBobinas[indexBobina].material;
@@ -830,7 +827,7 @@ function visualizarEtiquetaApontada() {
         document.querySelector("#pesoBobina-apontar-selecioado").textContent = `Peso bobina: ${listaBobinas[indexBobina].pesoLiquido} Kg's`;
         document.querySelector("#pesoSeparado-apontar-selecioado").textContent = `Peso separado: ${usarDigitado} Kg's`;
        
-        numeroBobinaAtual = maquinasProg[indexMaquina][indexOp].bobinas.length; 
+        numeroBobinaAtual = maquinasProg[indexMaquina][indexOp].bobinas.length + 1; 
         let volumesOk = `VOL.: ${numeroBobinaAtual}/${volumeDigitado}`;
         document.querySelector("#volume-apontar-selecioado").textContent = volumesOk;
 
@@ -838,17 +835,12 @@ function visualizarEtiquetaApontada() {
 
         document.querySelector(".molde-etiqueta-apontar").style.visibility = "visible";
         document.querySelector("#botao-confirmacao-apontamento").style.visibility = "visible";
-    }
-
-
-}
+    };
+};
 function confirmarApontamento() {  
     document.querySelector("#botao-confirmacao-apontamento").style.visibility = "hidden";
     document.querySelector(".molde-etiqueta-apontar").style.visibility = "hidden";
  
-    index = (maquinasProg[indexMaquina][indexOp].bobinas).findIndex((bob) => bob.bobinas == 'v');   
-    maquinasProg[indexMaquina][indexOp].bobinas.splice(index, 1);
-
     let bobinaApontada = {codigo: Number(document.querySelector("#apontou").value), pesoA: usarDigitado};
     maquinasProg[indexMaquina][indexOp].pesoSeparado += usarDigitado;
     maquinasProg[indexMaquina][indexOp].bobinas.push(bobinaApontada);
@@ -1006,7 +998,7 @@ function tabelaApontamentoSelecionado(iOp, iMaquina, pesoSeparado) {
             document.createTextNode(maquinasProg[iMaquina][iOp].bobinas[i].pesoA),
             document.createTextNode(
                 `Apontado por: ${usuario}, em 
-                ${registro.toLocaleDateString("pt-BR", {dateStyle: "short"})},
+                ${registro.toLocaleDateString("pt-BR", {dateStyle: "short"})} às 
                 ${registro.toLocaleTimeString("pt-BR", {timeStyle: "short"})}.`)
         ];
             
@@ -1024,44 +1016,106 @@ function tabelaApontamentoSelecionado(iOp, iMaquina, pesoSeparado) {
 
 // ---------IMPRESSÃO----------
 
+const tudoImpressao = document.querySelector(".tudo-impressao");
+
 function impressao() {
+    document.querySelector(".finalizar-impressa").style.visibility = "hidden"
+    document.querySelector(".abrir-inclui-lisa").style.visibility = "hidden"
+    document.querySelector(".cliche-impressao").textContent = "Clichê:"
+    document.querySelector(".detalhes-impressao").textContent = "Detalhes:"
+    document.querySelector(".metros-impressao").textContent = "Metragem ideal:"
+    document.querySelector(".op-impressao").value = null;
+    document.querySelector(".bobina-lisa-adicionada").value = null;
     document.querySelector(".inclui-bobina-lisa").style.visibility = "hidden";
-    document.querySelector(".impressao").style.visibility = "visible";
+    document.querySelector(".impressao").removeAttribute("style");
+    document.querySelector(".op-impressao").removeAttribute("readonly");
+    document.querySelector(".op-impressao").style.backgroundColor = "white";
+    document.querySelector(".op-impressao").style.color = "black"
+    document.querySelector(".maquina-impressao").removeAttribute("style");
+    document.querySelector(".maquinaImp").removeAttribute("style");
+    document.querySelector(".confirmar-impressao").style.visibility = "visible"
+    try {
+        document.querySelector("#tabelaImpressas").remove();
+        document.querySelector("#tabelaLisas").remove();
+    } catch {
+
+    }
 };
+
 function fecharImpressao() {
+    document.querySelector(".lancarBobinaImpressa").reset();
     fecharIncluiLisa()
-    document.querySelector(".impressao").style.visibility = "hidden";
+    document.querySelector(".impressao").style.display = "none";
+    try {
+        document.querySelector(".inputMaquinaImp").remove();
+    } catch {
+
+    }
 };
 
 function ConfirmarImpressao() {
-
     let opDigitada = document.querySelector(".op-impressao").value;
     let iOp = ops.findIndex((ordem) => ordem.op == opDigitada);
 
     this.op = function() {
         return opDigitada
-    } 
+    };
 
-    document.querySelector(".cliche-impressao").textContent = `Clichê:   ${ops[iOp].nomeServico}`
-
-    document.querySelector(".detalhes-impressao").textContent = `Detalhes:   
-    Material: ${ops[iOp].material} | 
-    Larg.: ${ops[iOp].largura}mm | 
-    Comp.: ${ops[iOp].comprimento}mm | 
-    Esp.: ${ops[iOp].espessura}mm | 
-    Solda: ${ops[iOp].tipoSolda}`
-
-    document.querySelector(".metros-impressao").textContent = `Metragem ideal: ${ops[iOp].metros} metros`;
-
+    let indexMaquina = null;
     this.maquina = function() {
-        let indexMaquina = null;
         let maquinaSelecionada = document.querySelector(".maquina-impressao").value;
         if (maquinaSelecionada === 'IMP-01') indexMaquina = 0;
         if (maquinaSelecionada === 'IMP-02') indexMaquina = 1;
         if (maquinaSelecionada === 'IMP-03') indexMaquina = 2;
         return indexMaquina;
-    }
-}
+    };
+    this.maquina();
+
+    let indexOpNaProducoes = producoes[this.maquina()].findIndex((ordem) => ordem.op == opDigitada);
+
+    let verificaProgramacao = maquinasProg[indexMaquina].find(obj => obj.op == opDigitada);
+    if (!verificaProgramacao) {
+        alert("Esta O.P. não está programada para tal máquina. Verifique as informações ou consulte o líder.")
+    } else {
+        document.querySelector(".cliche-impressao").textContent = `Clichê:   ${ops[iOp].nomeServico}`
+        document.querySelector(".detalhes-impressao").textContent = `Detalhes:   
+        Material: ${ops[iOp].material} | 
+        Larg.: ${ops[iOp].largura}mm | 
+        Comp.: ${ops[iOp].comprimento}mm | 
+        Esp.: ${ops[iOp].espessura}mm | 
+        Solda: ${ops[iOp].tipoSolda}`
+        document.querySelector(".metros-impressao").textContent = `Metragem ideal: ${ops[iOp].metros} metros`;
+        document.querySelector(".confirmar-impressao").style.visibility = "hidden";
+        confirmaOpImpressao();
+        try {
+            let ultimaBobina = producoes[this.maquina()][indexOpNaProducoes].producoes.length;
+            if (producoes[this.maquina()][indexOpNaProducoes].producoes[ultimaBobina - 1].dataTermino.data === null) {
+                document.querySelector(".finalizar-impressa").style.visibility = "visible";
+            } else {
+                document.querySelector(".finalizar-impressa").style.visibility = "hidden";
+                document.querySelector(".abrir-inclui-lisa").style.visibility = "visible";
+            }
+            apagaTabelaImpressas(producoes[this.maquina()][indexOpNaProducoes].producoes)
+            apagaTabelaLisas(producoes[this.maquina()][indexOpNaProducoes].producoes, 0);
+        }
+        catch {
+            document.querySelector(".abrir-inclui-lisa").style.visibility = "visible";
+        }
+    };
+};
+
+function confirmaOpImpressao() {
+    document.querySelector(".op-impressao").readOnly = "true";
+    document.querySelector(".op-impressao").style.backgroundColor = "green";
+    document.querySelector(".op-impressao").style.color = "white";
+    let valorMaquina = document.createTextNode(document.querySelector(".maquina-impressao").value);
+    document.querySelector(".maquina-impressao").style.display = "none"
+    document.querySelector(".maquinaImp").style.display = "none"
+    let p = document.createElement("p");
+    p.className = "inputMaquinaImp"
+    p.appendChild(valorMaquina);
+    document.querySelector(".cab-imp1").appendChild(p);   
+};
 
 let producoes = [[], [], []];
 
@@ -1076,6 +1130,7 @@ function incluirImpressa() {
     let valorAcima;
 
     let procura = function() {
+        document.querySelector(".bobina-lisa-adicionada").focus();
         bobDigitada.style.backgroundColor = "white";
         bobDigitada.addEventListener('keyup', function(e) {
             let bobina = listaBobinas.findIndex((codigo) => codigo.codigo == bobDigitada.value);
@@ -1166,12 +1221,148 @@ function confirmaEntradaLisa() {
             let indiceEmProducoes = producoes[indexMaq][indexOpNaProducoes].producoes.length;
             producoes[indexMaq][indexOpNaProducoes].producoes[indiceEmProducoes -1].bobinasLisas.push(listaBobinas[bobinaLisaCadastrada]);
             bobinasImpressas.push(producoes[indexMaq][indexOpNaProducoes].producoes[indiceEmProducoes -1]);
-            tabelaImpressas(producoes[indexMaq][indexOpNaProducoes].producoes);
+
+            document.querySelector(".finalizar-impressa").style.visibility = "visible";
+            document.querySelector(".abrir-inclui-lisa").style.visibility = "hidden";
+
+            apagaTabelaImpressas(producoes[indexMaq][indexOpNaProducoes].producoes);
+            apagaTabelaLisas(producoes[indexMaq][indexOpNaProducoes].producoes, 0);
         };
     };
 };
 
+function apagaTabelaImpressas(producoes) {
+    try {
+        let table = document.querySelector("#tabelaImpressas");
+        table.remove();
+        tabelaImpressas(producoes); 
+    } catch {
+        tabelaImpressas(producoes);
+    } 
+};
+
 function tabelaImpressas(producoes) {
     let local = document.querySelector(".aba1-imp");
-    console.log(producoes);
+    let table = document.createElement('table');
+    table.id = "tabelaImpressas";
+    let headTabela = document.createElement('thead');
+    headTabela.id = "headImpressas";
+    let bodyTabela = document.createElement('tbody');
+    bodyTabela.id = "bodyImpressas";
+
+    head = ['Código', 'Tubete', 'Peso Líquido', 'Metros', 'Status'];
+        let trC = document.createElement("tr");
+
+        for (let o in head) {
+            let th = document.createElement("th");
+            th.appendChild(document.createTextNode(head[o]));
+            trC.appendChild(th);
+            headTabela.appendChild(trC);
+        };
+
+        for (let i in producoes) {
+            let tr = document.createElement("tr");
+
+            let status = document.createTextNode("Não Finalizada");
+
+            tabela = [
+                document.createTextNode(producoes[i].codigo),
+                document.createTextNode(producoes[i].tubete),
+                document.createTextNode(producoes[i].pesoLiquido),
+                document.createTextNode(producoes[i].metros),
+                document.createTextNode(status.textContent)      
+            ];
+
+            for (let o in tabela) {
+                let th = document.createElement("th");
+                th.appendChild(tabela[o]);
+                if (th.textContent === "Não Finalizada") {
+                    th.className = `Status - ${i}`;      
+                };
+                tr.className = i;
+                tr.appendChild(th);
+                bodyTabela.appendChild(tr);
+            };       
+        };
+        table.appendChild(headTabela);
+        table.appendChild(bodyTabela);
+        local.appendChild(table);  
+        mostraLisasImpressas(producoes);    
+        try {
+            let local = document.querySelector("#bodyImpressas");
+            local.children[0].id = "selecaoTabelaImp"
+        } catch {
+
+        }  
+};
+
+let mostraLisasImpressas = function(producoes) {
+    let local = document.querySelector("#bodyImpressas");
+    local.addEventListener('click', function(e) {
+        try {
+            let encontraAntiga = document.querySelector("#selecaoTabelaImp");
+            encontraAntiga.id = null;
+        } catch {
+
+        }
+        let linhaSelecionada = e.composedPath()[1];
+        linhaSelecionada.id = "selecaoTabelaImp";
+        let localDoIndex = e.composedPath();
+        let index = localDoIndex[1].className;
+        apagaTabelaLisas(producoes, index);   
+    });
+};
+
+function apagaTabelaLisas(producoes, index) {
+    try {
+        let table = document.querySelector("#tabelaLisas");
+        table.remove();
+        tabelaLisas(producoes, index); 
+    } catch {
+        tabelaLisas(producoes, index)
+    }   
+};
+
+function tabelaLisas(producoes, index) {
+    let local = document.querySelector(".aba2-imp");
+    let table = document.createElement('table');
+    table.id = "tabelaLisas";
+    let headTabela = document.createElement('thead');
+    headTabela.id = "headLisas";
+    let bodyTabela = document.createElement('tbody');
+    bodyTabela.id = "bodyLisas";
+
+    head = ['Código', 'Peso Líquido', 'Material', 'Largura', 'Espessura'];
+        let trC = document.createElement("tr");
+
+        for (let o in head) {
+            let th = document.createElement("th");
+            th.appendChild(document.createTextNode(head[o]));
+            trC.appendChild(th);
+            headTabela.appendChild(trC);
+        };
+
+        let bobina = producoes[index].bobinasLisas;
+
+        for (let i in producoes[index].bobinasLisas) {
+            let tr = document.createElement("tr");
+
+            tabela = [
+                document.createTextNode(bobina[i].codigo),
+                document.createTextNode(bobina[i].pesoLiquido),
+                document.createTextNode(bobina[i].material),
+                document.createTextNode(bobina[i].largura),
+                document.createTextNode(bobina[i].espessura)
+            ];
+
+            for (let i in tabela) {
+                let th = document.createElement("th");
+                th.appendChild(tabela[i]);
+                tr.appendChild(th);
+                headTabela.appendChild(tr);
+            }
+            table.appendChild(bodyTabela);
+            table.appendChild(headTabela);
+            local.appendChild(table);
+        };
 };
