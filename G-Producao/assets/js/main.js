@@ -1019,18 +1019,19 @@ function tabelaApontamentoSelecionado(iOp, iMaquina, pesoSeparado) {
 const tudoImpressao = document.querySelector(".tudo-impressao");
 
 function impressao() {
-    document.querySelector(".finalizar-impressa").style.visibility = "hidden"
-    document.querySelector(".abrir-inclui-lisa").style.visibility = "hidden"
-    document.querySelector(".cliche-impressao").textContent = "Clichê:"
-    document.querySelector(".detalhes-impressao").textContent = "Detalhes:"
-    document.querySelector(".metros-impressao").textContent = "Metragem ideal:"
+    document.querySelector(".lancarBobinaImpressa").style.visibility = "hidden";
+    document.querySelector(".finalizar-impressa").style.visibility = "hidden";
+    document.querySelector(".abrir-inclui-lisa").style.visibility = "hidden";
+    document.querySelector(".cliche-impressao").textContent = "Clichê:";
+    document.querySelector(".detalhes-impressao").textContent = "Detalhes:";
+    document.querySelector(".metros-impressao").textContent = "Metragem ideal:";
     document.querySelector(".op-impressao").value = null;
     document.querySelector(".bobina-lisa-adicionada").value = null;
     document.querySelector(".inclui-bobina-lisa").style.visibility = "hidden";
     document.querySelector(".impressao").removeAttribute("style");
     document.querySelector(".op-impressao").removeAttribute("readonly");
     document.querySelector(".op-impressao").style.backgroundColor = "white";
-    document.querySelector(".op-impressao").style.color = "black"
+    document.querySelector(".op-impressao").style.color = "black";
     document.querySelector(".maquina-impressao").removeAttribute("style");
     document.querySelector(".maquinaImp").removeAttribute("style");
     document.querySelector(".confirmar-impressao").style.visibility = "visible"
@@ -1048,6 +1049,7 @@ function fecharImpressao() {
     document.querySelector(".impressao").style.display = "none";
     try {
         document.querySelector(".inputMaquinaImp").remove();
+        document.querySelector("#grafico-lisas").style.visibility = "hidden";
     } catch {
 
     }
@@ -1072,6 +1074,10 @@ function ConfirmarImpressao() {
     this.maquina();
 
     let indexOpNaProducoes = producoes[this.maquina()].findIndex((ordem) => ordem.op == opDigitada);
+
+    this.indexOpProd = function() {
+        return indexOpNaProducoes
+    };
 
     let verificaProgramacao = maquinasProg[indexMaquina].find(obj => obj.op == opDigitada);
     if (!verificaProgramacao) {
@@ -1105,6 +1111,11 @@ function ConfirmarImpressao() {
 };
 
 function confirmaOpImpressao() {
+    try {
+        document.querySelector(".inputMaquinaImp").remove();
+    } catch {
+
+    }
     document.querySelector(".op-impressao").readOnly = "true";
     document.querySelector(".op-impressao").style.backgroundColor = "green";
     document.querySelector(".op-impressao").style.color = "white";
@@ -1139,7 +1150,6 @@ function incluirImpressa() {
                     bobDigitada.style.backgroundColor = "green";
                     botaoAdciocionaBob.style.visibility = "visible";
                 }else {
-                    alert("Bobina não encontrada");
                     bobDigitada.style.backgroundColor = "red";
                     botaoAdciocionaBob.style.visibility = "hidden";
                 };
@@ -1148,7 +1158,6 @@ function incluirImpressa() {
             if ((bobDigitada.value).length > 13) {
                 bobDigitada.style.backgroundColor = "red";
                 bobDigitada.value = valorAcima;
-                alert("Limite de 13 dígitos. Bobina não encontrada.");
             };
         });
 
@@ -1193,6 +1202,7 @@ function confirmaEntradaLisa() {
             tubete: 0,
             pesoBruto: 0,
             pesoLiquido: 0,
+            perdaAcerto: 0,
             perdaImp: 0,
             perdaExt: 0,
             bobinasLisas: [],
@@ -1203,7 +1213,8 @@ function confirmaEntradaLisa() {
             dataTermino: {
                 data: null,
                 hora: null
-            }
+            },
+            status: "Não Finalizada"
         };        
         
         let bobinaLisaCadastrada = listaBobinas.findIndex((bob) => bob.codigo == bobinaDigitada);
@@ -1263,7 +1274,7 @@ function tabelaImpressas(producoes) {
         for (let i in producoes) {
             let tr = document.createElement("tr");
 
-            let status = document.createTextNode("Não Finalizada");
+            let status = document.createTextNode(producoes[i].status);
 
             tabela = [
                 document.createTextNode(producoes[i].codigo),
@@ -1276,8 +1287,8 @@ function tabelaImpressas(producoes) {
             for (let o in tabela) {
                 let th = document.createElement("th");
                 th.appendChild(tabela[o]);
-                if (th.textContent === "Não Finalizada") {
-                    th.className = `Status - ${i}`;      
+                if (th.textContent === ("Não Finalizada" || "Finalizada")) {
+                    th.className = `posi${i}`;      
                 };
                 tr.className = i;
                 tr.appendChild(th);
@@ -1318,8 +1329,10 @@ function apagaTabelaLisas(producoes, index) {
         let table = document.querySelector("#tabelaLisas");
         table.remove();
         tabelaLisas(producoes, index); 
+        graficoLisas(producoes, index);
     } catch {
-        tabelaLisas(producoes, index)
+        tabelaLisas(producoes, index);
+        graficoLisas(producoes, index);
     }   
 };
 
@@ -1365,4 +1378,136 @@ function tabelaLisas(producoes, index) {
             table.appendChild(headTabela);
             local.appendChild(table);
         };
+};
+
+function graficoLisas(producoes, index) {
+    try {
+        document.querySelector("#grafico-lisas").remove();
+        document.querySelector("#grafico-lisas").style.visibility = "visible";
+    } catch {
+        
+    }
+    
+    let pesoLisas = producoes[index].bobinasLisas.map((valor) => valor)
+    .map((valor => valor.pesoLiquido))
+    .reduce(((ac, valor) => ac + valor),0);
+    let pesoImpresso = producoes[index].pesoLiquido;
+    let perdasAcerto = producoes[index].perdaAcerto;
+    let perdasImp = producoes[index].perdaImp;
+    let perdasExt = producoes[index].perdaExt;
+    let perdas = (perdasAcerto + perdasExt + perdasImp);
+    let local = document.querySelector(".aba2-imp");
+    let div = document.createElement("div");
+    div.id = "grafico-lisas";
+    local.appendChild(div);
+
+    GraficoPizza3(div.id, pesoImpresso, pesoLisas, perdas);
+};
+
+function GraficoPizza3(local, v1, v2, v3) {
+
+    let pieData = google.visualization.arrayToDataTable([
+      ['Situações', 'Números'],
+      ['Produção',   v1],
+      ['Entrada lisa',   v2],
+      ['Perda',   v3]
+    ]);
+    // pie chart options
+    let pieOptions = {
+      backgroundColor: 'transparent',
+      pieHole: 0,
+      colors: [ "green", 
+                "blue",
+                "red" 
+            ],
+      pieSliceText: 'value',
+      tooltip: {
+        fontName: "Verdana",
+        text: 'percentage'
+      },
+      fontName: "Verdana",
+      chartArea: {
+        right: 23,
+        width: '100%',
+        height: '90%'
+      },
+      legend: {
+        textStyle: {
+          color: "black",
+          fontName: "Verdana",
+          fontSize: 20
+        }
+      }
+    };
+    // draw pie chart
+    let pieChart = new google.visualization.PieChart(document.getElementById(local));
+    pieChart.draw(pieData, pieOptions);
+  }
+        
+
+function campoFinalizarImpressa() {
+    document.querySelector(".lancarBobinaImpressa").style.visibility = "visible";
+};
+
+const formularioLancaImp = document.querySelector(".lancarBobinaImpressa");
+formularioLancaImp.addEventListener('submit', (e) => {
+    e.preventDefault();
+});
+
+
+function confirmarLancamentoImpressao() {
+    let achaIndex = new ConfirmarImpressao();
+    let indexOpProd = achaIndex.indexOpProd();
+    let maquina = achaIndex.maquina();
+    let ultimaProd = producoes[maquina][indexOpProd].producoes.length;
+
+    let pesoTubete = Number(document.querySelector(".tubeteLancaImpressa").value);
+    let pesoBruto = Number(document.querySelector(".pesoBrutoLancaImpressa").value);
+    let metragem = Number(document.querySelector(".metrosLancaImpressa").value);
+    let perdaAcerto = Number(document.querySelector(".acertoLancaImpressa").value);
+    let perdaImp = Number(document.querySelector(".perdaImpLancaImpressa").value);
+    let perdaExt = Number(document.querySelector(".perdaExtLancaImpressa").value);
+    let motivoPerdaImp = document.querySelector(".motivosPerdaImp").value;
+    let motivoPerdaExt = document.querySelector(".motivosPerdaExt").value;
+
+    if ((pesoTubete && pesoBruto && metragem) <= 0) {
+        alert("Tubete, Peso bruto ou Metragem incorretos !");
+        return
+    } else {
+        if (perdaImp > 0 && motivoPerdaImp === '') {
+            alert("Motivo 'Perda IMP' vázio !");
+            return
+        }
+
+        if (perdaExt > 0 && motivoPerdaExt === '') {
+            alert("Motivo 'Perda Ext' vázio !");
+            return
+        } else {
+            autorizaLancamentoImp();
+        }
+    };
+
+    function autorizaLancamentoImp() {
+        let dataTermino = new Date();
+        let dataOk = dataTermino.toLocaleDateString("pt-BR", {dateStyle: "short"});
+        let horaOk = dataTermino.toLocaleTimeString("pt-BR", {timeStyle: "short"});
+
+        producoes[maquina][indexOpProd].producoes[ultimaProd -1].tubete = pesoTubete;
+        producoes[maquina][indexOpProd].producoes[ultimaProd -1].pesoBruto = pesoBruto;
+        producoes[maquina][indexOpProd].producoes[ultimaProd -1].metros = metragem;
+        producoes[maquina][indexOpProd].producoes[ultimaProd -1].perdaAcerto = perdaAcerto;
+        producoes[maquina][indexOpProd].producoes[ultimaProd -1].perdaImp = perdaImp;
+        producoes[maquina][indexOpProd].producoes[ultimaProd -1].perdaExt = perdaExt;
+        producoes[maquina][indexOpProd].producoes[ultimaProd -1].pesoLiquido = (pesoBruto - pesoTubete);
+        producoes[maquina][indexOpProd].producoes[ultimaProd -1].dataTermino.data = dataOk;
+        producoes[maquina][indexOpProd].producoes[ultimaProd -1].dataTermino.hora = horaOk;
+        producoes[maquina][indexOpProd].producoes[ultimaProd -1].status = "Finalizada";
+
+        document.querySelector(".lancarBobinaImpressa").style.visibility = "hidden";
+        document.querySelector(".lancarBobinaImpressa").reset();
+
+        apagaTabelaImpressas(producoes[maquina][indexOpProd].producoes);
+    };
+
+    
 };
