@@ -1079,22 +1079,39 @@ height: 50px;
 } 
 
 .aba1-imp {
-margin-top: 0.5%;
-display: inline-block;
-background-color: greenyellow;
-width: 36.7%;
-height: 65%;
+  padding: 20px;
+  margin-top: 0.5%;
+  display: inline-block;
+  background-color: greenyellow;
+  width: 36.7%;
+  height: 65%;
 }
 .aba2-imp {
-margin-top: 0.5%;
-display: inline-block;
-background-color: greenyellow;
-width: 36.7%;
-height: 65%;
+  justify-self: center;
+  padding: 20px;
+  margin-top: 0.5%;
+  display: inline-block;
+  background-color: greenyellow;
+  width: 36.7%;
+  height: 65%;
 }
 
 #selecaoTabelaImp {
   background-color: red;
+}
+
+#tabelaLisas {
+  overflow-y: scroll;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+  border-radius: 10px;
+  padding: 5px;
+  max-height: 200px;
+  height: 200px;
+  width: 95%;
+}#tabelaLisas thead tr{
+  overflow-y: scroll;
 }
 .lancarBobinaImpressa {
   position: absolute;
@@ -1133,4 +1150,13 @@ height: 65%;
   height: 160px;
   width: 10%;
   margin-top: 0px;
+}
+
+#grafico-lisas {
+  margin-top: 55px;
+  border-radius: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+  width: 95%;
 }
