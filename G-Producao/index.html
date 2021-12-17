@@ -293,31 +293,35 @@
         </section>
         <section class="painel-botoes-impressao">
             <button class="abrir-inclui-lisa" onclick="incluirImpressa()">Nova bob. impressa</button>
-            <button class="finalizar-impressa" onclick="FinalizarImpressa()">Finalizar impressa</button>
+            <button class="finalizar-impressa" onclick="campoFinalizarImpressa()">Finalizar impressa</button>
         </section>
+
+        <section class="aba1-imp"></section> 
+
+        <section class="aba2-imp">
+            <div id="grafico-lisas"></div>
+        </section> 
+
         <section class="inclui-bobina-lisa">
             <p>BOBINA LISA
             <input class="bobina-lisa-adicionada">
             <button onclick="confirmaEntradaLisa()" class="confirma-bobina-lisa">Confirmar</button>
             <button onclick="fecharIncluiLisa()" class="fechar-inclui-bobina-lisa">Cancelar</button>
-            </p>
-            
+            </p>   
         </section>
         
-        <section class="aba1-imp"></section>  
-        <section class="aba2-imp"></section> 
         <button class="fechar-impressao" onclick="fecharImpressao()">Tela inicial</button>   
 
         <form class="lancarBobinaImpressa">
             <div class="lancarBobinaImpressaAla1">
                 <p>Tubete<input type="number" class="tubeteLancaImpressa"></p>
-                <p>Peso Bruto<input type="number" class="PesoBrutoLancaImpressa"></p>
+                <p>Peso Bruto<input type="number" class="pesoBrutoLancaImpressa"></p>
                 <p>Metros<input type="number" class="metrosLancaImpressa"></p>
             </div>
             <div class="lancarBobinaImpressaAla2">
-                <p>Perda ACERTO:<input type="number" class="tubeteLancaImpressa"></p>
+                <p>Perda ACERTO:<input type="number" class="acertoLancaImpressa"></p>
                 <p>
-                    Perda IMP.<input type="number" class="PesoBrutoLancaImpressa">Motivo
+                    Perda IMP.<input type="number" class="perdaImpLancaImpressa">Motivo
                     <select class="motivosPerdaImp">
                         <option></option>
                         <option>Faca estourou</option>
@@ -326,8 +330,8 @@
                     </select>
                 </p>
                 <p>
-                    Perda EXT.<input type="number" class="PesoBrutoLancaImpressa">Motivo
-                    <select class="motivosPerdaImp">
+                    Perda EXT.<input type="number" class="perdaExtLancaImpressa">Motivo
+                    <select class="motivosPerdaExt">
                         <option></option>
                         <option>Borda caída</option>
                         <option>Falta de tratamento</option>
@@ -335,7 +339,7 @@
                     </select>
                 </p>
             </div>  
-            <button class="confirmarLancamentoImpressao">Ok</button>        
+            <button type="submit" onclick="confirmarLancamentoImpressao()" class="confirmarLancamentoImpressao">Ok</button>        
         </form>
     </div> <!--impressao-->
         
