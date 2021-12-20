@@ -1055,7 +1055,7 @@ function fecharImpressao() {
     }
 };
 
-function ConfirmarImpressao() {
+function ConfirmarImpressao(indexSelecionado) {
     let opDigitada = document.querySelector(".op-impressao").value;
     let iOp = ops.findIndex((ordem) => ordem.op == opDigitada);
 
@@ -1083,6 +1083,12 @@ function ConfirmarImpressao() {
     if (!verificaProgramacao) {
         alert("Esta O.P. não está programada para tal máquina. Verifique as informações ou consulte o líder.")
     } else {
+
+        this.producao = function() {
+            return producoes[this.maquina()][indexOpNaProducoes].producoes
+        };
+
+
         document.querySelector(".cliche-impressao").textContent = `Clichê:   ${ops[iOp].nomeServico}`
         document.querySelector(".detalhes-impressao").textContent = `Detalhes:   
         Material: ${ops[iOp].material} | 
@@ -1101,8 +1107,8 @@ function ConfirmarImpressao() {
                 document.querySelector(".finalizar-impressa").style.visibility = "hidden";
                 document.querySelector(".abrir-inclui-lisa").style.visibility = "visible";
             }
-            apagaTabelaImpressas(producoes[this.maquina()][indexOpNaProducoes].producoes)
-            apagaTabelaLisas(producoes[this.maquina()][indexOpNaProducoes].producoes, 0);
+            apagaTabelaImpressas(producoes[this.maquina()][indexOpNaProducoes].producoes, indexSelecionado)
+            apagaTabelaLisas(producoes[this.maquina()][indexOpNaProducoes].producoes, ultimaBobina - 1);
         }
         catch {
             document.querySelector(".abrir-inclui-lisa").style.visibility = "visible";
@@ -1132,7 +1138,18 @@ let producoes = [[], [], []];
 
 let bobinasImpressas = [];
 
-function incluirImpressa() {
+var indexTemporario = false;
+
+function incluirImpressa(indexSel) {
+
+    if (indexSel >= 0) {
+        avaliaInclusaoLisa = true;
+        indexTemporario = indexSel;
+    } else {
+        avaliaInclusaoLisa = false;
+        indexTemporario = false;
+    }
+    
     document.querySelector(".inclui-bobina-lisa").style.visibility = "visible";
     let bobDigitada = document.querySelector(".bobina-lisa-adicionada");
     let botaoAdciocionaBob = document.querySelector(".confirma-bobina-lisa");
@@ -1169,6 +1186,8 @@ function fecharIncluiLisa() {
     document.querySelector(".confirma-bobina-lisa").style.visibility = "hidden";
 };
 
+var avaliaInclusaoLisa;
+
 function confirmaEntradaLisa() {
     document.querySelector(".inclui-bobina-lisa").style.visibility = "hidden";
     document.querySelector(".confirma-bobina-lisa").style.visibility = "hidden";
@@ -1182,6 +1201,20 @@ function confirmaEntradaLisa() {
     if (indexOpNaProgramacao < 0) {
         alert("Esta O.P. não está programada para essa máquina")
         return
+    } else if (avaliaInclusaoLisa === true) { 
+        let indexOpNaProducoes = producoes[indexMaq].findIndex((ordem) => ordem.op == op);
+        let indiceEmProducoes = producoes[indexMaq][indexOpNaProducoes].producoes.length;
+        let bobinaLisaCadastrada = listaBobinas.findIndex((bob) => bob.codigo == bobinaDigitada);
+
+        if (bobinaLisaCadastrada < 0) {
+            alert("Bobina Inexistente");
+            return
+        } else {
+            producoes[indexMaq][indexOpNaProducoes].producoes[indexTemporario].bobinasLisas.push(listaBobinas[bobinaLisaCadastrada]);
+            apagaTabelaImpressas(producoes[indexMaq][indexOpNaProducoes].producoes);
+            apagaTabelaLisas(producoes[indexMaq][indexOpNaProducoes].producoes, indiceEmProducoes -1);
+        }
+
     } else {
         let dataCadastro = new Date();
         let dataFormatoOk = dataCadastro.toLocaleDateString("pt-BR", {dateStyle: "short"});
@@ -1193,7 +1226,7 @@ function confirmaEntradaLisa() {
             geraCodigo = ultimoValor + 1;
         } catch {
             geraCodigo = 5000000000001;
-        };
+        };  
 
         let prod = {
             codigo: geraCodigo,
@@ -1231,28 +1264,46 @@ function confirmaEntradaLisa() {
 
             let indiceEmProducoes = producoes[indexMaq][indexOpNaProducoes].producoes.length;
             producoes[indexMaq][indexOpNaProducoes].producoes[indiceEmProducoes -1].bobinasLisas.push(listaBobinas[bobinaLisaCadastrada]);
-            bobinasImpressas.push(producoes[indexMaq][indexOpNaProducoes].producoes[indiceEmProducoes -1]);
 
+
+            if (avaliaInclusaoLisa === true) {
+                try {
+                    ultimaLinhaTabImp();
+                    graficoLisas(producoes[indexMaq][indexOpNaProducoes].producoes, indiceEmProducoes -1, true);
+                } catch {
+    
+                };     
+
+            } else if (avaliaInclusaoLisa === false) {
+                bobinasImpressas.push(producoes[indexMaq][indexOpNaProducoes].producoes[indiceEmProducoes -1]);
+                apagaTabelaImpressas(producoes[indexMaq][indexOpNaProducoes].producoes);
+                apagaTabelaLisas(producoes[indexMaq][indexOpNaProducoes].producoes, indiceEmProducoes -1);
+                try {
+                    ultimaLinhaTabImp();
+                    graficoLisas(producoes[indexMaq][indexOpNaProducoes].producoes, indiceEmProducoes -1, true);
+                } catch {
+    
+                };  
+            }
+          
             document.querySelector(".finalizar-impressa").style.visibility = "visible";
             document.querySelector(".abrir-inclui-lisa").style.visibility = "hidden";
-
-            apagaTabelaImpressas(producoes[indexMaq][indexOpNaProducoes].producoes);
-            apagaTabelaLisas(producoes[indexMaq][indexOpNaProducoes].producoes, 0);
+            document.querySelector(".bobina-lisa-adicionada").value = '';
         };
     };
 };
 
-function apagaTabelaImpressas(producoes) {
+function apagaTabelaImpressas(producoes, indexSelecionado) {
     try {
         let table = document.querySelector("#tabelaImpressas");
         table.remove();
-        tabelaImpressas(producoes); 
+        tabelaImpressas(producoes, indexSelecionado); 
     } catch {
-        tabelaImpressas(producoes);
+        tabelaImpressas(producoes, indexSelecionado);
     } 
 };
 
-function tabelaImpressas(producoes) {
+function tabelaImpressas(producoes, indexSelecionado = 0) {
     let local = document.querySelector(".aba1-imp");
     let table = document.createElement('table');
     table.id = "tabelaImpressas";
@@ -1287,9 +1338,9 @@ function tabelaImpressas(producoes) {
             for (let o in tabela) {
                 let th = document.createElement("th");
                 th.appendChild(tabela[o]);
-                if (th.textContent === ("Não Finalizada" || "Finalizada")) {
+                if ((th.textContent === "Não Finalizada") || (th.textContent === "Finalizada")) {
                     th.className = `posi${i}`;      
-                };
+                }
                 tr.className = i;
                 tr.appendChild(th);
                 bodyTabela.appendChild(tr);
@@ -1301,7 +1352,7 @@ function tabelaImpressas(producoes) {
         mostraLisasImpressas(producoes);    
         try {
             let local = document.querySelector("#bodyImpressas");
-            local.children[0].id = "selecaoTabelaImp"
+            local.children[indexSelecionado].id = "selecaoTabelaImp"
         } catch {
 
         }  
@@ -1330,9 +1381,12 @@ function apagaTabelaLisas(producoes, index) {
         table.remove();
         tabelaLisas(producoes, index); 
         graficoLisas(producoes, index);
+        tabelaInfosImp(producoes, index);
+        
     } catch {
         tabelaLisas(producoes, index);
         graficoLisas(producoes, index);
+        tabelaInfosImp(producoes, index);
     }   
 };
 
@@ -1380,7 +1434,13 @@ function tabelaLisas(producoes, index) {
         };
 };
 
-function graficoLisas(producoes, index) {
+function graficoLisas(producoes, index, verifica) {
+    if (verifica === true) {
+        setTimeout( function() {
+            index = (producoes.length -1);
+            graficoLisas(producoes, index);
+        }, 100);
+    };
     try {
         document.querySelector("#grafico-lisas").remove();
         document.querySelector("#grafico-lisas").style.visibility = "visible";
@@ -1405,7 +1465,6 @@ function graficoLisas(producoes, index) {
 };
 
 function GraficoPizza3(local, v1, v2, v3) {
-
     let pieData = google.visualization.arrayToDataTable([
       ['Situações', 'Números'],
       ['Produção',   v1],
@@ -1427,7 +1486,7 @@ function GraficoPizza3(local, v1, v2, v3) {
       },
       fontName: "Verdana",
       chartArea: {
-        right: 23,
+        right: 180,
         width: '100%',
         height: '90%'
       },
@@ -1435,18 +1494,31 @@ function GraficoPizza3(local, v1, v2, v3) {
         textStyle: {
           color: "black",
           fontName: "Verdana",
-          fontSize: 20
+          fontSize: 15,
+          left: 5
         }
       }
     };
-    // draw pie chart
     let pieChart = new google.visualization.PieChart(document.getElementById(local));
     pieChart.draw(pieData, pieOptions);
-  }
-        
+  };
 
+function ultimaLinhaTabImp(){
+    let localProducao = new ConfirmarImpressao();
+    let prod = localProducao.producao();
+    let linhaSelecioada = document.querySelector(`.posi${prod.length -1}`).parentElement;
+    let encontraAntiga = document.querySelector("#selecaoTabelaImp");
+    encontraAntiga.id = null;
+    linhaSelecioada.id = "selecaoTabelaImp";
+};
+        
 function campoFinalizarImpressa() {
     document.querySelector(".lancarBobinaImpressa").style.visibility = "visible";
+    try {
+        ultimaLinhaTabImp()       
+    } catch {
+
+    }
 };
 
 const formularioLancaImp = document.querySelector(".lancarBobinaImpressa");
@@ -1454,13 +1526,11 @@ formularioLancaImp.addEventListener('submit', (e) => {
     e.preventDefault();
 });
 
-
 function confirmarLancamentoImpressao() {
     let achaIndex = new ConfirmarImpressao();
     let indexOpProd = achaIndex.indexOpProd();
     let maquina = achaIndex.maquina();
     let ultimaProd = producoes[maquina][indexOpProd].producoes.length;
-
     let pesoTubete = Number(document.querySelector(".tubeteLancaImpressa").value);
     let pesoBruto = Number(document.querySelector(".pesoBrutoLancaImpressa").value);
     let metragem = Number(document.querySelector(".metrosLancaImpressa").value);
@@ -1478,14 +1548,13 @@ function confirmarLancamentoImpressao() {
             alert("Motivo 'Perda IMP' vázio !");
             return
         }
-
         if (perdaExt > 0 && motivoPerdaExt === '') {
             alert("Motivo 'Perda Ext' vázio !");
             return
         } else {
-            autorizaLancamentoImp();
+            autorizaLancamentoImp();       
         }
-    };
+};
 
     function autorizaLancamentoImp() {
         let dataTermino = new Date();
@@ -1507,7 +1576,50 @@ function confirmarLancamentoImpressao() {
         document.querySelector(".lancarBobinaImpressa").reset();
 
         apagaTabelaImpressas(producoes[maquina][indexOpProd].producoes);
-    };
-
-    
+        graficoLisas(producoes[maquina][indexOpProd].producoes, ultimaProd -1, true);
+        ultimaLinhaTabImp();
+    };   
 };
+
+function tabelaInfosImp(producoes, index) {
+    try {
+        document.querySelector(".tbodyTabInfosImp").remove();
+    } catch {
+
+    }
+    
+    const local = document.querySelector(".tabela-informacoes-imp");
+    let tbody = document.createElement("tbody");
+    tbody.className = "tbodyTabInfosImp";
+    let tr = document.createElement("tr");
+
+    let listaTabela = [
+        producoes[index].operador,
+        producoes[index].dataInicio.data,
+        producoes[index].dataInicio.hora,
+        producoes[index].dataTermino.data,  
+        producoes[index].dataTermino.hora
+     ];
+
+    for (let i in listaTabela) {
+        let th = document.createElement("th");
+        th.appendChild(document.createTextNode(listaTabela[i]));
+        tr.appendChild(th);
+    }
+    tbody.appendChild(tr);
+    local.appendChild(tbody);
+}
+
+function adicionarBobinaLisa() {
+    let encontraLinha = document.querySelector("#selecaoTabelaImp");
+    let infos = new ConfirmarImpressao(encontraLinha.className);
+    let maquina = infos.maquina();
+    let indexOpProd =  infos.indexOpProd();
+    if (producoes[maquina][indexOpProd].producoes[encontraLinha.className].status === "Finalizada") {
+        alert("Esta produção já está finalizada !!!")
+        return
+    } else {
+        avaliaInclusaoLisa = false;
+        incluirImpressa(encontraLinha.className); 
+    }
+}
