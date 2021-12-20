@@ -1101,6 +1101,7 @@ height: 50px;
 }
 
 #tabelaLisas {
+  margin-top: 15px;
   overflow-y: scroll;
   margin-left: auto;
   margin-right: auto;
@@ -1108,7 +1109,7 @@ height: 50px;
   border-radius: 10px;
   padding: 5px;
   max-height: 200px;
-  height: 200px;
+  height: 180px;
   width: 95%;
 }#tabelaLisas thead tr{
   overflow-y: scroll;
@@ -1153,7 +1154,16 @@ height: 50px;
 }
 
 #grafico-lisas {
-  margin-top: 55px;
+  margin-top: 15px;
+  border-radius: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+  width: 95%;
+}
+
+.tabela-informacoes-imp {
+  margin-top: 0px;
   border-radius: 20px;
   margin-left: auto;
   margin-right: auto;
