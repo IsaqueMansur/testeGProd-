@@ -12,6 +12,16 @@ body button:hover {
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap');
 
+.vazio {
+  font-size: 7pt;
+  border-radius: 30%;
+  color: black;
+  background-color: transparent;
+  border:black;
+  border-style: solid;
+  border-width: .5px;
+}
+
 .branco {
 font-size: 7pt;
 border-radius: 30%;
@@ -972,10 +982,11 @@ background-color: white;
 .impressao {
 padding: 0.5%;
 position: absolute;
-top: 60px;
-background-color: rgb(0, 0, 0);
+top: 50px;
+background-color: rgb(255, 255, 255);
 width: 96%;
 height: 700px;
+border-radius: 20px;
 }
 
 .fechar-impressao {
@@ -990,17 +1001,17 @@ padding: 5px;
 display: flex;
 width: 99%;
 height: 11%;
-background-color: red;
+background-color: var(--primary-color);
 }
 
 .cab-imp1 {
-overflow-y: scroll;
-width: 14%;
-margin-left: .5%;
-background-color: yellow;
-height: 100%;
-display: inline-block;
-line-height: 100%;
+  border-radius: 10px;
+  width: 14%;
+  margin-left: .5%;
+  background-color: rgb(199, 199, 199);
+  height: 100%;
+  display: inline-block;
+  line-height: 100%;
 }.cab-imp1 p {
 margin-top: -0.2%;
 padding: 5px;
@@ -1017,32 +1028,45 @@ width: 60%;
   font-size: 17pt;
 }
 .cab-imp2 {
-overflow-y: scroll;
-width: 60%;
-margin-left: .5%;
-background-color: yellow;
-height: 100%;
-display: inline-block;
+  border-radius: 10px;
+  width: 60%;
+  margin-left: .5%;
+  background-color: rgb(199, 199, 199);
+  height: 100%;
+  display: inline-block;
 }.cab-imp2 p{
-border-style: solid;
-border-width: 0.5px;
-padding: 0.1%;
-overflow: hidden;
-margin: 0.3%;
-line-height: 100%;
+  background-color: white;
+  border-style: solid;
+  border-width: 0.5px;
+  padding: 0.1%;
+  overflow: hidden;
+  margin: 0.45%;
+  line-height: 110%;
+  border-radius: 5px;
+  font-size: 11pt;
 }
 .painel-impressao {
-width: 26%;
-margin-left: .5%;
-background-color: yellow;
-height: 100%;
-display: inline-block;
+  border-radius: 10px;
+  width: 26%;
+  margin-left: .5%;
+  background-color: rgb(199, 199, 199);
+  height: 100%;
+  display: inline-block;
 }
 
 .painel-botoes-impressao {
-display: flex;
-width: 100%;
-background-color: orange;
+  border-radius: 10px;
+  margin-top: 7px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5px 0px;
+  display: flex;
+  width: 99.7%;
+  background-color: var(--primary-color);
+}
+.painel-botoes-impressao button{
+  margin-top: 10px;
+  height: 25px;
 }
 
 .inclui-bobina-lisa {
@@ -1079,25 +1103,54 @@ height: 50px;
 } 
 
 .aba1-imp {
+  border-radius: 20px;
   padding: 20px;
   margin-top: 0.5%;
   display: inline-block;
-  background-color: greenyellow;
+  background-color: var(--primary-color);
   width: 36.7%;
   height: 65%;
 }
+.tabela-impressas{
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
+  background-color: white;
+  height: 438px;
+  border-radius: 10px;
+}
+
+#tabelaImpressas {
+  display: block;
+  width: 100%;
+  height: 435px;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-y: scroll;
+  border-style: solid;
+  border-width: 2px;
+}#tabelaImpressas thead {
+  background-color: var(--primary-color);
+  color: white;
+  font-size: 15pt;
+}
+#tabelaImpressas tbody tr {
+  font-size: 12pt;
+}
+
 .aba2-imp {
-  justify-self: center;
+  border-radius: 20px;
   padding: 20px;
   margin-top: 0.5%;
   display: inline-block;
-  background-color: greenyellow;
+  background-color: var(--primary-color);
   width: 36.7%;
   height: 65%;
 }
 
 #selecaoTabelaImp {
-  background-color: red;
+  background-color: var(--primary-color-white);
 }
 
 #tabelaLisas {
@@ -1169,4 +1222,19 @@ height: 50px;
   margin-right: auto;
   background-color: white;
   width: 95%;
+}
+#painelCoresImp {
+  padding: 5px 8px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+}
+#painelCoresImp div {
+  text-align: center;
+  align-items: center;
+  border-radius: 10px;
+  width: 12.5%;
+  height: 60px;
+  max-width: 12%;
+  margin-left: 2px;
 }
