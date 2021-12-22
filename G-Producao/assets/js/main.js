@@ -27,7 +27,7 @@ const ops = [{
     pistas: 1, 
     imagens: 2, 
     cilindro: 480,
-    cores: ['branco', 'amarelo', 'magenta', 'cyan', 'p485', 'p355', , 'preto']},
+    cores: ['branco', 'amarelo', 'magenta', 'cyan', 'p485', 'p355', '', 'preto']},
     {
         op: 300002, 
         nomeServico: 'QUEIJO MUSSARELA TESTE 4KG', 
@@ -44,14 +44,14 @@ const ops = [{
         pistas: 1, 
         imagens: 1, 
         cilindro: 460,
-        cores: ['branco', 'amarelo', 'magenta', 'cyan', 'p485', , 'p021' , 'preto']},
+        cores: ['branco', 'amarelo', 'magenta', 'cyan', 'p485', '', 'p021' , 'preto']},
 ];
 
 document.querySelector(".container-tela-inicial").style.visibility = "hidden";
 document.querySelector(".programacao").style.visibility = "hidden";
 document.querySelector(".bobinas").style.visibility = "hidden";
 document.querySelector("#botaoCriaBobina").style.visibility = "hidden";
-document.querySelector(".impressao").style.visibility = "hidden";
+document.querySelector(".impressao").style.display = "none";
 
 const pegaErroUsuario = document.querySelector("#erroUsuario");
 const erroUsuario = "<div class='erro1' id='erroUsuario'>Usuário incorreto</div>"
@@ -418,8 +418,9 @@ function criaTabela(listaTab, listaOps) {
         for (let i in ops) {
             let t = document.createElement('th');
             t.className = (ops[i]);
-            if (ops[i] === undefined) {
+            if (ops[i] === undefined || ops[i] === '') {
                 t.appendChild(document.createTextNode('Vázio'));
+                t.className += " vazio";
                 tr.appendChild(t);
             } else {
                 t.appendChild(document.createTextNode(ops[i]));
@@ -1019,6 +1020,7 @@ function tabelaApontamentoSelecionado(iOp, iMaquina, pesoSeparado) {
 const tudoImpressao = document.querySelector(".tudo-impressao");
 
 function impressao() {
+    document.documentElement.style.overflow = 'hidden';
     document.querySelector(".lancarBobinaImpressa").style.visibility = "hidden";
     document.querySelector(".finalizar-impressa").style.visibility = "hidden";
     document.querySelector(".abrir-inclui-lisa").style.visibility = "hidden";
@@ -1044,6 +1046,14 @@ function impressao() {
 };
 
 function fecharImpressao() {
+    document.documentElement.style.overflow = 'visible';
+    try {
+        document.querySelector("#painelCoresImp").remove();
+        document.querySelector(".tbodyTabInfosImp").remove();
+    }
+    catch {
+        
+    }   
     document.querySelector(".lancarBobinaImpressa").reset();
     fecharIncluiLisa()
     document.querySelector(".impressao").style.display = "none";
@@ -1098,7 +1108,7 @@ function ConfirmarImpressao(indexSelecionado) {
         Solda: ${ops[iOp].tipoSolda}`
         document.querySelector(".metros-impressao").textContent = `Metragem ideal: ${ops[iOp].metros} metros`;
         document.querySelector(".confirmar-impressao").style.visibility = "hidden";
-        confirmaOpImpressao();
+        confirmaOpImpressao(verificaProgramacao);
         try {
             let ultimaBobina = producoes[this.maquina()][indexOpNaProducoes].producoes.length;
             if (producoes[this.maquina()][indexOpNaProducoes].producoes[ultimaBobina - 1].dataTermino.data === null) {
@@ -1109,6 +1119,7 @@ function ConfirmarImpressao(indexSelecionado) {
             }
             apagaTabelaImpressas(producoes[this.maquina()][indexOpNaProducoes].producoes, indexSelecionado)
             apagaTabelaLisas(producoes[this.maquina()][indexOpNaProducoes].producoes, ultimaBobina - 1);
+            setas(producoes[this.maquina()][indexOpNaProducoes].producoes);
         }
         catch {
             document.querySelector(".abrir-inclui-lisa").style.visibility = "visible";
@@ -1116,12 +1127,41 @@ function ConfirmarImpressao(indexSelecionado) {
     };
 };
 
-function confirmaOpImpressao() {
+function painelImp(op) {
+    try {
+        document.querySelector("#painelCoresImp").remove();
+    } catch {
+
+    }
+    let local = document.querySelector(".painel-impressao");
+    let section = document.createElement("section");
+    section.id = "painelCoresImp";
+    let ordemP = ops.find((ordem) => ordem.op == op.op);
+    
+    for (let i in ordemP.cores) {
+        let div = document.createElement("div");
+        let cor = document.createTextNode(ordemP.cores[i]);
+        if (ordemP.cores[i] === '') {
+            div.className += "vazio";
+            div.textContent = "Vázio";
+        } else {
+            div.className += ordemP.cores[i];
+        }
+        div.className += " colorPainelImp"
+        div.appendChild(cor);
+        section.appendChild(div);
+    }
+    local.appendChild(section);
+};
+
+function confirmaOpImpressao(op) {
     try {
         document.querySelector(".inputMaquinaImp").remove();
     } catch {
 
     }
+    painelImp(op);
+    document.querySelector(".painel-impressao").reset();
     document.querySelector(".op-impressao").readOnly = "true";
     document.querySelector(".op-impressao").style.backgroundColor = "green";
     document.querySelector(".op-impressao").style.color = "white";
@@ -1192,7 +1232,12 @@ function confirmaEntradaLisa() {
     document.querySelector(".inclui-bobina-lisa").style.visibility = "hidden";
     document.querySelector(".confirma-bobina-lisa").style.visibility = "hidden";
     let bobinaDigitada = document.querySelector(".bobina-lisa-adicionada").value;
-    let maquina = new ConfirmarImpressao();
+    try {
+        var indexAddLisa = document.querySelector("#selecaoTabelaImp").className;
+    } catch {
+        
+    }
+    let maquina = new ConfirmarImpressao(indexAddLisa);
     let indexMaq = maquina.maquina();
     let op = maquina.op();
 
@@ -1203,7 +1248,6 @@ function confirmaEntradaLisa() {
         return
     } else if (avaliaInclusaoLisa === true) { 
         let indexOpNaProducoes = producoes[indexMaq].findIndex((ordem) => ordem.op == op);
-        let indiceEmProducoes = producoes[indexMaq][indexOpNaProducoes].producoes.length;
         let bobinaLisaCadastrada = listaBobinas.findIndex((bob) => bob.codigo == bobinaDigitada);
 
         if (bobinaLisaCadastrada < 0) {
@@ -1211,8 +1255,8 @@ function confirmaEntradaLisa() {
             return
         } else {
             producoes[indexMaq][indexOpNaProducoes].producoes[indexTemporario].bobinasLisas.push(listaBobinas[bobinaLisaCadastrada]);
-            apagaTabelaImpressas(producoes[indexMaq][indexOpNaProducoes].producoes);
-            apagaTabelaLisas(producoes[indexMaq][indexOpNaProducoes].producoes, indiceEmProducoes -1);
+            apagaTabelaImpressas(producoes[indexMaq][indexOpNaProducoes].producoes, indexAddLisa);
+            apagaTabelaLisas(producoes[indexMaq][indexOpNaProducoes].producoes, indexAddLisa);
         }
 
     } else {
@@ -1269,7 +1313,7 @@ function confirmaEntradaLisa() {
             if (avaliaInclusaoLisa === true) {
                 try {
                     ultimaLinhaTabImp();
-                    graficoLisas(producoes[indexMaq][indexOpNaProducoes].producoes, indiceEmProducoes -1, true);
+                    graficoLisas(producoes[indexMaq][indexOpNaProducoes].producoes, indexAddLisa, true);
                 } catch {
     
                 };     
@@ -1303,8 +1347,8 @@ function apagaTabelaImpressas(producoes, indexSelecionado) {
     } 
 };
 
-function tabelaImpressas(producoes, indexSelecionado = 0) {
-    let local = document.querySelector(".aba1-imp");
+function tabelaImpressas(producoes, indexSelecionado = (producoes.length -1)) {
+    let local = document.querySelector(".tabela-impressas");
     let table = document.createElement('table');
     table.id = "tabelaImpressas";
     let headTabela = document.createElement('thead');
@@ -1471,10 +1515,9 @@ function GraficoPizza3(local, v1, v2, v3) {
       ['Entrada lisa',   v2],
       ['Perda',   v3]
     ]);
-    // pie chart options
     let pieOptions = {
       backgroundColor: 'transparent',
-      pieHole: 0,
+      pieHole: 0.6,
       colors: [ "green", 
                 "blue",
                 "red" 
@@ -1495,7 +1538,7 @@ function GraficoPizza3(local, v1, v2, v3) {
           color: "black",
           fontName: "Verdana",
           fontSize: 15,
-          left: 5
+          left: 5,
         }
       }
     };
@@ -1622,4 +1665,52 @@ function adicionarBobinaLisa() {
         avaliaInclusaoLisa = false;
         incluirImpressa(encontraLinha.className); 
     }
-}
+};
+
+function setas(producoes) {
+    let body= document.querySelector("body");
+    body.addEventListener("keyup", function(e) {
+
+        let local = document.querySelector(".impressao"); 
+
+        if (local.style.display !== "none") {
+        }   
+        if (e.keyCode === 38 || e.keyCode === 83 || e.keyCode === 98) {
+            try {
+                let linhaSel = document.querySelector("#selecaoTabelaImp");
+            
+                let index = Number(linhaSel.children[4].className.split("posi")[1]);
+                if (index === 0) {
+
+                } else {
+                    let linhaRecebe = document.querySelector(`.posi${index - 1}`);
+                    console.log(linhaRecebe)
+                    linhaSel.children[4].parentElement.id = null;
+                    linhaRecebe.parentElement.id = "selecaoTabelaImp"
+                    apagaTabelaImpressas(producoes, index -1);
+                    apagaTabelaLisas(producoes, index -1);    
+                }
+            } catch {
+        }
+    }
+    if (e.keyCode === 40 || e.keyCode === 87 || e.keyCode === 104) {
+        try {
+            let linhaSel = document.querySelector("#selecaoTabelaImp");
+            
+            let index = Number(linhaSel.children[4].className.split("posi")[1]);
+            if (index === producoes.length -1) {
+
+            } else {
+                let linhaRecebe = document.querySelector(`.posi${index + 1}`);
+                linhaSel.children[4].parentElement.id = null;
+                linhaRecebe.parentElement.id = "selecaoTabelaImp"
+                apagaTabelaImpressas(producoes, index +1);
+                apagaTabelaLisas(producoes, index +1);  
+            }
+        } catch {
+
+        }
+    }
+    
+});
+};
