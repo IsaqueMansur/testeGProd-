@@ -34,7 +34,7 @@
             <button type="submit" onclick="programacao()">Programação</button>
             <button type="submit" onclick="bobinas()">Bobinas</button>
             <button type="submit" onclick="impressao()">Impressão</button>
-            <button type="submit" onclick="d()">Resultados</button>
+            <button type="submit" onclick="resultados()">Resultados</button>
         </form>
     </section>
 
@@ -316,6 +316,7 @@
                     </thead>
                 </table>
             </div>
+            <div class="tabela-lisas"></div>
         </section> 
 
         <section class="inclui-bobina-lisa">
@@ -358,6 +359,18 @@
             <button type="submit" onclick="confirmarLancamentoImpressao()" class="confirmarLancamentoImpressao">Ok</button>        
         </form>
     </div> <!--impressao-->
+    <div class="resultados"> <!--resultados-->
+        <div class="cab-resultados">
+            <h4>Tipo de relatório:
+                <select class="tipo-resultado">
+                    <option>Todas as máquinas</option>
+                    <option>Máquina específica</option>
+                </select> 
+
+            </h4>
+        </div>
+        <button onclick="fecharResultados()">Tela inicial</button>
+    </div> <!--resultados-->
         
     
 
