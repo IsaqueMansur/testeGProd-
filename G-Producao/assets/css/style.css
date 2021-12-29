@@ -1017,6 +1017,7 @@ margin-top: -0.2%;
 padding: 5px;
 }.cab-imp1 input {
 width: 60%;
+text-align: center;
 }
 .inputMaquinaImp {
   margin-left: auto;
@@ -1120,6 +1121,13 @@ height: 50px;
   height: 438px;
   border-radius: 10px;
 }
+#selecaoTabelaImp {
+  background-color: rgb(52, 168, 37);
+  color: white;
+  border-style: solid;
+  border-width: 0.1px;
+  border-color: red;
+}
 
 #tabelaImpressas {
   display: block;
@@ -1128,15 +1136,59 @@ height: 50px;
   margin-left: auto;
   margin-right: auto;
   overflow-y: scroll;
-  border-style: solid;
-  border-width: 2px;
-}#tabelaImpressas thead {
+  border-spacing: 0px;
+}
+#tabelaImpressas thead {
   background-color: var(--primary-color);
   color: white;
   font-size: 15pt;
+  border-style: solid;
+  border-width: 0.1px;
 }
 #tabelaImpressas tbody tr {
   font-size: 12pt;
+}#tabelaImpressas th {
+  border-style: solid;
+  border-width: 0.1px;
+}#tabelaImpressas tbody tr:hover {
+  cursor: pointer;
+  opacity: 40%;
+}
+
+.tabela-lisas{
+  margin-top: 10px;
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
+  background-color: white;
+  height: 160px;
+  border-radius: 10px;
+}
+#tabelaLisas {
+  display: block;
+  height: 160px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  border-spacing: 0px;
+  overflow-y: scroll;
+}
+#tabelaLisas thead {
+  background-color: var(--primary-color);
+  color: white;
+  font-size: 15pt;
+  border-style: solid;
+  border-width: 0.1px;
+}
+#tabelaLisas tbody tr {
+  font-size: 12pt;
+}#tabelaLisas th {
+  border-style: solid;
+  border-width: 0.1px;
+}#tabelaLisas tbody tr:hover {
+  cursor: pointer;
+  opacity: 40%;
 }
 
 .aba2-imp {
@@ -1149,27 +1201,9 @@ height: 50px;
   height: 65%;
 }
 
-#selecaoTabelaImp {
-  background-color: var(--primary-color-white);
-}
-
-#tabelaLisas {
-  margin-top: 15px;
-  overflow-y: scroll;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: white;
-  border-radius: 10px;
-  padding: 5px;
-  max-height: 200px;
-  height: 180px;
-  width: 95%;
-}#tabelaLisas thead tr{
-  overflow-y: scroll;
-}
 .lancarBobinaImpressa {
   position: absolute;
-  margin-top: -400px;
+  margin-top: -450px;
   width: 60%;
   text-align: center;
   display: flex;
@@ -1177,13 +1211,14 @@ height: 50px;
   padding: 20px;
   border-radius: 20px;
   background-color: white;
+  border-style: solid;
 }
 
 .lancarBobinaImpressaAla1 {
   font-size: 20pt;
   color: white;
   width: 30%;
-  background-color: purple;
+  background-color: rgb(128 203 132);
 }.lancarBobinaImpressaAla1 input {
   width: 80%;
 }
@@ -1191,7 +1226,7 @@ height: 50px;
   height: 50%;
   display: flex;
   width: 60%;
-  background-color: rgb(199, 100, 199);
+  background-color: rgb(247, 152, 152);
 }
 .lancarBobinaImpressaAla2 input {
   border-radius: 10px;
@@ -1199,6 +1234,7 @@ height: 50px;
 }
 
 .confirmarLancamentoImpressao {
+  opacity: 100%;
   display: block;
   margin-left: 5px;
   height: 160px;
@@ -1207,21 +1243,24 @@ height: 50px;
 }
 
 #grafico-lisas {
-  margin-top: 15px;
+  background-color: white;
+  margin-top: 10px;
   border-radius: 20px;
   margin-left: auto;
   margin-right: auto;
-  background-color: white;
-  width: 95%;
+  width: 80%;
 }
 
 .tabela-informacoes-imp {
-  margin-top: 0px;
-  border-radius: 20px;
+  width: 97%;
+  padding: 5px;
+  border-radius: 10px;
   margin-left: auto;
   margin-right: auto;
   background-color: white;
-  width: 95%;
+}.tabela-informacoes-imp thead {
+  background-color: var(--primary-color);
+  color: white;
 }
 #painelCoresImp {
   padding: 5px 8px;
@@ -1237,4 +1276,14 @@ height: 50px;
   height: 60px;
   max-width: 12%;
   margin-left: 2px;
+}
+
+.resultados {
+  position: absolute;
+  top: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 95%;
+  height: 720px;
+  background-color: white;
 }
