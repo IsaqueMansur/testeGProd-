@@ -52,6 +52,7 @@ document.querySelector(".programacao").style.visibility = "hidden";
 document.querySelector(".bobinas").style.visibility = "hidden";
 document.querySelector("#botaoCriaBobina").style.visibility = "hidden";
 document.querySelector(".impressao").style.display = "none";
+document.querySelector(".resultados").style.display = "none";
 
 const pegaErroUsuario = document.querySelector("#erroUsuario");
 const erroUsuario = "<div class='erro1' id='erroUsuario'>Usuário incorreto</div>"
@@ -1020,6 +1021,9 @@ function tabelaApontamentoSelecionado(iOp, iMaquina, pesoSeparado) {
 const tudoImpressao = document.querySelector(".tudo-impressao");
 
 function impressao() {
+    document.querySelector(".tabela-impressas").style.visibility = "hidden"
+    document.querySelector(".tabela-lisas").style.visibility = "hidden";
+    document.querySelector(".tabela-informacoes-imp").style.visibility = "hidden";
     document.documentElement.style.overflow = 'hidden';
     document.querySelector(".lancarBobinaImpressa").style.visibility = "hidden";
     document.querySelector(".finalizar-impressa").style.visibility = "hidden";
@@ -1065,7 +1069,7 @@ function fecharImpressao() {
     }
 };
 
-function ConfirmarImpressao(indexSelecionado) {
+function ConfirmarImpressao(indexSelecionado) { 
     let opDigitada = document.querySelector(".op-impressao").value;
     let iOp = ops.findIndex((ordem) => ordem.op == opDigitada);
 
@@ -1119,12 +1123,17 @@ function ConfirmarImpressao(indexSelecionado) {
             }
             apagaTabelaImpressas(producoes[this.maquina()][indexOpNaProducoes].producoes, indexSelecionado)
             apagaTabelaLisas(producoes[this.maquina()][indexOpNaProducoes].producoes, ultimaBobina - 1);
-            setas(producoes[this.maquina()][indexOpNaProducoes].producoes);
         }
         catch {
             document.querySelector(".abrir-inclui-lisa").style.visibility = "visible";
         }
     };
+    let a = document.querySelector("#selecaoTabelaImp");
+    if (a !== null) {
+        document.querySelector(".tabela-impressas").style.visibility = "visible"; 
+        document.querySelector(".tabela-lisas").style.visibility = "visible";
+    document.querySelector(".tabela-informacoes-imp").style.visibility = "visible";
+    }       
 };
 
 function painelImp(op) {
@@ -1396,10 +1405,9 @@ function tabelaImpressas(producoes, indexSelecionado = (producoes.length -1)) {
         mostraLisasImpressas(producoes);    
         try {
             let local = document.querySelector("#bodyImpressas");
-            local.children[indexSelecionado].id = "selecaoTabelaImp"
+            local.children[indexSelecionado].id = "selecaoTabelaImp";
         } catch {
-
-        }  
+        }; 
 };
 
 let mostraLisasImpressas = function(producoes) {
@@ -1409,7 +1417,6 @@ let mostraLisasImpressas = function(producoes) {
             let encontraAntiga = document.querySelector("#selecaoTabelaImp");
             encontraAntiga.id = null;
         } catch {
-
         }
         let linhaSelecionada = e.composedPath()[1];
         linhaSelecionada.id = "selecaoTabelaImp";
@@ -1435,7 +1442,7 @@ function apagaTabelaLisas(producoes, index) {
 };
 
 function tabelaLisas(producoes, index) {
-    let local = document.querySelector(".aba2-imp");
+    let local = document.querySelector(".tabela-lisas");
     let table = document.createElement('table');
     table.id = "tabelaLisas";
     let headTabela = document.createElement('thead');
@@ -1470,7 +1477,7 @@ function tabelaLisas(producoes, index) {
                 let th = document.createElement("th");
                 th.appendChild(tabela[i]);
                 tr.appendChild(th);
-                headTabela.appendChild(tr);
+                bodyTabela.appendChild(tr);
             }
             table.appendChild(bodyTabela);
             table.appendChild(headTabela);
@@ -1504,7 +1511,6 @@ function graficoLisas(producoes, index, verifica) {
     let div = document.createElement("div");
     div.id = "grafico-lisas";
     local.appendChild(div);
-
     GraficoPizza3(div.id, pesoImpresso, pesoLisas, perdas);
 };
 
@@ -1516,11 +1522,16 @@ function GraficoPizza3(local, v1, v2, v3) {
       ['Perda',   v3]
     ]);
     let pieOptions = {
+      pieSliceTextStyle: {
+        color: 'black',
+        fontSize: 15,
+        alignment: 'center'
+      },
       backgroundColor: 'transparent',
-      pieHole: 0.6,
-      colors: [ "green", 
-                "blue",
-                "red" 
+      pieHole: 0.4,
+      colors: [ "#41e141", 
+                "#10fdcb",
+                "#f56464" 
             ],
       pieSliceText: 'value',
       tooltip: {
@@ -1529,18 +1540,20 @@ function GraficoPizza3(local, v1, v2, v3) {
       },
       fontName: "Verdana",
       chartArea: {
-        right: 180,
-        width: '100%',
-        height: '90%'
+        right: 50,
+        width: '80%',
+        height: '90%',
       },
       legend: {
+          position: 'relative',
+          alignment: 'center',
         textStyle: {
           color: "black",
           fontName: "Verdana",
-          fontSize: 15,
-          left: 5,
-        }
-      }
+          fontSize: 16,
+          left: 50,
+        },
+      },   
     };
     let pieChart = new google.visualization.PieChart(document.getElementById(local));
     pieChart.draw(pieData, pieOptions);
@@ -1582,6 +1595,8 @@ function confirmarLancamentoImpressao() {
     let perdaExt = Number(document.querySelector(".perdaExtLancaImpressa").value);
     let motivoPerdaImp = document.querySelector(".motivosPerdaImp").value;
     let motivoPerdaExt = document.querySelector(".motivosPerdaExt").value;
+    let pesoLiquido = pesoBruto - pesoTubete;
+    let liquidoOk = Number(pesoLiquido.toFixed(2));
 
     if ((pesoTubete && pesoBruto && metragem) <= 0) {
         alert("Tubete, Peso bruto ou Metragem incorretos !");
@@ -1595,11 +1610,11 @@ function confirmarLancamentoImpressao() {
             alert("Motivo 'Perda Ext' vázio !");
             return
         } else {
-            autorizaLancamentoImp();       
+            autorizaLancamentoImp(liquidoOk);       
         }
 };
 
-    function autorizaLancamentoImp() {
+    function autorizaLancamentoImp(pesoLiquido) {
         let dataTermino = new Date();
         let dataOk = dataTermino.toLocaleDateString("pt-BR", {dateStyle: "short"});
         let horaOk = dataTermino.toLocaleTimeString("pt-BR", {timeStyle: "short"});
@@ -1610,7 +1625,7 @@ function confirmarLancamentoImpressao() {
         producoes[maquina][indexOpProd].producoes[ultimaProd -1].perdaAcerto = perdaAcerto;
         producoes[maquina][indexOpProd].producoes[ultimaProd -1].perdaImp = perdaImp;
         producoes[maquina][indexOpProd].producoes[ultimaProd -1].perdaExt = perdaExt;
-        producoes[maquina][indexOpProd].producoes[ultimaProd -1].pesoLiquido = (pesoBruto - pesoTubete);
+        producoes[maquina][indexOpProd].producoes[ultimaProd -1].pesoLiquido = pesoLiquido;
         producoes[maquina][indexOpProd].producoes[ultimaProd -1].dataTermino.data = dataOk;
         producoes[maquina][indexOpProd].producoes[ultimaProd -1].dataTermino.hora = horaOk;
         producoes[maquina][indexOpProd].producoes[ultimaProd -1].status = "Finalizada";
@@ -1667,50 +1682,55 @@ function adicionarBobinaLisa() {
     }
 };
 
-function setas(producoes) {
-    let body= document.querySelector("body");
+setas();
+function setas() {
+    let body = document.querySelector("body");
     body.addEventListener("keyup", function(e) {
 
         let local = document.querySelector(".impressao"); 
 
         if (local.style.display !== "none") {
-        }   
-        if (e.keyCode === 38 || e.keyCode === 83 || e.keyCode === 98) {
-            try {
-                let linhaSel = document.querySelector("#selecaoTabelaImp");
-            
-                let index = Number(linhaSel.children[4].className.split("posi")[1]);
-                if (index === 0) {
-
-                } else {
-                    let linhaRecebe = document.querySelector(`.posi${index - 1}`);
-                    console.log(linhaRecebe)
-                    linhaSel.children[4].parentElement.id = null;
-                    linhaRecebe.parentElement.id = "selecaoTabelaImp"
-                    apagaTabelaImpressas(producoes, index -1);
-                    apagaTabelaLisas(producoes, index -1);    
-                }
-            } catch {
-        }
-    }
-    if (e.keyCode === 40 || e.keyCode === 87 || e.keyCode === 104) {
-        try {
-            let linhaSel = document.querySelector("#selecaoTabelaImp");
-            
-            let index = Number(linhaSel.children[4].className.split("posi")[1]);
-            if (index === producoes.length -1) {
-
-            } else {
-                let linhaRecebe = document.querySelector(`.posi${index + 1}`);
-                linhaSel.children[4].parentElement.id = null;
-                linhaRecebe.parentElement.id = "selecaoTabelaImp"
-                apagaTabelaImpressas(producoes, index +1);
-                apagaTabelaLisas(producoes, index +1);  
-            }
-        } catch {
-
-        }
-    }
-    
-});
+            if (e.keyCode === 38) {
+                try {
+                    let linhaSel = document.querySelector("#selecaoTabelaImp");                  
+                    let index = Number(linhaSel.children[4].className.split("posi")[1]);
+                    if (index === 0) {   
+                    } else {
+                        let prod = new ConfirmarImpressao(index);
+                        let producoes = prod.producao();
+                        let linhaRecebe = document.querySelector(`.posi${index - 1}`);
+                        linhaSel.children[4].parentElement.id = null;
+                        linhaRecebe.parentElement.id = "selecaoTabelaImp"
+                        apagaTabelaImpressas(producoes, index -1);
+                        apagaTabelaLisas(producoes, index -1); 
+                    };
+                }    catch {
+                     };
+            };
+            if (e.keyCode === 40) {
+                try {
+                    let linhaSel = document.querySelector("#selecaoTabelaImp");                   
+                    let index = Number(linhaSel.children[4].className.split("posi")[1]);   
+                    if (index === producoes.length - 1) {   
+                    } else {
+                        let prod = new ConfirmarImpressao(index);
+                        let producoes = prod.producao();
+                        let linhaRecebe = document.querySelector(`.posi${index + 1}`);
+                        linhaSel.children[4].parentElement.id = null;
+                        linhaRecebe.parentElement.id = "selecaoTabelaImp"
+                        apagaTabelaImpressas(producoes, index + 1);
+                        apagaTabelaLisas(producoes, index + 1); 
+                    };
+                }    catch {
+                    };
+            };
+        };               
+    });
 };
+
+function resultados() {
+    document.querySelector(".resultados").style.display = null;
+}
+function fecharResultados() {
+    document.querySelector(".resultados").style.display = "none";    
+}
