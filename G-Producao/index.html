@@ -363,13 +363,36 @@
         <div class="cab-resultados">
             <h4>Tipo de relatório:
                 <select class="tipo-resultado">
+                    <option></option>
                     <option>Todas as máquinas</option>
                     <option>Máquina específica</option>
                 </select> 
-
             </h4>
-        </div>
+            <h4 class="seleciona-maquina-resultado">Máquina:
+                <select class="maquina-resultado">
+                    <option>IMP-01</option>
+                    <option>IMP-02</option>
+                    <option>IMP-03</option>
+                </select> 
+            </h4>
+            <h4>Data inicio:
+                <input type="date" class="data-inicio-grafico">
+            </h4>
+            <h4>Data final:
+                <input type="date" class="data-final-grafico">
+            </h4>
+            <h4>Tipo do gráfico:
+                <select class="tipo-grafico-resultado">
+                    <option></option>
+                    <option>Pizza</option>
+                    <option>Barra</option>
+                    <option>Linha</option>
+                </select> 
+            </h4>
+            <button class="gerar-grafico" onclick="gerargrafico()">Gerar</button>
+        </div>     
         <button onclick="fecharResultados()">Tela inicial</button>
+        <div class="local-graficos-resultado"></div>
     </div> <!--resultados-->
         
     
