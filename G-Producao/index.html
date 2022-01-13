@@ -366,6 +366,7 @@
                     <option></option>
                     <option>Todas as máquinas</option>
                     <option>Máquina específica</option>
+                    <option>Operador por máquina</option>
                 </select> 
             </h4>
             <h4 class="seleciona-maquina-resultado">Máquina:
@@ -389,6 +390,12 @@
                     <option>Linha</option>
                 </select> 
             </h4>
+            <h4 class="modelo-grafico-resultado">Modelo:
+                <select class="valor-modelo-grafico-resultados">
+                    <option>3D</option>
+                    <option>Comum</option>
+                </select> 
+            </h4>
             <button class="gerar-grafico" onclick="gerargrafico()">Gerar</button>
         </div>     
         <button onclick="fecharResultados()">Tela inicial</button>
@@ -402,5 +409,9 @@
     <script src="https://cdn.jsdelivr.net/jsbarcode/3.6.0/JsBarcode.all.min.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script src="./assets/js/main teste.js "></script>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+      google.charts.load('current', {packages: ['corechart']});
+    </script>
 </body>
 </html>
