@@ -1,5 +1,3 @@
-google.load("visualization", "1", { packages: ["corechart"] });
-
 const usuarios = [
     {usuario: 'adm', codigo: 1, senha:'123'},
     {usuario: 'teste teste teste', codigo: 2, senha: '123'}
@@ -218,7 +216,6 @@ function confirmaOp(ops, alterarMetros) {
         let tempoSetup = 60;
 
         let minutosGastosImpressao = ((alterarMetros || op.metros)/velocidadeMedia + tempoSetup);
-
 
         let dataI = new Date();
         let anoI = dataI.getFullYear();
@@ -669,10 +666,7 @@ function nomeMaquinaBobina() {
     x.innerHTML = '<div><div>'
     let maquinaSelecionada = document.querySelector("#maquina-apontar-bobina").value;
     let indiceMaquina = null;
-
-    if (maquinaSelecionada === 'IMP-01') indiceMaquina = 0;
-    if (maquinaSelecionada === 'IMP-02') indiceMaquina = 1;
-    if (maquinaSelecionada === 'IMP-03') indiceMaquina = 2;
+    indiceMaquina = retornaIndiceMaquina(maquinaSelecionada);
     criaTabelaApontarBobinas(indiceMaquina);      
 }
 let listaTabApontarBobinas = ['Selecionar', 'Material', 'Pigmento', 'Esp.', 'Largura.', 'Comp.', 'Tipo', 'Tipo Solda', 'Kgs', 'OP', 'Clichê', 'Data Inicio', 'Hora inicio', 'Data Final', 'Hora final'];
@@ -787,9 +781,7 @@ function abrirApontamento(op) {
     document.querySelector(".apontar-bobina").style.visibility = "hidden";
     document.querySelector(".apontar-selecionado").style.visibility = "visible";
     let maquinaSelecionada = document.querySelector("#maquina-apontar-bobina").value;
-    if (maquinaSelecionada === 'IMP-01') indexMaquina = 0;
-    if (maquinaSelecionada === 'IMP-02') indexMaquina = 1;
-    if (maquinaSelecionada === 'IMP-03') indexMaquina = 2;
+    indexMaquina = retornaIndiceMaquina(maquinaSelecionada);
 
     achaOp = (maquinasProg[indexMaquina]).find((ordem) => ordem.op == op);
     indexOp = (maquinasProg[indexMaquina]).findIndex((ordem) => ordem.op == achaOp.op);
@@ -826,6 +818,7 @@ let volumeDigitado;
 let bobinaDigitada;
 let usarDigitado;
 let indexOp;
+let numeroOp;
 
 function visualizarEtiquetaApontada() {
     volumeDigitado = Number(document.querySelector("#volumes").value);
@@ -863,6 +856,16 @@ function confirmarApontamento() {
     let bobinaApontada = {codigo: Number(document.querySelector("#apontou").value), pesoA: usarDigitado};
     maquinasProg[indexMaquina][indexOp].pesoSeparado += usarDigitado;
     maquinasProg[indexMaquina][indexOp].bobinas.push(bobinaApontada);
+    try {
+        for (let i in producoes[indexMaquina]) {
+            let leituraAtual = producoes[indexMaquina][i].op;
+            if (leituraAtual === achaOp.op) {
+                producoes[indexMaquina][i].bobinas = maquinasProg[indexMaquina][indexOp].bobinas;
+            }
+        }
+    } catch {
+
+    }
 
     desenharGraficoApontamento(
         (maquinasProg[indexMaquina][indexOp].pesoImp), 
@@ -960,8 +963,7 @@ function desenharGraficoApontamento(solicitado, separado, faltam) {
 
 function apagaTabApSel(iOp, iMaquina, pesoSeparado) {
     try {
-        let tabelaAntiga = document.querySelector("#tabelaApSel");
-        tabelaAntiga.remove();
+        document.querySelector("#tabelaApSel").remove();
         tabelaApontamentoSelecionado(iOp, iMaquina, pesoSeparado);  
     }catch {
         tabelaApontamentoSelecionado(iOp, iMaquina, pesoSeparado);
@@ -1040,8 +1042,9 @@ const tudoImpressao = document.querySelector(".tudo-impressao");
 function impressao() {
     document.querySelector(".tabela-impressas").style.visibility = "hidden"
     document.querySelector(".tabela-lisas").style.visibility = "hidden";
+    document.querySelector("#grafico-lisas").style.visibility = "hidden";
     document.querySelector(".tabela-informacoes-imp").style.visibility = "hidden";
-    document.documentElement.style.overflow = 'hidden';
+    /* document.documentElement.style.overflow = 'hidden'; */
     document.querySelector(".lancarBobinaImpressa").style.visibility = "hidden";
     document.querySelector(".finalizar-impressa").style.visibility = "hidden";
     document.querySelector(".abrir-inclui-lisa").style.visibility = "hidden";
@@ -1119,7 +1122,6 @@ function ConfirmarImpressao(indexSelecionado) {
             return producoes[this.maquina()][indexOpNaProducoes].producoes
         };
 
-
         document.querySelector(".cliche-impressao").textContent = `Clichê:   ${ops[iOp].nomeServico}`
         document.querySelector(".detalhes-impressao").textContent = `Detalhes:   
         Material: ${ops[iOp].material} | 
@@ -1149,8 +1151,9 @@ function ConfirmarImpressao(indexSelecionado) {
     if (a !== null) {
         document.querySelector(".tabela-impressas").style.visibility = "visible"; 
         document.querySelector(".tabela-lisas").style.visibility = "visible";
-    document.querySelector(".tabela-informacoes-imp").style.visibility = "visible";
-    }       
+        document.querySelector("#grafico-lisas").style.visibility = "visible";
+        document.querySelector(".tabela-informacoes-imp").style.visibility = "visible";
+    }    
 };
 
 function painelImp(op) {
@@ -1200,7 +1203,220 @@ function confirmaOpImpressao(op) {
     document.querySelector(".cab-imp1").appendChild(p);   
 };
 
-let producoes = [[], [], []]
+let producoes = [
+    [
+        {
+            "op": 300002,
+            "pesoImp": 350,
+            "pesoSeparado": 0,
+            "cliche": "QUEIJO MUSSARELA TESTE 4KG",
+            "material": "Termoencolhível Artflex",
+            "pigmento": "Natural",
+            "espessura": 0.09,
+            "tipoBobina": "Tubular",
+            "solda": "Fundo",
+            "c1": "branco",
+            "c2": "amarelo",
+            "c3": "magenta",
+            "c4": "cyan",
+            "c5": "p485",
+            "c7": "p021",
+            "c8": "preto",
+            "dtI": "2021-12-10",
+            "hrI": "16:07",
+            "dtF": "2021-12-10",
+            "hrF": "18:52",
+            "comprimento": 460,
+            "largura": 240,
+            "bobinas": [],
+            "producoes": [
+                {
+                    "codigo": 5000000000001,
+                    "operador": {
+                        "nome": "adm",
+                        "codigo": 1
+                    },
+                    "metros": 3520,
+                    "tubete": 5,
+                    "pesoBruto": 90,
+                    "pesoLiquido": 85,
+                    "perdaAcerto": 5,
+                    "perdaImp": 0,
+                    "perdaExt": 0,
+                    "bobinasLisas": [
+                        {
+                            "material": "Nylon Poli",
+                            "tipo": "Folha",
+                            "largura": 600,
+                            "espessura": 5,
+                            "pigmento": "Natural",
+                            "pesoBruto": 60,
+                            "pesoTubete": 5,
+                            "pesoLiquido": 55,
+                            "codigo": 1000000000001,
+                            "disponivel": 55,
+                            "usadaPor": []
+                        }
+                    ],
+                    "dataInicio": {
+                        "data": "11/01/2022",
+                        "hora": "11:15",
+                        "dataNumerica": 1641910525955
+                    },
+                    "dataTermino": {
+                        "data": "11/01/2022",
+                        "hora": "11:15",
+                        "dataNumerica": 1641910529561
+                    },
+                    "status": "Finalizada",
+                    "maquina": 0
+                }
+            ]
+        }
+    ],
+    [
+        {
+            "op": 300001,
+            "pesoImp": 320,
+            "pesoSeparado": 0,
+            "cliche": "QUEIJO TIPO COALHO TESTE 1KG",
+            "material": "Nylon Poli",
+            "pigmento": "Natural",
+            "espessura": 0.11,
+            "tipoBobina": "Tubular",
+            "solda": "Fundo",
+            "c1": "branco",
+            "c2": "amarelo",
+            "c3": "magenta",
+            "c4": "cyan",
+            "c5": "p485",
+            "c6": "p355",
+            "c7": "",
+            "c8": "preto",
+            "dtI": "2022-01-11",
+            "hrI": "11:16",
+            "dtF": "2022-01-11",
+            "hrF": "13:26",
+            "comprimento": 240,
+            "largura": 160,
+            "bobinas": [],
+            "producoes": [
+                {
+                    "codigo": 5000000000002,
+                    "operador": {
+                        "nome": "adm",
+                        "codigo": 1
+                    },
+                    "metros": 3200,
+                    "tubete": 5,
+                    "pesoBruto": 115,
+                    "pesoLiquido": 110,
+                    "perdaAcerto": 4,
+                    "perdaImp": 0,
+                    "perdaExt": 0,
+                    "bobinasLisas": [
+                        {
+                            "material": "Nylon Poli",
+                            "tipo": "Folha",
+                            "largura": 600,
+                            "espessura": 5,
+                            "pigmento": "Natural",
+                            "pesoBruto": 60,
+                            "pesoTubete": 5,
+                            "pesoLiquido": 55,
+                            "codigo": 1000000000001,
+                            "disponivel": 55,
+                            "usadaPor": []
+                        }
+                    ],
+                    "dataInicio": {
+                        "data": "11/01/2022",
+                        "hora": "11:16",
+                        "dataNumerica": 1641910588347
+                    },
+                    "dataTermino": {
+                        "data": "11/01/2022",
+                        "hora": "11:16",
+                        "dataNumerica": 1641910595808
+                    },
+                    "status": "Finalizada",
+                    "maquina": 1
+                }
+            ]
+        }
+    ],
+    [
+        {
+            "op": 300003,
+            "pesoImp": 350,
+            "pesoSeparado": 0,
+            "cliche": "QUEIJO PRATO TESTE 3KG",
+            "material": "Termoencolhível Artflex",
+            "pigmento": "Natural",
+            "espessura": 0.09,
+            "tipoBobina": "Tubular",
+            "solda": "Fundo",
+            "c1": "branco",
+            "c2": "amarelo",
+            "c3": "magenta",
+            "c4": "cyan",
+            "c5": "p485",
+            "c6": "",
+            "c7": "p021",
+            "c8": "p871",
+            "dtI": "2022-01-11",
+            "hrI": "13:34",
+            "dtF": "2022-01-11",
+            "hrF": "16:35",
+            "comprimento": 460,
+            "largura": 240,
+            "bobinas": [],
+            "producoes": [
+                {
+                    "codigo": 5000000000001,
+                    "operador": {
+                        "nome": "adm",
+                        "codigo": 1
+                    },
+                    "metros": 4720,
+                    "tubete": 5,
+                    "pesoBruto": 123.47,
+                    "pesoLiquido": 118.47,
+                    "perdaAcerto": 4.37,
+                    "perdaImp": 0,
+                    "perdaExt": 0,
+                    "bobinasLisas": [
+                        {
+                            "material": "Nylon Poli",
+                            "tipo": "Folha",
+                            "largura": 600,
+                            "espessura": 5,
+                            "pigmento": "Natural",
+                            "pesoBruto": 60,
+                            "pesoTubete": 5,
+                            "pesoLiquido": 55,
+                            "codigo": 1000000000001,
+                            "disponivel": 55,
+                            "usadaPor": []
+                        }
+                    ],
+                    "dataInicio": {
+                        "data": "11/01/2022",
+                        "hora": "13:34",
+                        "dataNumerica": 1641918886449
+                    },
+                    "dataTermino": {
+                        "data": "11/01/2022",
+                        "hora": "13:35",
+                        "dataNumerica": 1641918911362
+                    },
+                    "status": "Finalizada",
+                    "maquina": 2
+                }
+            ]
+        }
+    ]
+];
 
 let bobinasImpressas = [];
 
@@ -1270,7 +1486,7 @@ function confirmaEntradaLisa() {
     let indexOpNaProgramacao = maquinasProg[indexMaq].findIndex((ordem) => ordem.op == op);
 
     if (indexOpNaProgramacao < 0) {
-        alert("Esta O.P. não está programada para essa máquina")
+        alert("Esta O.P. não está programada para essa máquina");
         return
     } else if (avaliaInclusaoLisa === true) { 
         let indexOpNaProducoes = producoes[indexMaq].findIndex((ordem) => ordem.op == op);
@@ -1370,8 +1586,7 @@ function confirmaEntradaLisa() {
 
 function apagaTabelaImpressas(producoes, indexSelecionado) {
     try {
-        let table = document.querySelector("#tabelaImpressas");
-        table.remove();
+        document.querySelector("#tabelaImpressas").remove();
         tabelaImpressas(producoes, indexSelecionado); 
     } catch {
         tabelaImpressas(producoes, indexSelecionado);
@@ -1435,6 +1650,7 @@ function tabelaImpressas(producoes, indexSelecionado = (producoes.length -1)) {
 let mostraLisasImpressas = function(producoes) {
     let local = document.querySelector("#bodyImpressas");
     local.addEventListener('click', function(e) {
+        if (e.target.className !== '' || e.target.id !== '') return
         try {
             let encontraAntiga = document.querySelector("#selecaoTabelaImp");
             encontraAntiga.id = null;
@@ -1450,17 +1666,13 @@ let mostraLisasImpressas = function(producoes) {
 
 function apagaTabelaLisas(producoes, index) {
     try {
-        let table = document.querySelector("#tabelaLisas");
-        table.remove();
-        tabelaLisas(producoes, index); 
-        graficoLisas(producoes, index);
-        tabelaInfosImp(producoes, index);
-        
+        document.querySelector("#tabelaLisas").remove();    
     } catch {
+        
+    } finally {
         tabelaLisas(producoes, index);
-        graficoLisas(producoes, index);
         tabelaInfosImp(producoes, index);
-    }   
+    }
 };
 
 function tabelaLisas(producoes, index) {
@@ -1505,6 +1717,7 @@ function tabelaLisas(producoes, index) {
             table.appendChild(headTabela);
             local.appendChild(table);
         };
+        graficoLisas(producoes, index);
 };
 
 function graficoLisas(producoes, index, verifica) {
@@ -1516,7 +1729,6 @@ function graficoLisas(producoes, index, verifica) {
     };
     try {
         document.querySelector("#grafico-lisas").remove();
-        document.querySelector("#grafico-lisas").style.visibility = "visible";
     } catch {
         
     }
@@ -1558,7 +1770,7 @@ function GraficoPizza3(local, v1, v2, v3) {
       pieSliceText: 'value',
       tooltip: {
         fontName: "Verdana",
-        text: 'percentage'
+        text: 'percentage' + 'value'
       },
       fontName: "Verdana",
       chartArea: {
@@ -1734,11 +1946,11 @@ function setas() {
             if (e.keyCode === 40) {
                 try {
                     let linhaSel = document.querySelector("#selecaoTabelaImp");                   
-                    let index = Number(linhaSel.children[4].className.split("posi")[1]);   
-                    if (index === producoes.length - 1) {   
+                    let index = Number(linhaSel.children[4].className.split("posi")[1]);  
+                    let prod = new ConfirmarImpressao(index);
+                    let producoes = prod.producao(); 
+                    if (index === (producoes.length - 1)) {   
                     } else {
-                        let prod = new ConfirmarImpressao(index);
-                        let producoes = prod.producao();
                         let linhaRecebe = document.querySelector(`.posi${index + 1}`);
                         linhaSel.children[4].parentElement.id = null;
                         linhaRecebe.parentElement.id = "selecaoTabelaImp"
@@ -1755,6 +1967,7 @@ function setas() {
 function resultados() {
     document.querySelector(".resultados").style.display = null;
     document.querySelector(".seleciona-maquina-resultado").style.display = 'none';
+    document.querySelector(".modelo-grafico-resultado").style.display = 'none';
     document.querySelector(".gerar-grafico").style.display = 'none';  
 }
 function fecharResultados() {
@@ -1772,6 +1985,11 @@ document.querySelector(".cab-resultados").addEventListener("click", function(e) 
     } catch {
     }
     let tipoGrafico = document.querySelector(".tipo-grafico-resultado").value;
+    if (tipoGrafico === "Pizza") {
+        document.querySelector(".modelo-grafico-resultado").style.display = null;
+    } else {
+        document.querySelector(".modelo-grafico-resultado").style.display = 'none';
+    }
     let dataI = document.querySelector(".data-inicio-grafico").value;
     let dataF = document.querySelector(".data-final-grafico").value;
     function avaliaCamposResultado() {
@@ -1785,7 +2003,16 @@ document.querySelector(".cab-resultados").addEventListener("click", function(e) 
     avaliaCamposResultado(); 
 });
 
-
+function retornaNomeMaquina(indice) {
+    if (indice === 0) return 'IMP-01';
+    if (indice === 1) return 'IMP-02';
+    if (indice === 2) return 'IMP-03';
+}
+function retornaIndiceMaquina(nome) {
+    if (nome === 'IMP-01') return 0;
+    if (nome === 'IMP-02') return 1;
+    if (nome === 'IMP-03') return 2;
+}
 
 function gerargrafico() {
     try {
@@ -1796,12 +2023,18 @@ function gerargrafico() {
         
     }
     let local = document.querySelector(".local-graficos-resultado");
+
     let tipoRelatorio = document.querySelector(".tipo-resultado").value;
     let tipoGrafico = document.querySelector(".tipo-grafico-resultado").value;
     let dataI = document.querySelector(".data-inicio-grafico").value + ' 00:00';
-    let dataF = document.querySelector(".data-final-grafico").value + ' 23:59';
+    let dataF = document.querySelector(".data-final-grafico").value + ' 23:59:59';
+    let dataInicioEmNumeros = new Date(dataI).getTime();
+    let dataTerminoEmNumeros = new Date(dataF).getTime();
 
-    if (tipoRelatorio === "Todas as máquinas") {
+
+    if (tipoRelatorio === "Todas as máquinas" || tipoRelatorio === "Máquina específica") {
+        let maquinaEspecifica = false;
+        if (tipoRelatorio === "Máquina específica") maquinaEspecifica = true;
         let divQuilos = document.createElement("div");
         divQuilos.className = "quilos-grafico-resultados"
         local.appendChild(divQuilos);
@@ -1812,8 +2045,6 @@ function gerargrafico() {
         divAparas.className = "aparas-grafico-resultados"
         local.appendChild(divAparas);
 
-        let dataInicioEmNumeros = new Date(dataI).getTime();
-        let dataTerminoEmNumeros = new Date(dataF).getTime();
 
         var listaProducoes = [[],[],[]];
         let tipoAtual = "Quilos"
@@ -1821,119 +2052,167 @@ function gerargrafico() {
         for (let i in producoes) {
             for (let o in producoes[i]) {
                 for(let u in producoes[i][o].producoes) {
-                    listaProducoes[i].push(producoes[i][o].producoes[u]);
-                    if (producoes[i][o].producoes[u].dataTermino.dataNumerica === null) {
-                        listaProducoes.pop();
-                    } 
+                    if (producoes[i][o].producoes[u].dataTermino.dataNumerica !== null) {
+                        listaProducoes[i].push(producoes[i][o].producoes[u]);
+                    }
                     listaProducoes[i] = listaProducoes[i].filter((prod) => (prod.dataInicio.dataNumerica >= dataInicioEmNumeros && prod.dataTermino.dataNumerica <= dataTerminoEmNumeros));
-                }
-                    
+                }       
             }     
         }
 
         let listaInformacoesFiltradas = [];
-        console.log(listaProducoes);
-        console.log(listaInformacoesFiltradas);
-
+        
         for (let i in listaProducoes) {
             listaInformacoesFiltradas.push(listaProducoes[i]);
-            listaInformacoesFiltradas[i] = {quilos: 0, metros: 0, aparas: 0};
+            listaInformacoesFiltradas[i] = {quilos: 0, metros: 0, aparas: 0, maquina: undefined};
             for (let o in listaProducoes[i]) {
-                listaInformacoesFiltradas[i].quilos += listaProducoes[i][o].pesoLiquido;
-                listaInformacoesFiltradas[i].metros += listaProducoes[i][o].metros;
-                listaInformacoesFiltradas[i].aparas += (listaProducoes[i][o].perdaAcerto + listaProducoes[i][o].perdaExt + listaProducoes[i][o].perdaImp) ;
+                let quilos = 0;
+                let aparas = 0;
+                quilos = Number(listaProducoes[i][o].pesoLiquido);
+                aparas = Number(listaProducoes[i][o].perdaAcerto + listaProducoes[i][o].perdaExt + listaProducoes[i][o].perdaImp);
+                listaInformacoesFiltradas[i].maquina = listaProducoes[i][o].maquina;
+                listaInformacoesFiltradas[i].quilos += quilos;
+                listaInformacoesFiltradas[i].metros += parseInt(listaProducoes[i][o].metros);
+                listaInformacoesFiltradas[i].aparas += aparas;
             }      
         }
 
-        let localQuilos = document.querySelector(".quilos-grafico-resultados");
-        let localMetros = document.querySelector(".metros-grafico-resultados");
-        let localAparas = document.querySelector(".aparas-grafico-resultados");
+        var localQuilos = document.querySelector(".quilos-grafico-resultados");
+        var localMetros = document.querySelector(".metros-grafico-resultados");
+        var localAparas = document.querySelector(".aparas-grafico-resultados");
 
         let valoresGrafico = [[tipoAtual, 'Valores']];
-        let maquina
+        let maquina = null;
 
 
         if (tipoGrafico === "Pizza") {
+            if (maquinaEspecifica) {
+                let nomeMaquina = document.querySelector(".maquina-resultado").value;
+                let indiceMaquina = retornaIndiceMaquina(nomeMaquina);
+                maquina = retornaNomeMaquina(indiceMaquina);
+            }
+            let avalia3D = false;
+            let valorAvaliado = document.querySelector(".valor-modelo-grafico-resultados").value;
+            if (valorAvaliado === "3D") avalia3D = true;
             if (tipoAtual === "Quilos"){
-                for (let i in listaInformacoesFiltradas) {
-                    if (i == 0) {
-                        maquina = 'IMP-01'
-                    }
-                    if (i == 1) {
-                        maquina = 'IMP-02'
-                    }
-                    if (i == 2) {
-                        maquina = 'IMP-03'
-                    }                   
+                let nomeAtual = document.createElement("h2");
+                nomeAtual.className = "legenda-tipo-grafico-resultados";
+                nomeAtual.textContent = "PESO";
+                if (maquinaEspecifica) {
                     valoresGrafico.push(
-                        [maquina, listaInformacoesFiltradas[i].quilos]
-                    );                   
-                }
-                GraficoPizza(localQuilos, valoresGrafico)
+                        [maquina, listaInformacoesFiltradas[retornaIndiceMaquina(maquina)].quilos]
+                    );
+                } else {
+                    for (let i in listaInformacoesFiltradas) {
+                        maquina = retornaNomeMaquina(listaInformacoesFiltradas[i].maquina);                 
+                        valoresGrafico.push(
+                            [maquina, listaInformacoesFiltradas[i].quilos]
+                        );                   
+                    }
+                }   
+                GraficoPizza(localQuilos, valoresGrafico, avalia3D);
+                localQuilos.appendChild(nomeAtual);
                 tipoAtual = "Metros"
             }
             if (tipoAtual === "Metros"){
+                let nomeAtual = document.createElement("h2");
+                nomeAtual.className = "legenda-tipo-grafico-resultados";
+                nomeAtual.textContent = "METROS"
                 valoresGrafico = [[tipoAtual, 'Valores']];
-                for (let i in listaInformacoesFiltradas) {
-                    if (i == 0) {
-                        maquina = 'IMP-01'
-                    }
-                    if (i == 1) {
-                        maquina = 'IMP-02'
-                    }
-                    if (i == 2) {
-                        maquina = 'IMP-03'
-                    }                   
+                if (maquinaEspecifica) {
                     valoresGrafico.push(
-                        [maquina, listaInformacoesFiltradas[i].metros]
-                    );                   
+                        [maquina, listaInformacoesFiltradas[retornaIndiceMaquina(maquina)].metros]
+                    );
+                } else {
+                    for (let i in listaInformacoesFiltradas) {
+                        maquina = retornaNomeMaquina(listaInformacoesFiltradas[i].maquina);                 
+                        valoresGrafico.push(
+                            [maquina, listaInformacoesFiltradas[i].metros]
+                        );                   
+                    }
                 }
-                GraficoPizza(localMetros, valoresGrafico)
+                GraficoPizza(localMetros, valoresGrafico, avalia3D);
+                localMetros.appendChild(nomeAtual);
                 tipoAtual = "Aparas"
             }
             if (tipoAtual === "Aparas"){
+                let nomeAtual = document.createElement("h2");
+                nomeAtual.className = "legenda-tipo-grafico-resultados";
+                nomeAtual.textContent = "APARAS"
                 valoresGrafico = [[tipoAtual, 'Valores']];
-                for (let i in listaInformacoesFiltradas) {
-                    if (i == 0) {
-                        maquina = 'IMP-01'
-                    }
-                    if (i == 1) {
-                        maquina = 'IMP-02'
-                    }
-                    if (i == 2) {
-                        maquina = 'IMP-03'
-                    }                   
+                if (maquinaEspecifica) {
                     valoresGrafico.push(
-                        [maquina, listaInformacoesFiltradas[i].aparas]
-                    );                   
+                        [maquina, listaInformacoesFiltradas[retornaIndiceMaquina(maquina)].aparas]
+                    );
+                } else {
+                    for (let i in listaInformacoesFiltradas) {
+                        maquina = retornaNomeMaquina(listaInformacoesFiltradas[i].maquina);                 
+                        valoresGrafico.push(
+                            [maquina, listaInformacoesFiltradas[i].aparas]
+                        );                   
+                    }
                 }
-                GraficoPizza(localAparas, valoresGrafico)
+                GraficoPizza(localAparas, valoresGrafico, avalia3D);
+                localAparas.appendChild(nomeAtual);
                 tipoAtual = "Metros"
-            }
-            
-               
+            }         
         }  
+    }
+    if (tipoRelatorio === "Operador por máquina") {
+        let divQuilos = document.createElement("div");
+        divQuilos.className = "quilos-grafico-resultados"
+        local.appendChild(divQuilos);
+        let divMetros = document.createElement("div");
+        divMetros.className = "metros-grafico-resultados"
+        local.appendChild(divMetros);
+        let divAparas = document.createElement("div");
+        divAparas.className = "aparas-grafico-resultados"
+        local.appendChild(divAparas);
+
+        let nomeMaquina = document.querySelector(".maquina-resultado").value;
+        let indiceMaquina = retornaIndiceMaquina(nomeMaquina);
+        maquina = retornaNomeMaquina(indiceMaquina);
+
+        var listaProducoes = [];
+
+        for (let i in producoes[indiceMaquina]) {
+            for (let o in producoes[indiceMaquina][i].producoes);
+            listaProducoes.push(producoes[indiceMaquina][i].producoes);
+        };
+        var listaOperadores = [];
+        for (let i in listaProducoes) {
+            for (let o in listaProducoes[i]) {
+                let operadores = listaProducoes[i][o].operador
+                let encontra = listaOperadores.findIndex((operador) => operador.producoesDe == operadores.nome)
+                if (encontra === -1) {
+                    listaOperadores.push({producoesDe: operadores.nome, todasProducoes: [{...listaProducoes[i][o]}]})
+                }else {
+                    listaOperadores[encontra].todasProducoes.push({...listaProducoes[i][o]});
+                }
+            }   
+        }
     }
 }
 
-function GraficoPizza(local, valores) {
+function GraficoPizza(local, valores, avalia3D) {
     let pieData = google.visualization.arrayToDataTable(valores);
     let pieOptions = {
       pieSliceTextStyle: {
-        color: 'black',
+        color: 'rgb(230, 230, 230)',
         fontSize: 15,
-        alignment: 'center'
+        alignment: 'center',
       },
-      backgroundColor: 'transparent',
-      pieHole: 0.4,
-      colors: [ "#41e141", 
-                "#10fdcb",
-                "#f56464" 
+      backgroundColor: 'white',
+      pieHole: 0.0,
+      is3D: avalia3D,
+      colors: [ "rgb(47, 114, 78)", 
+                "rgb(213, 121, 9)",
+                "rgb(45, 94, 139)" 
             ],
       pieSliceText: 'value',
       tooltip: {
         fontName: "Verdana",
-        text: 'percentage'
+        text: 'percentage' + 'value',
       },
       fontName: "Verdana",
       chartArea: {
@@ -1949,6 +2228,9 @@ function GraficoPizza(local, valores) {
           fontName: "Verdana",
           fontSize: 16,
           left: 50,
+          toolbar: {
+              text: 'value'
+          },
         },
       },   
     };
