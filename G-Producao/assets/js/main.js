@@ -1270,6 +1270,47 @@ let producoes = [
                     },
                     "status": "Finalizada",
                     "maquina": 0
+                },
+                {
+                    "codigo": 5000000000001,
+                    "operador": {
+                        "nome": "adm",
+                        "codigo": 1
+                    },
+                    "metros": 10000,
+                    "tubete": 5,
+                    "pesoBruto": 105,
+                    "pesoLiquido": 100,
+                    "perdaAcerto": 5,
+                    "perdaImp": 0,
+                    "perdaExt": 0,
+                    "bobinasLisas": [
+                        {
+                            "material": "Nylon Poli",
+                            "tipo": "Folha",
+                            "largura": 600,
+                            "espessura": 5,
+                            "pigmento": "Natural",
+                            "pesoBruto": 60,
+                            "pesoTubete": 5,
+                            "pesoLiquido": 55,
+                            "codigo": 1000000000001,
+                            "disponivel": 55,
+                            "usadaPor": []
+                        }
+                    ],
+                    "dataInicio": {
+                        "data": "14/01/2022",
+                        "hora": "09:56",
+                        "dataNumerica": 1642164977578
+                    },
+                    "dataTermino": {
+                        "data": "14/01/2022",
+                        "hora": "09:56",
+                        "dataNumerica": 1642164989464
+                    },
+                    "status": "Finalizada",
+                    "maquina": 0
                 }
             ]
         }
@@ -1409,6 +1450,47 @@ let producoes = [
                         "data": "11/01/2022",
                         "hora": "13:35",
                         "dataNumerica": 1641918911362
+                    },
+                    "status": "Finalizada",
+                    "maquina": 2
+                },
+                {
+                    "codigo": 5000000000004,
+                    "operador": {
+                        "nome": "Teste",
+                        "codigo": 1
+                    },
+                    "metros": 3520,
+                    "tubete": 5,
+                    "pesoBruto": 78.3,
+                    "pesoLiquido": 73.3,
+                    "perdaAcerto": 4.5,
+                    "perdaImp": 0,
+                    "perdaExt": 0,
+                    "bobinasLisas": [
+                        {
+                            "material": "Nylon Poli",
+                            "tipo": "Folha",
+                            "largura": 600,
+                            "espessura": 5,
+                            "pigmento": "Natural",
+                            "pesoBruto": 60,
+                            "pesoTubete": 5,
+                            "pesoLiquido": 55,
+                            "codigo": 1000000000001,
+                            "disponivel": 55,
+                            "usadaPor": []
+                        }
+                    ],
+                    "dataInicio": {
+                        "data": "24/01/2022",
+                        "hora": "14:03",
+                        "dataNumerica": 1643043826209
+                    },
+                    "dataTermino": {
+                        "data": "24/01/2022",
+                        "hora": "14:04",
+                        "dataNumerica": 1643043848582
                     },
                     "status": "Finalizada",
                     "maquina": 2
@@ -1977,7 +2059,7 @@ function fecharResultados() {
 document.querySelector(".cab-resultados").addEventListener("click", function(e) {
     try {
         var tipoRelatorio = document.querySelector(".tipo-resultado").value;
-        if (tipoRelatorio === "Máquina específica") {
+        if (tipoRelatorio === "Máquina específica" || tipoRelatorio === "Operador por máquina" ) {
             document.querySelector(".seleciona-maquina-resultado").style.display = null;
         } else {
             document.querySelector(".seleciona-maquina-resultado").style.display = 'none';
@@ -2014,11 +2096,14 @@ function retornaIndiceMaquina(nome) {
     if (nome === 'IMP-03') return 2;
 }
 
-function gerargrafico() {
+function gerargrafico(listaVetada = false) {
+    var avalia3D = false;
+    let valorAvaliado = document.querySelector(".valor-modelo-grafico-resultados").value;
+    if (valorAvaliado === "3D") avalia3D = true;
     try {
-        document.querySelector(".quilos-grafico-resultados").remove();
-        document.querySelector(".aparas-grafico-resultados").remove();
-        document.querySelector(".metros-grafico-resultados").remove();
+        document.querySelectorAll(".quilos-grafico-resultados").remove();
+        document.querySelectorAll(".aparas-grafico-resultados").remove();
+        document.querySelectorAll(".metros-grafico-resultados").remove();
     } catch {
         
     }
@@ -2033,8 +2118,11 @@ function gerargrafico() {
 
 
     if (tipoRelatorio === "Todas as máquinas" || tipoRelatorio === "Máquina específica") {
-        let maquinaEspecifica = false;
-        if (tipoRelatorio === "Máquina específica") maquinaEspecifica = true;
+        gerarPorMaquina()
+    }
+
+
+    function gerarPorMaquina() {
         let divQuilos = document.createElement("div");
         divQuilos.className = "quilos-grafico-resultados"
         local.appendChild(divQuilos);
@@ -2044,10 +2132,11 @@ function gerargrafico() {
         let divAparas = document.createElement("div");
         divAparas.className = "aparas-grafico-resultados"
         local.appendChild(divAparas);
+        var listaProducoes = [];
 
-
-        var listaProducoes = [[],[],[]];
-        let tipoAtual = "Quilos"
+        for (let i in producoes) {
+            listaProducoes.push([]);
+        }
 
         for (let i in producoes) {
             for (let o in producoes[i]) {
@@ -2057,7 +2146,13 @@ function gerargrafico() {
                     }
                     listaProducoes[i] = listaProducoes[i].filter((prod) => (prod.dataInicio.dataNumerica >= dataInicioEmNumeros && prod.dataTermino.dataNumerica <= dataTerminoEmNumeros));
                 }       
-            }     
+            }
+        }
+        
+        for (let i in listaProducoes) {
+            if (listaProducoes[i].length === 0) {
+                listaProducoes.splice(i, 1)
+            }
         }
 
         let listaInformacoesFiltradas = [];
@@ -2077,87 +2172,97 @@ function gerargrafico() {
             }      
         }
 
-        var localQuilos = document.querySelector(".quilos-grafico-resultados");
-        var localMetros = document.querySelector(".metros-grafico-resultados");
-        var localAparas = document.querySelector(".aparas-grafico-resultados");
+        let localQuilos = document.querySelector(".quilos-grafico-resultados");
+        let localMetros = document.querySelector(".metros-grafico-resultados");
+        let localAparas = document.querySelector(".aparas-grafico-resultados");
+        let locais = [localQuilos, localMetros, localAparas];
 
-        let valoresGrafico = [[tipoAtual, 'Valores']];
-        let maquina = null;
+        if (listaVetada !== false) {
+            listaInformacoesFiltradas = listaVetada;
+        }
 
+        if (tipoRelatorio === "Todas as máquinas") {
+            gerarTodasAsMaquinas(listaInformacoesFiltradas, locais, "Quilos")
+        }
 
-        if (tipoGrafico === "Pizza") {
-            if (maquinaEspecifica) {
-                let nomeMaquina = document.querySelector(".maquina-resultado").value;
-                let indiceMaquina = retornaIndiceMaquina(nomeMaquina);
-                maquina = retornaNomeMaquina(indiceMaquina);
-            }
-            let avalia3D = false;
-            let valorAvaliado = document.querySelector(".valor-modelo-grafico-resultados").value;
-            if (valorAvaliado === "3D") avalia3D = true;
-            if (tipoAtual === "Quilos"){
-                let nomeAtual = document.createElement("h2");
-                nomeAtual.className = "legenda-tipo-grafico-resultados";
-                nomeAtual.textContent = "PESO";
-                if (maquinaEspecifica) {
-                    valoresGrafico.push(
-                        [maquina, listaInformacoesFiltradas[retornaIndiceMaquina(maquina)].quilos]
-                    );
-                } else {
-                    for (let i in listaInformacoesFiltradas) {
-                        maquina = retornaNomeMaquina(listaInformacoesFiltradas[i].maquina);                 
-                        valoresGrafico.push(
-                            [maquina, listaInformacoesFiltradas[i].quilos]
-                        );                   
-                    }
-                }   
-                GraficoPizza(localQuilos, valoresGrafico, avalia3D);
-                localQuilos.appendChild(nomeAtual);
-                tipoAtual = "Metros"
-            }
-            if (tipoAtual === "Metros"){
-                let nomeAtual = document.createElement("h2");
-                nomeAtual.className = "legenda-tipo-grafico-resultados";
-                nomeAtual.textContent = "METROS"
-                valoresGrafico = [[tipoAtual, 'Valores']];
-                if (maquinaEspecifica) {
-                    valoresGrafico.push(
-                        [maquina, listaInformacoesFiltradas[retornaIndiceMaquina(maquina)].metros]
-                    );
-                } else {
-                    for (let i in listaInformacoesFiltradas) {
-                        maquina = retornaNomeMaquina(listaInformacoesFiltradas[i].maquina);                 
-                        valoresGrafico.push(
-                            [maquina, listaInformacoesFiltradas[i].metros]
-                        );                   
-                    }
-                }
-                GraficoPizza(localMetros, valoresGrafico, avalia3D);
-                localMetros.appendChild(nomeAtual);
-                tipoAtual = "Aparas"
-            }
-            if (tipoAtual === "Aparas"){
-                let nomeAtual = document.createElement("h2");
-                nomeAtual.className = "legenda-tipo-grafico-resultados";
-                nomeAtual.textContent = "APARAS"
-                valoresGrafico = [[tipoAtual, 'Valores']];
-                if (maquinaEspecifica) {
-                    valoresGrafico.push(
-                        [maquina, listaInformacoesFiltradas[retornaIndiceMaquina(maquina)].aparas]
-                    );
-                } else {
-                    for (let i in listaInformacoesFiltradas) {
-                        maquina = retornaNomeMaquina(listaInformacoesFiltradas[i].maquina);                 
-                        valoresGrafico.push(
-                            [maquina, listaInformacoesFiltradas[i].aparas]
-                        );                   
-                    }
-                }
-                GraficoPizza(localAparas, valoresGrafico, avalia3D);
-                localAparas.appendChild(nomeAtual);
-                tipoAtual = "Metros"
-            }         
-        }  
+        if (tipoRelatorio === "Máquina específica") {
+            gerarMaquinaEspecifica(listaInformacoesFiltradas, locais, "Quilos")
+        }
     }
+
+    function gerarTodasAsMaquinas(lista, locais, tipoAtual) {
+        let valoresGrafico = [[tipoAtual, 'Valores']];
+        let nomeAtual = document.createElement("h2");
+        nomeAtual.className = "legenda-tipo-grafico-resultados";
+        nomeAtual.textContent = tipoAtual;
+        let localAtual = null;
+
+        for (let i in lista) {
+            let maquina = retornaNomeMaquina(lista[i].maquina);
+    
+            if (tipoAtual === "Quilos") {
+                valoresGrafico.push([maquina, lista[i].quilos]);
+                localAtual = locais[0];
+                if (i == (lista.length -1 )) gerarTodasAsMaquinas(lista, locais, "Metros");
+            }
+            
+            if (tipoAtual === "Metros") {
+                valoresGrafico.push([maquina, lista[i].metros]);
+                localAtual = locais[1];
+                if (i == (lista.length -1 )) gerarTodasAsMaquinas(lista, locais, "Aparas");
+            } 
+
+            if (tipoAtual === "Aparas") {
+                valoresGrafico.push([maquina, lista[i].metros]);
+                localAtual = locais[2];
+                if (listaVetada == false) {
+                    vetarInformacoes(lista);
+                }
+            } 
+        }
+        if (tipoGrafico === "Pizza") GraficoPizza(localAtual, valoresGrafico, avalia3D); 
+        localAtual.appendChild(nomeAtual);
+        return
+    }
+
+    function gerarMaquinaEspecifica(lista, locais, tipoAtual) {
+        try {
+            document.querySelector(".vetador-resultados").remove();
+        } catch {
+
+        }
+        let valoresGrafico = [[tipoAtual, 'Valores']];
+        let nomeAtual = document.createElement("h2");
+        nomeAtual.className = "legenda-tipo-grafico-resultados";
+        nomeAtual.textContent = tipoAtual;
+        let localAtual = null;
+        let nomeMaquina = document.querySelector(".maquina-resultado").value;
+        let indiceMaquina = retornaIndiceMaquina(nomeMaquina);
+        let maquina = retornaNomeMaquina(indiceMaquina);
+    
+        if (tipoAtual === "Quilos") {
+            valoresGrafico.push([maquina, lista[indiceMaquina].quilos]);
+            localAtual = locais[0];
+            gerarMaquinaEspecifica(lista, locais, "Metros");
+        }
+            
+        if (tipoAtual === "Metros") {
+            valoresGrafico.push([maquina, lista[indiceMaquina].metros]);
+            localAtual = locais[1];
+            gerarMaquinaEspecifica(lista, locais, "Aparas");
+        }
+
+        if (tipoAtual === "Aparas") {
+            valoresGrafico.push([maquina, lista[indiceMaquina].aparas]);
+            localAtual = locais[2];
+        }
+
+        if (tipoGrafico === "Pizza") GraficoPizza(localAtual, valoresGrafico, avalia3D);
+        localAtual.appendChild(nomeAtual);
+        return   
+    }
+ 
+        
     if (tipoRelatorio === "Operador por máquina") {
         let divQuilos = document.createElement("div");
         divQuilos.className = "quilos-grafico-resultados"
@@ -2176,25 +2281,189 @@ function gerargrafico() {
         var listaProducoes = [];
 
         for (let i in producoes[indiceMaquina]) {
-            for (let o in producoes[indiceMaquina][i].producoes);
-            listaProducoes.push(producoes[indiceMaquina][i].producoes);
+            for (let o in producoes[indiceMaquina][i].producoes) {
+                if (producoes[indiceMaquina][i].producoes[o].dataInicio.dataNumerica >= dataInicioEmNumeros && producoes[indiceMaquina][i].producoes[o].dataTermino.dataNumerica <= dataTerminoEmNumeros) {    
+                    let prodDataFiltrada = Object.assign(producoes[indiceMaquina][i].producoes[o]);
+                    listaProducoesPuxa(prodDataFiltrada);
+                }
+            }                                      
         };
+        function listaProducoesPuxa(recebe) {
+            listaProducoes.push(recebe); 
+        }
+
         var listaOperadores = [];
         for (let i in listaProducoes) {
-            for (let o in listaProducoes[i]) {
-                let operadores = listaProducoes[i][o].operador
-                let encontra = listaOperadores.findIndex((operador) => operador.producoesDe == operadores.nome)
+                let operadores = listaProducoes[i].operador
+                var encontra = listaOperadores.findIndex((operador) => operador.producoesDe == operadores.nome)
                 if (encontra === -1) {
-                    listaOperadores.push({producoesDe: operadores.nome, todasProducoes: [{...listaProducoes[i][o]}]})
+                    listaOperadores.push({producoesDe: operadores.nome, todasProducoes: [{...listaProducoes[i]}]})
                 }else {
-                    listaOperadores[encontra].todasProducoes.push({...listaProducoes[i][o]});
-                }
-            }   
+                    var objeto = Object.assign(listaProducoes[i]);
+                }     
+        }
+        puxarProducoes(objeto)
+            function puxarProducoes(recebe) {
+                if (recebe) listaOperadores[encontra].todasProducoes.push(Object.assign(objeto))
+            }
+
+        let listaFiltrada = []
+        for (let i in listaOperadores) {
+            listaFiltrada.push({
+                quilos: 0,
+                metros: 0,
+                aparas: 0,
+                operador: listaOperadores[i].producoesDe
+            });
+            let quilos = 0;
+            let metros = 0;
+            let aparas = 0;
+            for (let o in listaOperadores[i].todasProducoes) {
+                quilos += listaOperadores[i].todasProducoes[o].pesoLiquido;
+                metros += listaOperadores[i].todasProducoes[o].metros;
+                aparas += (listaOperadores[i].todasProducoes[o].perdaAcerto + listaOperadores[i].todasProducoes[o].perdaExt + listaOperadores[i].todasProducoes[o].perdaImp) 
+                listaFiltrada[i].quilos = quilos;
+                listaFiltrada[i].metros = metros;
+                listaFiltrada[i].aparas = aparas;              
+            }            
+        }
+        var listaSemVetar = new Array(...listaFiltrada);  
+        if (listaVetada !== false) {
+            listaFiltrada = listaVetada;
+        }
+          
+        var localQuilos = document.querySelector(".quilos-grafico-resultados");
+        var localMetros = document.querySelector(".metros-grafico-resultados");
+        var localAparas = document.querySelector(".aparas-grafico-resultados");
+
+        let tipoAtual = "Quilos"
+        let valoresGrafico = [[tipoAtual, 'Valores']];
+
+        for (let i in listaFiltrada) {
+            var nomeAtual = document.createElement("h2");
+            nomeAtual.className = "legenda-tipo-grafico-resultados";
+            nomeAtual.textContent = "PESO"
+            let operador = listaFiltrada[i].operador;   
+            valoresGrafico.push(
+                [operador, listaFiltrada[i].quilos]
+            ); 
+        }
+        GraficoPizza(localQuilos, valoresGrafico, avalia3D);
+        let elementoClone = nomeAtual.cloneNode(true);
+        localQuilos.appendChild(elementoClone);
+
+        tipoAtual = "Metros"
+        valoresGrafico = [[tipoAtual, 'Valores']];
+
+        for (let i in listaFiltrada) {
+            nomeAtual.textContent = "METROS"   
+            let operador = listaFiltrada[i].operador;  
+            valoresGrafico.push(
+                [operador, listaFiltrada[i].metros]
+            ); 
+        }
+        GraficoPizza(localMetros, valoresGrafico, avalia3D);
+        let elementoClone1 = nomeAtual.cloneNode(true);
+        localMetros.appendChild(elementoClone1);  
+        
+        tipoAtual = "Aparas"
+        valoresGrafico = [[tipoAtual, 'Valores']];
+
+        for (let i in listaFiltrada) {
+            nomeAtual.textContent = "APARAS"   
+            let operador = listaFiltrada[i].operador;  
+            valoresGrafico.push(
+                [operador, listaFiltrada[i].aparas]
+            ); 
+        }
+        GraficoPizza(localAparas, valoresGrafico, avalia3D);
+        localAparas.appendChild(nomeAtual);
+        if (listaVetada == false) {
+            vetarInformacoes(listaSemVetar)
         }
     }
 }
 
-function GraficoPizza(local, valores, avalia3D) {
+
+function vetarInformacoes(lista) {
+    try {
+        document.querySelector(".vetador-resultados").remove();
+    } catch {
+
+    }
+    let local = document.querySelector(".resultados");
+    let vetador = document.createElement('div');
+    let ocultar = document.createElement("img");
+    ocultar.src = "./assets/img/ocultar.png"
+    vetador.appendChild(ocultar);
+    let listaAVetar = []
+    vetador.classList = "vetador-resultados";
+    for (let i in lista) {
+        let localNovoVetador = document.createElement("div");
+        let novoVetador = document.createElement("input");
+        novoVetador.type = 'checkbox';
+        novoVetador.name = i;
+        listaAVetar.push(lista[i]);
+        let nome = null;
+        if (lista[i].maquina == undefined && lista[i].operador !== undefined) {
+            nome = document.createTextNode(lista[i].operador);
+        }else {
+            if (retornaNomeMaquina(lista[i].maquina) !== undefined) {
+                nome = document.createTextNode(retornaNomeMaquina(lista[i].maquina));
+            }    
+        }
+        if (nome !== null) {
+            localNovoVetador.appendChild(novoVetador);
+            localNovoVetador.appendChild(nome);   
+            vetador.appendChild(localNovoVetador);       
+        } 
+    }
+    local.appendChild(vetador);
+    ligarVetador(listaAVetar);
+}
+
+function ligarVetador(lista) {
+    for (let i in lista) {
+        lista[i].indice = i;
+    }
+    let indicesAFiltrar = [];
+    let novaLista = new Array(...lista);
+    document.querySelector(".vetador-resultados").addEventListener('click', function(e) {
+        let target = e.target;
+        if (target.type !== "checkbox") return
+        if (target.checked) {
+            indicesAFiltrar.push(lista[target.name]);
+            let encontraEmNovaLista = novaLista.findIndex((index) => index == lista[target.name]);
+            if (encontraEmNovaLista !== -1) {
+                novaLista.splice(encontraEmNovaLista, 1)
+            }     
+        }
+        if (target.checked == false) {
+            let encontraIndice = indicesAFiltrar.findIndex((index) => index.indice == target.name);
+            if (encontraIndice !== -1) {
+                novaLista.push(indicesAFiltrar[encontraIndice]);
+                indicesAFiltrar.splice(encontraIndice, 1);
+            } 
+        }    
+        for (let i in novaLista) {
+            if (novaLista[i].maquina == undefined && novaLista[i].operador == undefined) novaLista.splice(i, 1);
+        }
+        if (novaLista.length === 0) {
+            alert("Você não pode vetar todos os dados !");
+            novaLista.push(lista[target.name]);
+            target.checked = false;
+            gerargrafico(novaLista);
+            return
+        }else {
+            gerargrafico(novaLista);
+        } 
+    })   
+}
+
+function GraficoPizza(local, valores, avalia3D, avaliaVetador) {
+    if (avaliaVetador) {
+
+    }
     let pieData = google.visualization.arrayToDataTable(valores);
     let pieOptions = {
       pieSliceTextStyle: {
